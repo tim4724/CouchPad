@@ -60,10 +60,17 @@ jobs:
     needs: build
     environment: production
     steps:
+      # Needed for deploy/ — the Deployment manifest is applied, not patched.
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
       - name: Install kubectl
         uses: azure/setup-kubectl@v5
         with:
           version: v1.30.0
+
+      - name: Install kustomize
+        uses: imranismail/setup-kustomize@v2
 
       - name: Write kubeconfig
         run: |
@@ -72,6 +79,10 @@ jobs:
         env:
           KUBECONFIG_B64: ${{ secrets.KUBECONFIG_B64 }}
 
+      # Declarative apply, not `kubectl set image`. The imperative form mutated
+      # the live Deployment without touching any manifest, so the cluster drifted
+      # from its declared state and nothing recorded what was actually running.
+      # deploy/ is now the single source of truth for this object.
       - name: Deploy to production
         env:
           TAG: ${{ github.ref_name }}
@@ -81,13 +92,18 @@ jobs:
           IMAGE="ghcr.io/${REPO}:${TAG}"
 
           echo "Deploying ${IMAGE} to production"
-          kubectl set image deployment/couch-games-site \
-            couch-games-site="${IMAGE}" -n couch-games-site
+          cd deploy
+          kustomize edit set image "ghcr.io/tim4724/couch-games=${IMAGE}"
+
+          echo "--- rendered manifest ---"
+          kustomize build .
+
+          kustomize build . | kubectl apply -f -
           kubectl rollout status deployment/couch-games-site \
             -n couch-games-site --timeout=120s
 
           {
             echo "### Production Deploy ${TAG}"
             echo "- Image: \`${IMAGE}\`"
-            echo "- URL: https://couch-games.com"
+            echo "- URL: https://couchpad.games"
           } >> "$GITHUB_STEP_SUMMARY"

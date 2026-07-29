@@ -1,0 +1,60 @@
+# The only cluster object this repo owns. Everything else for the site
+# (Namespace, Service, Certificate, Middlewares, IngressRoutes) is deliberately
+# kept private in ~/Projects/kube/couch-games/couch-games.yaml — see deploy.md
+# there. Keeping exactly one source of truth per object is the point: CI used to
+# run `kubectl set image`, which mutated the live Deployment without touching any
+# manifest, so the cluster silently drifted from its own declared state.
+#
+# The image tag below is a placeholder. CI overrides it via
+# `kustomize edit set image` before applying, so this file never needs editing
+# on a release.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: couch-games-site
+  namespace: couch-games-site
+  labels:
+    app: couch-games-site
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: couch-games-site
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: couch-games-site
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: couch-games-site
+          image: ghcr.io/tim4724/couch-games:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /health, port: http }
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          resources:
+            requests: { cpu: "10m", memory: "24Mi" }
+            limits:   { cpu: "200m", memory: "64Mi" }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]

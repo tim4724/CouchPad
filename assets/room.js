@@ -1,4 +1,4 @@
-// Room join page. The URL is couch-games.com/<CODE>#<instance> — the same link
+// Room join page. The URL is couchpad.games/<CODE>#<instance> — the same link
 // a display's QR encodes for app deep-linking (see .well-known/). When the app
 // isn't installed the browser lands here instead: we look the code up on the
 // relay directory, show what we know about the room, and offer browser play
@@ -23,8 +23,14 @@
   var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=com.couchgames.controller'
   var ANDROID_APP_SIZE = '≈ 8 MB';
 
-  var SHARED_RELAY = 'https://ws.couch-games.com';
-  var OWN_HOST = 'couch-games.com'; // preview deployments live on subdomains
+  // Both are probed while the couch-games.com -> couchpad.games move is in
+  // flight: ws.couchpad.games is canonical, ws.couch-games.com still answers
+  // until Tiny Track and Powder are repointed. Drop the old entry once they are
+  // (and the matching connect-src in security-headers.conf).
+  var SHARED_RELAYS = ['https://ws.couchpad.games', 'https://ws.couch-games.com'];
+  // Allow-list for room links. Preview deployments live on subdomains, so both
+  // apexes stay listed until the per-game namespaces move to *.couchpad.games.
+  var OWN_HOSTS = ['couchpad.games', 'couch-games.com'];
 
   // ---- DOM ----
   var el = {
@@ -116,7 +122,7 @@
       var games = (manifest && manifest.games || []).filter(function (g) {
         return g && typeof g.name === 'string';
       });
-      var allowedHosts = [OWN_HOST];
+      var allowedHosts = OWN_HOSTS.slice();
       var relays = [];
       for (var i = 0; i < games.length; i++) {
         var hosts = games[i].hosts || [];
@@ -124,7 +130,9 @@
         var probe = games[i].relayProbeBase;
         if (probe && relays.indexOf(probe) === -1) relays.push(probe);
       }
-      if (relays.indexOf(SHARED_RELAY) === -1) relays.push(SHARED_RELAY);
+      for (var k = 0; k < SHARED_RELAYS.length; k++) {
+        if (relays.indexOf(SHARED_RELAYS[k]) === -1) relays.push(SHARED_RELAYS[k]);
+      }
 
       // Returns the join URL when target is an allowed https URL, else null.
       function vetted(target) {

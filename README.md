@@ -1,4 +1,4 @@
-# couch-games.com
+# couchpad.games
 
 Static landing site for **Couch Games** — the umbrella brand for party games
 where everyone plays together on the TV/screen and phones are the controllers

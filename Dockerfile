@@ -1,4 +1,4 @@
-# Static site image for couch-games.com — unprivileged nginx, no build step.
+# Static site image for couchpad.games — unprivileged nginx, no build step.
 FROM nginxinc/nginx-unprivileged:1.27-alpine
 
 # Server block: listens on 8080 (non-root), security headers, /health, no SPA fallback.
