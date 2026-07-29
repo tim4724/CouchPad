@@ -1,4 +1,4 @@
-// Language preference + German-suggestion banner for the Couch Games site.
+// Language preference + German-suggestion banner for the Couchpad site.
 // Shared by every page: the landing (index.html carries #langbar; /de/ does not)
 // and the legal pages (/privacy, /imprint and their /en/ counterparts). The
 // blocks below each no-op on pages missing the elements they target, so one

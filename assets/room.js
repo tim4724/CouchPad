@@ -9,7 +9,7 @@
 // bundled manifest, so a new game is a site deploy, not a code change here.
 //
 // Resolution mirrors the controller apps (RoomDirectory in
-// Couch-Games-Controller): probe the game relays and the shared relay in
+// Couchpad Controller): probe the game relays and the shared relay in
 // parallel and prefer a host-declared controller URL over the declared origin.
 // Relay answers are UNTRUSTED — a join target that doesn't vet against the
 // manifest allow-list is treated as "room not found": we won't send anyone to
@@ -18,7 +18,7 @@
   'use strict';
 
   // ---- Store listings (fill in when the apps go live; sizes shown to users) ----
-  var IOS_APP_URL = null;      // e.g. 'https://apps.apple.com/app/couch-games/id<APPSTORE_ID>'
+  var IOS_APP_URL = null;      // e.g. 'https://apps.apple.com/app/couchpad/id<APPSTORE_ID>'
   var IOS_APP_SIZE = '≈ 3 MB';
   var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=com.couchgames.controller'
   var ANDROID_APP_SIZE = '≈ 8 MB';
@@ -76,7 +76,7 @@
   var code = m[1];
   var instance = (location.hash.slice(1).match(/^[A-Za-z0-9_-]{1,64}$/) || [''])[0];
   el.code.textContent = code;
-  document.title = 'Room ' + code + ' · Couch Games';
+  document.title = 'Room ' + code + ' · Couchpad';
 
   // ---- Relay lookup ----
   function lookup(base) {

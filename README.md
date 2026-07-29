@@ -1,6 +1,6 @@
 # couchpad.games
 
-Static landing site for **Couch Games** — the umbrella brand for party games
+Static landing site for **Couchpad** — the umbrella brand for party games
 where everyone plays together on the TV/screen and phones are the controllers
 (scan a QR to play, no install required).
 
@@ -10,7 +10,7 @@ racer) and **Powder** (skiing).
 
 ## Design
 
-Neutral **MONO graphite chrome**, mirroring the Couch Games Controller launcher
+Neutral **MONO graphite chrome**, mirroring the Couchpad Controller launcher
 (console-shell pattern — the game posters carry the color, the chrome stays
 neutral). Stock system type, Material 3 surface values, follows the system
 light/dark setting. Tokens live in `assets/theme.css`.
@@ -25,7 +25,7 @@ light/dark setting. Tokens live in `assets/theme.css`.
   apps. Keep in sync with the controller repo's bundled copy; when a poster's
   bytes change, bump the `?v=` in its `art` path (the apps cache artwork by URL)
 - `privacy.html`, `imprint.html` — legal pages (German, umbrella policy for all
-  Couch Games infra); English versions in `en/`
+  Couchpad infra); English versions in `en/`
 - `assets/` — CSS (design tokens in `theme.css`) and 16×9 game posters in
   `artwork/`
 - `nginx.conf`, `Dockerfile` — the deployed container; fully static otherwise
