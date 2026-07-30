@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["5ZH48MPAM3.com.couch-games.controller"],
+        "appIDs": ["5ZH48MPAM3.games.couchpad.controller"],
         "components": [
           { "/": "/??????", "comment": "6-char room code opens the app" },
           { "/": "/privacy", "comment": "privacy policy opens the app" },
