@@ -9,7 +9,7 @@
 // bundled manifest, so a new game is a site deploy, not a code change here.
 //
 // Resolution mirrors the controller apps (RoomDirectory in
-// Couchpad Controller): probe the game relays and the shared relay in
+// CouchPad Controller): probe the game relays and the shared relay in
 // parallel and prefer a host-declared controller URL over the declared origin.
 // Relay answers are UNTRUSTED — a join target that doesn't vet against the
 // manifest allow-list is treated as "room not found": we won't send anyone to
@@ -85,7 +85,7 @@
   var code = m[1];
   var instance = (location.hash.slice(1).match(/^[A-Za-z0-9_-]{1,64}$/) || [''])[0];
   el.code.textContent = code;
-  document.title = 'Room ' + code + ' · Couchpad';
+  document.title = 'Room ' + code + ' · CouchPad';
 
   // ---- Relay lookup ----
   function lookup(base) {

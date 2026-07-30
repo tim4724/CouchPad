@@ -1,4 +1,4 @@
-/* Shared layout styles for the Couchpad landing pages (EN root + /de/).
+/* Shared layout styles for the CouchPad landing pages (EN root + /de/).
    Design tokens (--bg, --on-surface, --radius-*, --transition-*, …) come from
    theme.css, which every page links before this file. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
