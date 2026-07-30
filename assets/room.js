@@ -23,10 +23,19 @@
   var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=games.couchpad.controller'
   var ANDROID_APP_SIZE = '≈ 8 MB';
 
-  // One entry is enough: every ws host (couchpad.games, couch-games.com,
-  // hexstacker.com) routes to the same `party-sockets` service, so they share
-  // one room registry. ws.couch-games.com was dropped as a duplicate probe, not
-  // because the old name stopped answering.
+  // ws.couch-games.com was dropped as a DUPLICATE: it and ws.couchpad.games both
+  // resolve to the cluster and are served by the same in-cluster party-sockets
+  // pod, so the second probe could never find a room the first didn't.
+  //
+  // Careful: ws.hexstacker.com is NOT that server. It CNAMEs to
+  // party-sockets.fly.dev — a separate Fly.io process with its own room
+  // registry — which is why it belongs in games-manifest.json per game rather
+  // than here. Two registries, not one.
+  //
+  // Before public release this host moves to Fly.io too. That is a registry
+  // switch, not a rename: whatever currently registers rooms with the
+  // in-cluster relay (Tiny Track, Powder) has to move in the same change, or
+  // they will register in-cluster while this page looks on Fly.
   var SHARED_RELAYS = ['https://ws.couchpad.games'];
   // Allow-list for room links — and NOT the same question as the relay above.
   // This vets the join URL a relay hands back, and the games still SERVE from
