@@ -103,8 +103,8 @@ jobs:
           kustomize build .
 
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/couch-games-site \
-            -n couch-games-site --timeout=120s
+          kubectl rollout status deployment/couchpad-site \
+            -n couchpad-site --timeout=120s
 
           {
             echo "### Production Deploy ${TAG}"

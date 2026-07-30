@@ -1,16 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: couch-games-site
+namespace: couchpad-site
 
 resources:
   - deployment.yaml
 
 # CI rewrites newTag on every release with:
 #   kustomize edit set image ghcr.io/tim4724/couchpad=<repo>:<tag>
-# The name tracks the GitHub repo (the workflow derives the image from
-# github.repository, lowercased), so it changed with the Couch-Games -> Couchpad
-# rename. Keep this selector, deployment.yaml's image and the workflow's
+# The name tracks the GitHub repo, because the workflow derives the image from
+# github.repository lowercased — so renaming the repo silently renames the
+# image. Keep this selector, deployment.yaml's image and the workflow's
 # `kustomize edit set image` argument identical — a mismatch is silent: kustomize
 # simply finds nothing to rewrite and deploys the `latest` tag below.
 # Committed as `latest` only so `kubectl apply -k deploy/` is runnable by hand.

@@ -23,28 +23,23 @@
   var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=games.couchpad.controller'
   var ANDROID_APP_SIZE = '≈ 8 MB';
 
-  // ws.couch-games.com was dropped as a DUPLICATE: it and ws.couchpad.games both
-  // resolve to the cluster and are served by the same in-cluster party-sockets
-  // pod, so the second probe could never find a room the first didn't.
+  // The shared relay is the in-cluster party-sockets pod. ws.hexstacker.com is
+  // NOT that server — it CNAMEs to party-sockets.fly.dev, a separate Fly.io
+  // process with its own room registry, which is why it is declared per game in
+  // games-manifest.json instead of here. Two registries, not one.
   //
-  // Careful: ws.hexstacker.com is NOT that server. It CNAMEs to
-  // party-sockets.fly.dev — a separate Fly.io process with its own room
-  // registry — which is why it belongs in games-manifest.json per game rather
-  // than here. Two registries, not one.
-  //
-  // Before public release this host moves to Fly.io too. That is a registry
-  // switch, not a rename: whatever currently registers rooms with the
-  // in-cluster relay (Tiny Track, Powder) has to move in the same change, or
-  // they will register in-cluster while this page looks on Fly.
+  // Before public release this host moves to Fly.io as well. That is a registry
+  // switch, not a rename: whatever registers rooms with the in-cluster relay has
+  // to move in the same change, or it will keep writing to the cluster while
+  // this page looks on Fly.
   var SHARED_RELAYS = ['https://ws.couchpad.games'];
-  // Allow-list for room links — and NOT the same question as the relay above.
-  // This vets the join URL a relay hands back, and the games still SERVE from
-  // the old apex (tinytrack.couch-games.com resolves; powder.couchpad.games is
-  // still a 404), so a Tiny Track or Powder room resolves to a
-  // *.couch-games.com URL. Removing that entry would turn those rooms into
-  // "Room not found". Drop it only once every game serves from
-  // *.couchpad.games — check with a real room link, not just DNS.
-  var OWN_HOSTS = ['couchpad.games', 'couch-games.com'];
+  // Allow-list for room links — a different question from the relay above: this
+  // vets the join URL a relay hands back. Subdomains are matched too, so every
+  // game served from *.couchpad.games is covered by the single entry.
+  //
+  // A game still serving from another domain resolves to "Room not found" by
+  // design — an unvettable join target is not something we send players to.
+  var OWN_HOSTS = ['couchpad.games'];
 
   // ---- DOM ----
   var el = {

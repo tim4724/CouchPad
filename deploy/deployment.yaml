@@ -1,6 +1,6 @@
 # The only cluster object this repo owns. Everything else for the site
 # (Namespace, Service, Certificate, Middlewares, IngressRoutes) is deliberately
-# kept private in ~/Projects/kube/couch-games/couch-games.yaml — see deploy.md
+# kept private in ~/Projects/kube/couchpad/couchpad-site.yaml — see deploy.md
 # there. Keeping exactly one source of truth per object is the point: CI used to
 # run `kubectl set image`, which mutated the live Deployment without touching any
 # manifest, so the cluster silently drifted from its own declared state.
@@ -11,16 +11,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: couch-games-site
-  namespace: couch-games-site
+  name: couchpad-site
+  namespace: couchpad-site
   labels:
-    app: couch-games-site
+    app: couchpad-site
 spec:
   replicas: 2
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: couch-games-site
+      app: couchpad-site
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -29,7 +29,7 @@ spec:
   template:
     metadata:
       labels:
-        app: couch-games-site
+        app: couchpad-site
     spec:
       securityContext:
         runAsNonRoot: true
@@ -37,7 +37,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: couch-games-site
+        - name: couchpad-site
           image: ghcr.io/tim4724/couchpad:latest
           imagePullPolicy: IfNotPresent
           ports:
