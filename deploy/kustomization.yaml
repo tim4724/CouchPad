@@ -7,8 +7,13 @@ resources:
   - deployment.yaml
 
 # CI rewrites newTag on every release with:
-#   kustomize edit set image ghcr.io/tim4724/couch-games=<repo>:<tag>
+#   kustomize edit set image ghcr.io/tim4724/couchpad=<repo>:<tag>
+# The name tracks the GitHub repo (the workflow derives the image from
+# github.repository, lowercased), so it changed with the Couch-Games -> Couchpad
+# rename. Keep this selector, deployment.yaml's image and the workflow's
+# `kustomize edit set image` argument identical — a mismatch is silent: kustomize
+# simply finds nothing to rewrite and deploys the `latest` tag below.
 # Committed as `latest` only so `kubectl apply -k deploy/` is runnable by hand.
 images:
-  - name: ghcr.io/tim4724/couch-games
+  - name: ghcr.io/tim4724/couchpad
     newTag: latest

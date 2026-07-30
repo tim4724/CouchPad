@@ -44,6 +44,10 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
 
+      # The image name follows github.repository, so it became
+      # ghcr.io/tim4724/couchpad with the repo rename. The cluster pulls it
+      # anonymously (the Deployment carries no imagePullSecret), so this package
+      # must be public — a newly created GHCR package may start out private.
       - name: Build and push image
         uses: docker/build-push-action@v7
         with:
@@ -93,7 +97,7 @@ jobs:
 
           echo "Deploying ${IMAGE} to production"
           cd deploy
-          kustomize edit set image "ghcr.io/tim4724/couch-games=${IMAGE}"
+          kustomize edit set image "ghcr.io/tim4724/couchpad=${IMAGE}"
 
           echo "--- rendered manifest ---"
           kustomize build .
