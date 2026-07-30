@@ -23,13 +23,18 @@
   var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=games.couchpad.controller'
   var ANDROID_APP_SIZE = '≈ 8 MB';
 
-  // Both are probed while the couch-games.com -> couchpad.games move is in
-  // flight: ws.couchpad.games is canonical, ws.couch-games.com still answers
-  // until Tiny Track and Powder are repointed. Drop the old entry once they are
-  // (and the matching connect-src in security-headers.conf).
-  var SHARED_RELAYS = ['https://ws.couchpad.games', 'https://ws.couch-games.com'];
-  // Allow-list for room links. Preview deployments live on subdomains, so both
-  // apexes stay listed until the per-game namespaces move to *.couchpad.games.
+  // One entry is enough: every ws host (couchpad.games, couch-games.com,
+  // hexstacker.com) routes to the same `party-sockets` service, so they share
+  // one room registry. ws.couch-games.com was dropped as a duplicate probe, not
+  // because the old name stopped answering.
+  var SHARED_RELAYS = ['https://ws.couchpad.games'];
+  // Allow-list for room links — and NOT the same question as the relay above.
+  // This vets the join URL a relay hands back, and the games still SERVE from
+  // the old apex (tinytrack.couch-games.com resolves; powder.couchpad.games is
+  // still a 404), so a Tiny Track or Powder room resolves to a
+  // *.couch-games.com URL. Removing that entry would turn those rooms into
+  // "Room not found". Drop it only once every game serves from
+  // *.couchpad.games — check with a real room link, not just DNS.
   var OWN_HOSTS = ['couchpad.games', 'couch-games.com'];
 
   // ---- DOM ----
