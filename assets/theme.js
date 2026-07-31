@@ -10,13 +10,26 @@
   try { choice = localStorage.getItem(STORE); } catch (e) { choice = null; }
   if (choice === 'light' || choice === 'dark') root.setAttribute('data-theme', choice);
 
-  document.addEventListener('click', function (ev) {
-    if (!ev.target.closest('.theme-toggle')) return;
-    var dark = root.getAttribute('data-theme')
+  function isDark() {
+    return root.getAttribute('data-theme')
       ? root.getAttribute('data-theme') === 'dark'
       : matchMedia('(prefers-color-scheme: dark)').matches;
-    var next = dark ? 'light' : 'dark';
+  }
+
+  // The toggle is labelled "Dark mode"; aria-pressed carries the on/off state.
+  function syncPressed() {
+    var btns = document.querySelectorAll('.theme-toggle');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].setAttribute('aria-pressed', isDark() ? 'true' : 'false');
+    }
+  }
+  document.addEventListener('DOMContentLoaded', syncPressed);
+
+  document.addEventListener('click', function (ev) {
+    if (!ev.target.closest('.theme-toggle')) return;
+    var next = isDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try { localStorage.setItem(STORE, next); } catch (e) {}
+    syncPressed();
   });
 })();

@@ -34,6 +34,9 @@ h1 {
   color: var(--on-surface);
   font-size: clamp(1.6rem, 5vw, 2.4rem);
   font-weight: 700;
+  /* Caps are styling, not content — literal ALL-CAPS text can get spelled
+     out letter-by-letter by screen readers. */
+  text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 1.15;
   overflow-wrap: break-word;

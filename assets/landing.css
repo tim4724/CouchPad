@@ -218,7 +218,10 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
 }
-.cta::after { content: "→"; }
+/* Empty alt text keeps the decorative arrow out of the accessible name
+   ("Play now", not "Play now →"). Same progressive-enhancement pattern as
+   .cta__label: browsers without the alt syntax keep the plain declaration. */
+.cta::after { content: "→"; content: "→" / ""; }
 .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(240, 74, 80, 0.55); }
 .cta:active { transform: translateY(0); box-shadow: 0 6px 16px rgba(240, 74, 80, 0.4); }
 .cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }

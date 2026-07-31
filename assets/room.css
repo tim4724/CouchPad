@@ -142,7 +142,8 @@
   text-decoration: none;
   transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
-.joinbtn::after { content: "→"; }
+/* Empty alt text keeps the arrow out of the accessible name — see .cta::after. */
+.joinbtn::after { content: "→"; content: "→" / ""; }
 .joinbtn:hover { opacity: 0.92; }
 .joinbtn:active { transform: translateY(1px); }
 .joinbtn__label {
