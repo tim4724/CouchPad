@@ -6,3 +6,9 @@
 Dockerfile
 .dockerignore
 README.md
+
+# Infra and working files — must never be publicly served.
+deploy
+design-drafts
+rasters.json
+glyph-inspect.png
