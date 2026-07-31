@@ -263,6 +263,7 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 }
 .howfacts li:nth-child(2)::before { background: var(--confetti-amber); }
 .howfacts li:nth-child(3)::before { background: var(--confetti-teal); }
+.howfacts li:nth-child(4)::before { background: var(--confetti-violet); }
 @media (max-width: 560px) {
   .how { flex-direction: column; text-align: center; }
   .how__copy p { margin: 0 auto; }
