@@ -47,16 +47,16 @@
   object-fit: cover;
   object-position: 58% center;
 }
-/* Cinematic bottom-left veil: darkest where the type sits, art stays clear
-   toward the top-right. Mirrors the landing hero's .feature__veil (slightly
-   lighter peak — the text block here is smaller); keep the two in step. */
+/* Cinematic bottom veil: darkest where the type sits, art stays clear toward
+   the top. Mirrors the landing hero's .feature__veil (slightly lighter peak —
+   the text block here is smaller); keep the two in step. */
 .roomcard__veil {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   visibility: hidden;
-  background: radial-gradient(120% 140% at 0% 100%,
-    rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.62) 30%,
-    rgba(0,0,0,0.32) 55%, rgba(0,0,0,0) 82%);
+  background: linear-gradient(8deg,
+    rgba(20, 19, 24, 0.82) 10%, rgba(20, 19, 24, 0.45) 40%,
+    rgba(20, 19, 24, 0) 68%);
 }
 /* Once key art is behind the text, flip the card to hero-style white type. */
 .roomcard--art { color: #fff; }

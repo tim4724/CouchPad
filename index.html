@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#FAFAFB" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0F0F11" media="(prefers-color-scheme: dark)">
-  <title>CouchPad</title>
-  <meta name="description" content="CouchPad turns your TV into the game and everyone's phone into a controller. Scan a QR code to join — no install, no extra gamepads. Starring HexStacker Party.">
+  <!-- The page always opens on the chrome stripe, in both color schemes. -->
+  <meta name="theme-color" content="#26242C">
+  <title>CouchPad — turn your TV into a party console</title>
+  <meta name="description" content="CouchPad turns your TV into a party console — everyone plays with the phone already in their pocket. Scan the code on the TV to join. Starring HexStacker Party.">
   <link rel="canonical" href="https://couchpad.games/">
   <link rel="alternate" hreflang="en" href="https://couchpad.games/">
   <link rel="alternate" hreflang="de" href="https://couchpad.games/de/">
@@ -15,15 +15,35 @@
   <link rel="icon" href="/favicon.ico?v=4" sizes="16x16 32x32 48x48">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="CouchPad — play together on the big screen">
-  <meta property="og:description" content="The TV is the game, your phone is the controller. Scan a QR code and play — no install.">
+  <meta property="og:title" content="CouchPad — turn your TV into a party console">
+  <meta property="og:description" content="The TV is the game, phones are the controllers. Scan the code on the TV and you're in.">
   <meta property="og:url" content="https://couchpad.games/">
   <meta property="og:image" content="https://couchpad.games/assets/artwork/hexstacker-16x9.webp">
-  <link rel="stylesheet" href="/assets/theme.css?v=3">
-  <link rel="stylesheet" href="/assets/landing.css?v=3">
+  <link rel="preload" href="/assets/fonts/baloo2-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/nunito-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/theme.css?v=5">
+  <link rel="stylesheet" href="/assets/landing.css?v=5">
+  <script src="/assets/theme.js?v=1"></script>
 </head>
 <body>
-  <div class="wrap">
+
+  <div class="headstripe">
+    <div class="wrap">
+      <header class="topbar">
+        <a class="brand" href="/">CouchPad</a>
+        <div class="topbar__side">
+          <a class="topbar__mail" href="mailto:info@couchpad.games">info@couchpad.games</a>
+          <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode">
+            <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z"/></svg>
+            <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+          </button>
+        </div>
+      </header>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1200 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 H1200 V10 C1000,42 800,0 600,16 C400,32 200,42 0,10 Z" fill="currentColor"/></svg>
+
+  <main class="wrap">
 
     <!-- Offered to visitors whose browser prefers German. Suggests, never forces;
          dismissal and the footer toggle are both remembered in localStorage. -->
@@ -33,41 +53,32 @@
       <button class="langbar__dismiss" type="button" aria-label="Schließen">✕</button>
     </aside>
 
-    <header class="topbar">
-      <a class="brand" href="/">
-        <svg viewBox="0 0 100 100" aria-hidden="true" fill="none">
-          <g stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M39 23 H31 a8 8 0 0 0 -8 8 V39"/>
-            <path d="M61 23 H69 a8 8 0 0 1 8 8 V39"/>
-            <path d="M61 77 H69 a8 8 0 0 0 8 -8 V61"/>
-            <path d="M39 77 H31 a8 8 0 0 1 -8 -8 V61"/>
-          </g>
-          <path d="M43 39 L43 61 L60 50 Z" fill="currentColor" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-        </svg>
-        CouchPad
-      </a>
-      <a class="topbar__mail" href="mailto:info@couchpad.games">info@couchpad.games</a>
-    </header>
+    <section class="hero">
+      <h1>Turn your TV into a <mark>party console</mark></h1>
+      <p class="hero__sub">Everyone plays with the phone already in their pocket.</p>
 
-    <section class="feature" aria-labelledby="feature-title">
-      <img class="feature__bg" src="/assets/artwork/hexstacker-16x9.webp"
-           srcset="/assets/artwork/hexstacker-16x9-960.webp 960w, /assets/artwork/hexstacker-16x9.webp 1920w"
-           sizes="(max-width: 1160px) 100vw, 1040px"
-           alt="HexStacker Party key art" width="1600" height="900" fetchpriority="high">
-      <div class="feature__veil" aria-hidden="true"></div>
-      <div class="feature__inner">
-        <h1 id="feature-title">HexStacker Party</h1>
-        <p>Stack, Clear, Outlast Your Friends.<br><span class="feature__sub">Apple&nbsp;TV &amp; Android&nbsp;TV soon.</span></p>
-        <a class="cta" href="https://hexstacker.com"><span class="cta__label">Play now</span></a>
-      </div>
+      <section class="feature" aria-labelledby="feature-title">
+        <img class="feature__bg" src="/assets/artwork/hexstacker-16x9.webp"
+             srcset="/assets/artwork/hexstacker-16x9-960.webp 960w, /assets/artwork/hexstacker-16x9.webp 1920w"
+             sizes="(max-width: 1160px) 100vw, 1040px"
+             alt="HexStacker Party key art" width="1600" height="900" fetchpriority="high">
+        <div class="feature__veil" aria-hidden="true"></div>
+        <div class="feature__inner">
+          <div class="feature__copy">
+            <h2 id="feature-title">HexStacker Party</h2>
+            <p>Stack, Clear, Outlast Your Friends.<br><span class="feature__sub">Apple&nbsp;TV &amp; Android&nbsp;TV soon.</span></p>
+          </div>
+          <a class="cta" href="https://hexstacker.com"><span class="cta__label">Play now</span></a>
+        </div>
+      </section>
     </section>
 
-        <section class="how" aria-label="How it works">
+    <section class="how" aria-label="How it works">
       <div class="how__art" aria-hidden="true">
         <!-- TV showing an abstract (not real) square QR — three finder eyes,
              a bottom-right alignment mark, and sparse data modules — with a
-             portrait phone as controller (D-pad + buttons in its lower half)
-             overlapping the TV corner. One SVG so the composition can't drift. -->
+             portrait phone as controller (D-pad + confetti buttons in its lower
+             half) overlapping the TV corner. One SVG so the composition can't drift. -->
         <svg viewBox="0 0 180 118" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
           <!-- TV; stand centered under the part the phone doesn't cover -->
           <rect x="2.5" y="2.5" width="145" height="87" rx="7"/>
@@ -107,24 +118,29 @@
               <!-- D-pad (left) -->
               <rect x="11.75" y="55" width="6.5" height="18" rx="2"/>
               <rect x="6" y="60.75" width="18" height="6.5" rx="2"/>
-              <!-- action buttons (right) -->
-              <circle cx="38" cy="57" r="3.2"/><circle cx="38" cy="71" r="3.2"/>
-              <circle cx="31.5" cy="64" r="3.2"/><circle cx="44.5" cy="64" r="3.2"/>
+              <!-- action buttons (right), confetti-colored -->
+              <circle cx="38" cy="57" r="3.2" fill="var(--confetti-coral)"/><circle cx="38" cy="71" r="3.2" fill="var(--confetti-teal)"/>
+              <circle cx="31.5" cy="64" r="3.2" fill="var(--confetti-violet)"/><circle cx="44.5" cy="64" r="3.2" fill="var(--confetti-amber)"/>
             </g>
           </g>
         </svg>
       </div>
       <div class="how__copy">
-        <h2>Scan to play</h2>
-        <p><span class="lead">Scan the code on your TV with your phone.</span><br>No install, no gamepads.</p>
+        <h2><mark>Scan</mark> to play</h2>
+        <p><span class="lead">Scan the code on your TV with your phone.</span></p>
+        <ul class="howfacts">
+          <li>Up to 8 players</li>
+          <li>Phones are the controllers</li>
+          <li>Joining takes seconds</li>
+        </ul>
       </div>
     </section>
 
     <section class="section" aria-labelledby="more-heading">
-      <h2 class="section__label" id="more-heading">More games</h2>
+      <h2 id="more-heading">More games <mark>on the way</mark></h2>
       <div class="shelf">
 
-        <article class="tile tile--soon tile--tinytrack">
+        <article class="tile tile--soon">
           <div class="tile__poster">
             <img src="/assets/artwork/tinytrack-16x9.webp"
                  srcset="/assets/artwork/tinytrack-16x9-960.webp 960w, /assets/artwork/tinytrack-16x9.webp 1920w"
@@ -138,7 +154,7 @@
           </div>
         </article>
 
-        <article class="tile tile--soon tile--powder">
+        <article class="tile tile--soon">
           <div class="tile__poster">
             <img src="/assets/artwork/powder-16x9.webp"
                  srcset="/assets/artwork/powder-16x9-960.webp 960w, /assets/artwork/powder-16x9.webp 1920w"
@@ -153,10 +169,14 @@
         </article>
 
       </div>
-      <p class="apps-note">Free <strong>CouchPad</strong> app for iPhone and Android coming soon.</p>
+      <p class="apps-note"><strong>CouchPad</strong> apps coming to iOS, Android, Apple&nbsp;TV and Android&nbsp;TV.</p>
     </section>
 
-    <footer>
+  </main>
+
+  <svg class="wave wave--flip wave--foot" viewBox="0 0 1200 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 H1200 V10 C1000,42 800,0 600,16 C400,32 200,42 0,10 Z" fill="currentColor"/></svg>
+  <footer class="footstripe">
+    <div class="wrap">
       <div class="footer-row">
         <span>© 2026 CouchPad · Tim Vogel</span>
         <nav class="footer-links">
@@ -166,9 +186,8 @@
           <a href="/de/" class="lang-toggle" data-lang-set="de" hreflang="de">Deutsch</a>
         </nav>
       </div>
-    </footer>
-
-  </div>
+    </div>
+  </footer>
 
   <script src="/assets/lang.js?v=2"></script>
 </body>

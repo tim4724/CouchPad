@@ -1,17 +1,49 @@
 /* ==========================================================
-   CouchPad — design tokens (MONO graphite chrome)
-   Mirrors the CouchPad Controller launcher: console-shell
-   pattern (PS5/Switch/Netflix). Neutral graphite chrome so
-   the game posters carry ALL the color. Material 3 values are
-   lifted verbatim from the app (theme/Color.kt, CGTheme.swift);
-   stock system type scale — no custom display face.
-   Follows the system light/dark setting.
+   CouchPad — design tokens ("Ink & Confetti")
+   Neutral charcoal chrome carries the structure (stripes,
+   waves, ribbons); color is confined to the game art and a
+   few deliberate accents. Role rules:
+   - --chrome: header/footer stripes, waves, status ribbons.
+     Same value in both schemes so the stripes are the brand's
+     constant; the page background changes around them.
+   - --action (coral): CTA + text marks ONLY, and only at
+     large/bold sizes — it is 3.4:1 against the light bg, so
+     small text must use --on-surface instead.
+   - --confetti-*: decorative dots (facts markers, scan-art
+     buttons). Never used for text.
+   Follows the system light/dark setting; dark is near-black
+   by design, not a tinted grey.
    ========================================================== */
 
+/* Self-hosted (CSP font-src 'self'), latin subset, variable weight. */
+@font-face {
+  font-family: "Baloo 2";
+  src: url("/assets/fonts/baloo2-latin-var.woff2") format("woff2");
+  font-weight: 700 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("/assets/fonts/nunito-latin-var.woff2") format("woff2");
+  font-weight: 600 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
-  /* System type — the brand voice lives in the app icon and the
-     games' own art, not the launcher chrome. */
-  --font-sans: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Nunito", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Baloo 2", var(--font-sans);
+
+  /* Brand constants (scheme-independent) */
+  --chrome: #26242C;
+  --action: #F04A50;
+  --confetti-coral: #F04A50;
+  --confetti-amber: #FFB020;
+  --confetti-teal: #2AA198;
+  --confetti-violet: #8B7CF0;
 
   /* Game accents (from games-manifest.json) — used sparingly; the
      poster art does the real color work. */
@@ -22,45 +54,64 @@
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius-xl: 22px;
   --radius-pill: 999px;
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s ease;
 
-  /* ---- Light scheme (default) ---- */
-  --bg: #FAFAFB;
-  --surface: #FAFAFB;
+  /* ---- Light scheme (default): warm paper ---- */
+  --bg: #FBF9F4;
+  --surface: #FBF9F4;
   --surface-lowest: #FFFFFF;
-  --surface-low: #F0F0F1;
-  --surface-container: #EBEBEC;
-  --surface-high: #E4E4E5;
-  --surface-highest: #DDDDDE;
-  --on-surface: #1C1B1F;
-  --on-surface-variant: #46464B;
-  --outline: #77767C;
-  --outline-variant: #CAC9CE;
-  --primary: #202024;
+  --surface-low: #F0EDE6;
+  --surface-container: #E9E4D9;
+  --surface-high: #E0DACC;
+  --surface-highest: #D8D1C1;
+  --on-surface: #26242C;
+  --on-surface-variant: #5E5A66;
+  --outline: #77717F;
+  --outline-variant: #DFD9CD;
+  --primary: #26242C;
   --on-primary: #FFFFFF;
-  --scrim: rgba(0, 0, 0, 0.55);
+  --scrim: rgba(20, 19, 24, 0.55);
 }
 
+/* Dark values appear twice on purpose: once for the system setting (unless the
+   visitor forced light) and once for a forced-dark choice. theme.js sets
+   data-theme from localStorage; keep both blocks identical when editing. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0F0F11;
-    --surface: #0F0F11;
-    --surface-lowest: #040405;
-    --surface-low: #151517;
-    --surface-container: #19191B;
-    --surface-high: #222224;
-    --surface-highest: #2A2A2C;
-    --on-surface: #E6E1E5;
-    --on-surface-variant: #C7C6CC;
-    --outline: #90909A;
-    --outline-variant: #44444A;
-    --primary: #E6E1E9;
-    --on-primary: #1C1B20;
+  :root:not([data-theme="light"]) {
+    --bg: #110F17;
+    --surface: #110F17;
+    --surface-lowest: #0B0A10;
+    --surface-low: #1C1A24;
+    --surface-container: #211E2B;
+    --surface-high: #2A2735;
+    --surface-highest: #332F3F;
+    --on-surface: #F2EFE9;
+    --on-surface-variant: #A8A3B1;
+    --outline: #8D8798;
+    --outline-variant: #2F2B3A;
+    --primary: #F2EFE9;
+    --on-primary: #26242C;
     --scrim: rgba(0, 0, 0, 0.65);
   }
+}
+:root[data-theme="dark"] {
+  --bg: #110F17;
+  --surface: #110F17;
+  --surface-lowest: #0B0A10;
+  --surface-low: #1C1A24;
+  --surface-container: #211E2B;
+  --surface-high: #2A2735;
+  --surface-highest: #332F3F;
+  --on-surface: #F2EFE9;
+  --on-surface-variant: #A8A3B1;
+  --outline: #8D8798;
+  --outline-variant: #2F2B3A;
+  --primary: #F2EFE9;
+  --on-primary: #26242C;
+  --scrim: rgba(0, 0, 0, 0.65);
 }
 
 /* Kill the blue tap-highlight box mobile browsers overlay on links
