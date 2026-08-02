@@ -22,12 +22,17 @@ light/dark setting. Tokens live in `assets/theme.css`.
   (nginx maps any 6-char base58 path to it); browser fallback for the app deep
   links in `.well-known/`
 - `games-manifest.json` — drives the room page and is fetched by the controller
-  apps. Keep in sync with the controller repo's bundled copy; when a poster's
-  bytes change, bump the `?v=` in its `art` path (the apps cache artwork by URL)
+  apps. Keep in sync with the controller repo's bundled copy. `art` is the 16:9
+  cover, `icon` the square brand mark (nearby-room / rejoin cards in the
+  launcher). The apps match their bundled copy by **filename**, and cache
+  anything they didn't ship by URL without revalidating — so re-rendered artwork
+  ships under a new name (`…-v2.webp`) here, in both app bundles and in the
+  landing-page `srcset`; never as a `?v=` bump, which the filename match would
+  swallow
 - `privacy.html`, `imprint.html` — legal pages (German, umbrella policy for all
   CouchPad infra); English versions in `en/`
-- `assets/` — CSS (design tokens in `theme.css`) and 16×9 game posters in
-  `artwork/`
+- `assets/` — CSS (design tokens in `theme.css`), 16×9 game posters and square
+  brand icons in `artwork/`
 - `nginx.conf`, `Dockerfile` — the deployed container; fully static otherwise
 
 ## Local preview
