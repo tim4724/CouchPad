@@ -206,8 +206,8 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   padding: 0.55em 1.6em;
   border-radius: var(--radius-pill);
   text-decoration: none;
-  box-shadow: 0 10px 26px rgba(240, 74, 80, 0.45);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 6px 16px rgba(240, 74, 80, 0.22);
+  transition: box-shadow var(--transition-fast);
 }
 /* Optically center the label: trim the line box down to the glyph's
    cap/baseline so vertical centering follows the visible text rather than the
@@ -222,8 +222,8 @@ h1 mark, h2 mark { background: none; color: var(--action); }
    ("Play now", not "Play now →"). Same progressive-enhancement pattern as
    .cta__label: browsers without the alt syntax keep the plain declaration. */
 .cta::after { content: "→"; content: "→" / ""; }
-.cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(240, 74, 80, 0.55); }
-.cta:active { transform: translateY(0); box-shadow: 0 6px 16px rgba(240, 74, 80, 0.4); }
+.cta:hover { box-shadow: 0 8px 20px rgba(240, 74, 80, 0.3); }
+.cta:active { box-shadow: 0 4px 10px rgba(240, 74, 80, 0.2); }
 .cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 /* ---- Scan to play: paper card with the pairing visual ---- */
