@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- viewport-fit=cover is what makes env(safe-area-inset-*) non-zero under the launcher (§5). -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>CouchPad contract test controller</title>
+<!-- §4: the launcher tints its chrome from these and re-reads them on every change. -->
+<meta name="theme-color" content="#101014">
+<meta name="cp-accent-color" content="#f2555a">
+<link rel="stylesheet" href="/assets/controller-test.css?v=1">
+</head>
+<body>
+<div id="zone" hidden><i></i></div>
+<main>
+  <h1>Contract test controller</h1>
+  <p class="row"><span id="mode" class="badge">…</span></p>
+
+  <section>
+    <h2>§1–2 Identity</h2>
+    <dl>
+      <dt>cpName</dt><dd id="cpname">—</dd>
+      <dt>setName calls</dt><dd id="setname">0</dd>
+      <dt>current name</dt><dd id="name">—</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>§9 System back</h2>
+    <div class="row">
+      <button id="arm" aria-pressed="false">Armed: no</button>
+      <button id="open">Open dialog</button>
+    </div>
+    <div class="row gap-top">
+      <button data-back="consume" aria-pressed="false">back() → true</button>
+      <button data-back="decline" aria-pressed="true">back() → false</button>
+      <button data-back="absent" aria-pressed="false">no back()</button>
+    </div>
+    <dl class="gap-top">
+      <dt>back() calls</dt><dd id="backs">0</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>§4 Theming</h2>
+    <div class="row" id="themes"></div>
+  </section>
+
+  <section>
+    <h2>§5 Safe zone</h2>
+    <div class="row"><button id="zonetoggle" aria-pressed="false">Show frame</button></div>
+    <dl class="gap-top">
+      <dt>--cp-safe-*</dt><dd id="vars">—</dd>
+      <dt>env(safe-area)</dt><dd id="env">—</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>§3 Session end</h2>
+    <div class="row" id="ends"></div>
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <pre id="log"></pre>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <p>A dialog. System back is armed while it's open; back() closes it and returns true.</p>
+  <button id="close">Close</button>
+</dialog>
+
+<div id="envprobe"></div>
+<script src="/assets/controller-test.js?v=1"></script>
+</body>
+</html>
