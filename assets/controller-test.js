@@ -134,6 +134,42 @@
     e.currentTarget.setAttribute('aria-pressed', String(on));
   };
 
+  // ---- §10 orientation: ask the launcher to rotate. Default portrait, reset on
+  // every page load, and only the literal 'landscape' rotates — hence the nonsense
+  // button, which must land back in portrait rather than doing nothing.
+  function readOrientation() {
+    $('orient').textContent =
+      matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
+  }
+  readOrientation();
+  // A rotation is a resize of the same document — the page is never reloaded, so
+  // there is no load-time hook to read this from.
+  addEventListener('resize', readOrientation);
+  // ?orient=landscape asked for it from <head>, before this file ran (see the inline
+  // script there) — reflect that in the buttons so they don't claim portrait.
+  if (params.get('orient') === 'landscape') {
+    log('setOrientation("landscape") from <head> — before first paint');
+    document.querySelector('[data-orient="portrait"]').setAttribute('aria-pressed', 'false');
+    document.querySelector('[data-orient="landscape"]').setAttribute('aria-pressed', 'true');
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-orient]'), function (b) {
+    b.onclick = function () {
+      var mode = b.dataset.orient;
+      Array.prototype.forEach.call(document.querySelectorAll('[data-orient]'), function (o) {
+        o.setAttribute('aria-pressed', String(o === b));
+      });
+      // Guarded — absent in a browser, so this is a no-op there and the page keeps
+      // whatever the browser and the user's rotation lock were doing.
+      if (window.CouchPadHost && window.CouchPadHost.setOrientation) {
+        window.CouchPadHost.setOrientation(mode);
+        log('setOrientation(' + JSON.stringify(mode) + ')');
+      } else {
+        log('setOrientation(' + JSON.stringify(mode) + ') — no bridge, ignored');
+      }
+    };
+  });
+
   // ---- §3 session end. Terminal only — the launcher tears the web view down.
   ['game_ended', 'room_not_found', 'game_full', 'replaced', 'nonsense'].forEach(function (reason) {
     var b = document.createElement('button');
