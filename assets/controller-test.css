@@ -1,0 +1,80 @@
+/* Contract test controller (controller-test.html).
+   Deliberately self-contained rather than built on theme.css: this stands in for
+   a GAME controller under the launcher's dark chrome, not for a site page. */
+
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0f0f11;
+  color: #f3f3f5;
+  font: 15px/1.45 -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  /* CONTRACT §5, and the pattern games should copy: take whichever channel is
+     larger, so the same rule is correct under the launcher and in a browser. */
+  padding:
+    max(var(--cp-safe-top, 0px), env(safe-area-inset-top, 0px))
+    max(var(--cp-safe-right, 0px), env(safe-area-inset-right, 0px))
+    max(var(--cp-safe-bottom, 0px), env(safe-area-inset-bottom, 0px))
+    max(var(--cp-safe-left, 0px), env(safe-area-inset-left, 0px));
+}
+
+main { padding: 12px 14px 40px; }
+h1 { font-size: 17px; margin: 0 0 2px; }
+h2 {
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+  color: #9a9aa4; margin: 22px 0 8px;
+}
+section { border-top: 1px solid #26262c; }
+p { margin: 0 0 14px; }
+
+.badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.badge.shell { background: #1d3a24; color: #7ee69a; }
+.badge.browser { background: #3a2a1d; color: #f0b464; }
+
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.gap-top { margin-top: 10px; }
+
+button {
+  font: inherit; font-weight: 600; color: #f3f3f5; background: #26262c;
+  border: 1px solid #35353d; border-radius: 10px; padding: 9px 13px; cursor: pointer;
+}
+button:active { background: #32323a; }
+button[aria-pressed="true"] { background: #f2555a; border-color: #f2555a; color: #14090a; }
+
+dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; }
+dt { color: #9a9aa4; }
+dd { margin: 0; font-variant-numeric: tabular-nums; }
+dd, #log { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+
+#log {
+  height: 160px; overflow: auto; background: #17171b;
+  border-radius: 10px; padding: 8px 10px; margin: 0; white-space: pre-wrap;
+}
+
+/* The safe zone drawn exactly as the launcher reports it — the frame should hug
+   the underside of the chrome, with nothing interactive outside it. */
+#zone { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+#zone i {
+  position: absolute;
+  inset:
+    var(--cp-safe-top, 0px) var(--cp-safe-right, 0px)
+    var(--cp-safe-bottom, 0px) var(--cp-safe-left, 0px);
+  border: 1px dashed rgba(242, 85, 90, .5);
+  border-radius: 6px;
+}
+
+/* Padding-only probe: lets the script read the resolved env() values, which are
+   not otherwise observable from JS. */
+#envprobe {
+  position: fixed; top: 0; left: 0; width: 0; height: 0; visibility: hidden;
+  padding:
+    env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+dialog {
+  background: #1b1b20; color: #f3f3f5; border: 1px solid #35353d;
+  border-radius: 14px; padding: 20px; max-width: 300px;
+}
+dialog::backdrop { background: rgba(0, 0, 0, .67); }
