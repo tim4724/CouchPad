@@ -145,12 +145,22 @@
   // A rotation is a resize of the same document — the page is never reloaded, so
   // there is no load-time hook to read this from.
   addEventListener('resize', readOrientation);
-  // ?orient=landscape asked for it from <head>, before this file ran (see the inline
-  // script there) — reflect that in the buttons so they don't claim portrait.
+  // ?orient=landscape asked for it from <head>, before this file ran (see
+  // controller-orient.js) — reflect that in the buttons so they don't claim portrait.
+  // Report what that script ACTUALLY did, not what the URL asked for: a head script
+  // that never ran (CSP blocking an inline one) or found no bridge would otherwise
+  // leave the buttons claiming landscape over a portrait screen with nothing to
+  // explain it — which is exactly how this page once lied.
   if (params.get('orient') === 'landscape') {
-    log('setOrientation("landscape") from <head> — before first paint');
+    var asked = window.__cpOrientAsked;
+    log(asked === 'called'
+      ? 'setOrientation("landscape") from <head> — before first paint'
+      : asked === 'no-bridge'
+        ? 'head script ran, but no bridge — plain browser, nothing to ask'
+        : 'head script never ran (blocked?) — no orientation was requested');
     document.querySelector('[data-orient="portrait"]').setAttribute('aria-pressed', 'false');
-    document.querySelector('[data-orient="landscape"]').setAttribute('aria-pressed', 'true');
+    document.querySelector('[data-orient="landscape"]')
+      .setAttribute('aria-pressed', String(asked === 'called'));
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-orient]'), function (b) {

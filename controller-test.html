@@ -10,16 +10,10 @@
 <meta name="theme-color" content="#101014">
 <meta name="cp-accent-color" content="#f2555a">
 <link rel="stylesheet" href="/assets/controller-test.css?v=1">
-<!-- §10: the earliest a controller can ask for landscape. The bridge is installed
-     before any page script runs, so a rotation asked for here happens while the
-     launcher's own "Joining…" cover is still up and the player never sees it. Opt in
-     with ?orient=landscape — the buttons below cover the mid-session case instead. -->
-<script>
-  if (new URLSearchParams(location.search).get('orient') === 'landscape') {
-    window.CouchPadHost && window.CouchPadHost.setOrientation &&
-      window.CouchPadHost.setOrientation('landscape');
-  }
-</script>
+<!-- §10: the earliest a controller can ask for landscape (?orient=landscape). An
+     external file, not inline — this origin ships `script-src 'self'`, which blocks
+     inline script. Not deferred: it must run during head parsing. -->
+<script src="/assets/controller-orient.js?v=1"></script>
 </head>
 <body>
 <div id="zone" hidden><i></i></div>
