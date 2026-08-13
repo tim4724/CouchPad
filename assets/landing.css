@@ -124,7 +124,6 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   min-height: clamp(340px, 52vh, 520px);
   display: flex;
   align-items: flex-end;
-  box-shadow: 0 24px 50px rgba(38, 36, 44, 0.22);
 }
 /* top/right/bottom/left instead of `inset` so Safari < 14.5 keeps the hero. */
 .feature__bg {
@@ -135,20 +134,22 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   object-position: 70% center;
 }
 /* Darkening hugs the bottom edge where the copy sits; the art stays clear
-   toward the top. */
+   toward the top. The tint is cooler (more blue) than the art's warm board
+   colors on purpose: a neutral dark here let the maroon boards bleed through
+   as a muddy brown band. */
 .feature__veil {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   background: linear-gradient(8deg,
-    rgba(20, 19, 24, 0.88) 10%, rgba(20, 19, 24, 0.5) 40%,
-    rgba(20, 19, 24, 0) 68%);
+    rgba(16, 14, 27, 0.92) 10%, rgba(16, 14, 27, 0.55) 40%,
+    rgba(16, 14, 27, 0) 68%);
 }
 @media (max-width: 720px) {
   .feature__bg { object-position: 58% center; }
   .feature__veil {
     background: linear-gradient(0deg,
-      rgba(20, 19, 24, 0.86) 0%, rgba(20, 19, 24, 0.75) 46%,
-      rgba(20, 19, 24, 0.44) 72%, rgba(20, 19, 24, 0.12) 100%);
+      rgba(16, 14, 27, 0.9) 0%, rgba(16, 14, 27, 0.78) 46%,
+      rgba(16, 14, 27, 0.46) 72%, rgba(16, 14, 27, 0.12) 100%);
   }
 }
 .feature__inner {
@@ -228,7 +229,7 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 
 /* ---- Scan to play: paper card with the pairing visual ---- */
 .how {
-  margin-top: 3rem;
+  margin-top: 2rem;
   background: var(--surface-low);
   border-radius: var(--radius-xl);
   display: flex;
@@ -236,12 +237,15 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   align-items: center;
   justify-content: space-between;
   gap: clamp(1.25rem, 4vw, 3rem);
-  padding: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.25rem, 2.5vw, 2rem);
+  padding: 1.5rem clamp(1.25rem, 2.5vw, 2rem);
   text-align: left;
 }
 .how__art { flex: none; color: var(--on-surface); }
-.how__art svg { display: block; width: clamp(160px, 27vw, 200px); }
-.how__copy h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 0.3rem; }
+.how__art svg { display: block; width: clamp(150px, 24vw, 180px); }
+/* Tight leading: the body's 1.6 line-height put ~14px of invisible leading
+   above the heading's cap, which read as extra top padding and made the
+   card look top-heavy despite symmetric box spacing. */
+.how__copy h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; line-height: 1.15; margin-bottom: 0.3rem; }
 .how__copy p { font-size: 1rem; font-weight: 600; color: var(--on-surface-variant); max-width: 46ch; }
 .how__copy .lead { color: var(--on-surface); font-weight: 800; }
 .howfacts {
@@ -287,10 +291,9 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   background: var(--surface-lowest);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(38, 36, 44, 0.12);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  transition: transform var(--transition-normal);
 }
-.tile:hover { transform: translateY(-5px) rotate(-0.4deg); box-shadow: 0 16px 32px rgba(38, 36, 44, 0.18); }
+.tile:hover { transform: translateY(-5px) rotate(-0.4deg); }
 .tile__poster { position: relative; aspect-ratio: 16 / 9; background: var(--surface-container); }
 .tile__poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tile--soon .tile__poster img { filter: saturate(0.85) brightness(0.9); opacity: 0.9; }
