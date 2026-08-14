@@ -19,9 +19,9 @@
 
   // ---- Store listings (fill in when the apps go live; sizes shown to users) ----
   var IOS_APP_URL = null;      // e.g. 'https://apps.apple.com/app/couchpad/id<APPSTORE_ID>'
-  var IOS_APP_SIZE = '≈ 3 MB';
+  var IOS_APP_SIZE = '≈ 2 MB';
   var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=games.couchpad.controller'
-  var ANDROID_APP_SIZE = '≈ 8 MB';
+  var ANDROID_APP_SIZE = '≈ 3 MB';
 
   // The shared relay is the in-cluster party-sockets pod. ws.hexstacker.com is
   // NOT that server — it CNAMEs to party-sockets.fly.dev, a separate Fly.io
