@@ -28,7 +28,11 @@
       "maxPlayers": 4,
       "art": "/assets/artwork/tinytrack-16x9-v2.webp",
       "icon": "/assets/artwork/tinytrack-icon.png",
-      "accentColor": "#4ECDC4"
+      "accentColor": "#4ECDC4",
+      "controllerBaseUrl": "https://tinytrack.couchpad.games",
+      "hosts": [
+        "tinytrack.couchpad.games"
+      ]
     },
     {
       "id": "powder",
