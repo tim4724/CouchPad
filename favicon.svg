@@ -1,10 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="CouchPad">
-  <rect x="4" y="4" width="92" height="92" rx="24" fill="#1C1B1F"/>
-  <g fill="none" stroke="#F4F4F5" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M39 23 H31 a8 8 0 0 0 -8 8 V39"/>
-    <path d="M61 23 H69 a8 8 0 0 1 8 8 V39"/>
-    <path d="M61 77 H69 a8 8 0 0 0 8 -8 V61"/>
-    <path d="M39 77 H31 a8 8 0 0 1 -8 -8 V61"/>
-  </g>
-  <path fill="#F4F4F5" stroke="#F4F4F5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" d="M43 39 L43 61 L60 50 Z"/>
+  <!-- The gamepad mark, matching the launcher app icon (Couch-Games-Controller
+       ios/CouchPad/AppIcon.icon/Assets/controller.svg): same silhouette, same -8°
+       tilt. The body sits tighter in the tile and the d-pad arms and buttons are
+       fatter than the app icon's, because at a 16px tab favicon the app icon's
+       proportions put a d-pad arm under half a pixel and it vanishes. Controls are
+       even-odd holes, so the tile shows through and the glyph also works as a mask.
+       Tile is the chrome token, glyph is the bg token. -->
+  <rect x="2" y="2" width="96" height="96" rx="22" fill="#26242C"/>
+  <path transform="rotate(-8 50 50)" fill="#FBF9F4" fill-rule="evenodd"
+        d="M25 34 H75 A10 10 0 0 1 85 44 V56 A10 10 0 0 1 75 66 H25 A10 10 0 0 1 15 56 V44 A10 10 0 0 1 25 34 Z
+           M28.8 41.3 A1.8 1.8 0 0 1 30.6 39.5 L35.4 39.5 A1.8 1.8 0 0 1 37.2 41.3 L37.2 44 A1.8 1.8 0 0 0 39 45.8 L41.7 45.8 A1.8 1.8 0 0 1 43.5 47.6 L43.5 52.4 A1.8 1.8 0 0 1 41.7 54.2 L39 54.2 A1.8 1.8 0 0 0 37.2 56 L37.2 58.7 A1.8 1.8 0 0 1 35.4 60.5 L30.6 60.5 A1.8 1.8 0 0 1 28.8 58.7 L28.8 56 A1.8 1.8 0 0 0 27 54.2 L24.3 54.2 A1.8 1.8 0 0 1 22.5 52.4 L22.5 47.6 A1.8 1.8 0 0 1 24.3 45.8 L27 45.8 A1.8 1.8 0 0 0 28.8 44 Z
+           M58.8 58 A5.2 5.2 0 1 1 69.2 58 A5.2 5.2 0 1 1 58.8 58 Z
+           M68.8 44 A5.2 5.2 0 1 1 79.2 44 A5.2 5.2 0 1 1 68.8 44 Z"/>
 </svg>
