@@ -2,7 +2,8 @@
    Design tokens (--bg, --chrome, --action, --radius-*, …) come from theme.css,
    which every page links before this file.
    Page anatomy: chrome header stripe + wave → centered hero → featured game
-   card → "Scan to play" paper card → games shelf → wave + chrome footer stripe.
+   card → "Scan to play" paper card → games section (second-billing card, then
+   the shelf) → wave + chrome footer stripe.
    The waves are inline SVGs in the HTML (aria-hidden); this file only sizes
    and colors them. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -117,11 +118,18 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   margin: 0 auto 2.1rem;
 }
 
+/* Game cards take their poster's own 16:9 so the art shows uncropped. The
+   min-height is the floor the copy needs, and it wins on narrow screens — where
+   a 16:9 box would be far too short — so cover crops there as it always did. */
 .feature {
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
+  aspect-ratio: 16 / 9;
   min-height: clamp(340px, 52vh, 520px);
+  /* Required, not belt-and-braces: once min-height wins, the aspect ratio is
+     transferred back into `width: auto` and the card grows past its column. */
+  max-width: 100%;
   display: flex;
   align-items: flex-end;
 }
@@ -131,6 +139,8 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   top: 0; right: 0; bottom: 0; left: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  /* Off-center: only reached on narrow screens, where the box is squarer than
+     the art and cover crops the sides. */
   object-position: 70% center;
 }
 /* Darkening hugs the bottom edge where the copy sits; the art stays clear
@@ -164,7 +174,8 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   padding: clamp(1.25rem, 3.5vw, 2.5rem);
   text-align: left;
 }
-.feature h2 {
+.feature h2,
+.feature h3 {
   font-size: clamp(1.9rem, 4.4vw, 3rem);
   font-weight: 800;
   line-height: 1.02;
@@ -173,8 +184,53 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 .feature p { font-weight: 700; color: rgba(255, 255, 255, 0.9); }
 .feature__sub { opacity: 0.75; font-size: 0.9em; }
 
-/* Status pill on artwork. No landing markup uses it anymore, but room.html's
-   join-state badge builds on this shape (room.css adds the color variants). */
+/* Where a game runs natively: status, not buttons. The glyph does the
+   identifying, so the row stays flat text and never competes with the CTA
+   beside it. */
+.platforms {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.15rem;
+  margin-top: 0.7rem;
+}
+.platform {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+  text-decoration: none;
+}
+.platform__icon {
+  width: 1.15em; height: 1.15em;
+  flex: none;
+  fill: currentColor;
+}
+.platform:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+/* Second-billing game card: it leads the games shelf, under that section's
+   heading, so the spacing above it is the heading's and only the gap down to
+   the tiles is ours. */
+.feature--minor { margin-bottom: clamp(1.1rem, 2.5vw, 1.5rem); }
+.feature--minor h3 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); }
+/* Steeper than the hero's veil, and clear sooner: this art's bottom band is
+   bright daylight where HexStacker's is a dark board, so the copy needs more
+   cover — but the poster shows in full here and shouldn't be dimmed overall.
+   Only where the card is wide enough to hold the full 16:9: below that the
+   min-height crops, which lifts the lower quadrants' HUD chips into the
+   headline, and the shared mobile veil (heavy nearly to the top) is what
+   covers them. */
+@media (min-width: 721px) {
+  .feature--minor .feature__veil {
+    background: linear-gradient(0deg,
+      rgba(16, 14, 27, 0.94) 0%, rgba(16, 14, 27, 0.74) 22%,
+      rgba(16, 14, 27, 0.26) 45%, rgba(16, 14, 27, 0) 62%);
+  }
+}
+
+/* Status pill on artwork. No landing markup uses it; room.html's join-state
+   badge builds on this shape (room.css adds the color variants). */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -226,6 +282,17 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 .cta:hover { box-shadow: 0 8px 20px rgba(240, 74, 80, 0.3); }
 .cta:active { box-shadow: 0 4px 10px rgba(240, 74, 80, 0.2); }
 .cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* Second-game CTA: amber keeps coral as the flagship's action, so two cards in
+   a row don't read as the same offer. Dark label, because white on amber is
+   unreadable. */
+.cta--amber {
+  background: var(--confetti-amber);
+  color: var(--chrome);
+  box-shadow: 0 6px 16px rgba(255, 176, 32, 0.24);
+}
+.cta--amber:hover { box-shadow: 0 8px 20px rgba(255, 176, 32, 0.32); }
+.cta--amber:active { box-shadow: 0 4px 10px rgba(255, 176, 32, 0.2); }
 
 /* ---- Scan to play: paper card with the pairing visual ---- */
 .how {
@@ -280,10 +347,15 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 /* ---- More games shelf ---- */
 .section { padding: 2.5rem 0 0; }
 .section h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 1.3rem; }
+/* Tiles cap at 360px instead of stretching to 1fr: the shelf holds whatever
+   isn't playable yet, so it is often a single tile, and a full-width poster
+   would outshout the game cards above it. The cap also matches the 330px the
+   tile `sizes` hint has always claimed. */
 .shelf {
   display: grid;
   gap: clamp(1.1rem, 2.5vw, 1.5rem);
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(270px, 360px));
+  justify-content: start;
 }
 .tile {
   display: flex;
@@ -313,15 +385,6 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 .tile__body { padding: 0.95rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.15rem; }
 .tile__body h3 { font-size: 1.25rem; font-weight: 800; }
 .tile__body p { font-size: 0.92rem; font-weight: 600; color: var(--on-surface-variant); }
-
-.apps-note {
-  margin-top: 1.8rem;
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--on-surface-variant);
-  max-width: 62ch;
-}
-.apps-note strong { color: var(--on-surface); }
 
 /* ---- Footer stripe ---- */
 .footer-row {

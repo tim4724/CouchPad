@@ -4,9 +4,17 @@ Static landing site for **CouchPad** — the umbrella brand for party games
 where everyone plays together on the TV/screen and phones are the controllers
 (scan a QR to play, no install required).
 
-Flagship game: **HexStacker Party** (live at [hexstacker.com](https://hexstacker.com),
-coming to Apple TV & Android TV). Also in development: **Tiny Track** (kart
-racer) and **Powder** (skiing).
+Flagship game: **HexStacker Party** — live at
+[hexstacker.com](https://hexstacker.com) and on the
+[Apple TV App Store](https://apps.apple.com/app/hexstacker-party/id6788876779).
+**Tiny Track Party** (kart racer) is playable at
+[tinytrack.couchpad.games](https://tinytrack.couchpad.games);
+**Powder** (skiing) is still in development.
+
+The Android TV builds and the phone controller are in closed testing, gated on
+the [testers Google Group](https://groups.google.com/g/couchpadgames) — a Play
+listing 404s for anyone who isn't a member yet. The landing page deliberately
+says nothing about that: it links only what a visitor can actually open.
 
 ## Design
 
