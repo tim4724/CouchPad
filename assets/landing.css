@@ -8,6 +8,13 @@
    and colors them. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Overscroll (rubber-band) paints the root background. Where the page is
+   capped top and bottom by chrome stripes, make that chrome so the bounce
+   extends the stripes; body keeps --bg and fills the viewport (min-height),
+   so this never shows on screen otherwise. room.html shares this file but
+   has no stripes, so it keeps the default. */
+html:has(.headstripe) { background: var(--chrome); }
+
 body {
   background: var(--bg);
   color: var(--on-surface);
