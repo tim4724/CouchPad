@@ -45,8 +45,9 @@
 
   <main class="wrap">
 
-    <!-- Offered to visitors whose browser prefers German. Suggests, never forces;
-         dismissal and the footer toggle are both remembered in localStorage. -->
+    <!-- Offered to visitors whose browser prefers German, or who last chose
+         German. Suggests, never redirects; dismissing it or choosing English
+         (saved in localStorage) hides it. -->
     <aside class="langbar" id="langbar" lang="de" hidden>
       <span>Diese Seite gibt es auch auf Deutsch.</span>
       <a class="langbar__accept" href="/de/" data-lang-set="de">Auf Deutsch anzeigen →</a>
@@ -209,6 +210,6 @@
     </div>
   </footer>
 
-  <script src="/assets/lang.js?v=2"></script>
+  <script src="/assets/lang.js?v=3"></script>
 </body>
 </html>

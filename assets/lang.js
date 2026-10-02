@@ -9,8 +9,8 @@
   try { choice = localStorage.getItem(STORE); } catch (e) { choice = null; }
 
   document.addEventListener('click', function (ev) {
-    // Remember the language whenever a switch/banner link is clicked, so the
-    // suggestion never nags again once the visitor has expressed a preference.
+    // Remember the language whenever a switch/banner link is clicked. A saved
+    // "en" silences the German banner; a saved "de" keeps offering it.
     var pref = ev.target.closest('[data-lang-set]');
     if (pref) {
       try { localStorage.setItem(STORE, pref.getAttribute('data-lang-set')); } catch (e) {}
@@ -27,10 +27,11 @@
     }
   });
 
-  // Below only applies to a page carrying the banner (the EN root), and only
-  // when the visitor hasn't chosen and their browser ranks German above English.
+  // Below only applies to a page carrying the banner (the EN root). Show it for
+  // a saved "de", or when nothing is saved and the browser ranks German above
+  // English. Never redirect: every URL keeps its language.
   var bar = document.getElementById('langbar');
-  if (!bar || choice) return;
+  if (!bar || choice === 'en') return;
   var prefs = navigator.languages || [navigator.language || ''];
   var wantsDe = false;
   for (var i = 0; i < prefs.length; i++) {
@@ -38,7 +39,7 @@
     if (code === 'en') break;        // English ranked first → stay, no banner
     if (code === 'de') { wantsDe = true; break; }
   }
-  if (!wantsDe) return;
+  if (choice !== 'de' && !wantsDe) return;
 
   bar.hidden = false;
   bar.querySelector('.langbar__dismiss').addEventListener('click', function () {
