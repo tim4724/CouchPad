@@ -126,8 +126,8 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 }
 
 /* Game cards take their poster's own 16:9 so the art shows uncropped. The
-   min-height is the floor the copy needs, and it wins on narrow screens — where
-   a 16:9 box would be far too short — so cover crops there as it always did. */
+   min-height is the floor the copy needs; where it wins (narrow desktop
+   windows) cover crops the sides. Phones get the tile layout below instead. */
 .feature {
   position: relative;
   border-radius: var(--radius-xl);
@@ -146,8 +146,8 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   top: 0; right: 0; bottom: 0; left: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  /* Off-center: only reached on narrow screens, where the box is squarer than
-     the art and cover crops the sides. */
+  /* Off-center: only reached where min-height wins (narrow desktop windows),
+     and cover crops the sides. */
   object-position: 70% center;
 }
 /* Darkening hugs the bottom edge where the copy sits; the art stays clear
@@ -160,14 +160,6 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   background: linear-gradient(8deg,
     rgba(16, 14, 27, 0.92) 10%, rgba(16, 14, 27, 0.55) 40%,
     rgba(16, 14, 27, 0) 68%);
-}
-@media (max-width: 720px) {
-  .feature__bg { object-position: 58% center; }
-  .feature__veil {
-    background: linear-gradient(0deg,
-      rgba(16, 14, 27, 0.9) 0%, rgba(16, 14, 27, 0.78) 46%,
-      rgba(16, 14, 27, 0.46) 72%, rgba(16, 14, 27, 0.12) 100%);
-  }
 }
 .feature__inner {
   position: relative;
@@ -224,16 +216,44 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 /* Steeper than the hero's veil, and clear sooner: this art's bottom band is
    bright daylight where HexStacker's is a dark board, so the copy needs more
    cover — but the poster shows in full here and shouldn't be dimmed overall.
-   Only where the card is wide enough to hold the full 16:9: below that the
-   min-height crops, which lifts the lower quadrants' HUD chips into the
-   headline, and the shared mobile veil (heavy nearly to the top) is what
-   covers them. */
+   Phones use the tile layout, where only the title sits on the art. */
 @media (min-width: 721px) {
   .feature--minor .feature__veil {
     background: linear-gradient(0deg,
       rgba(16, 14, 27, 0.94) 0%, rgba(16, 14, 27, 0.74) 22%,
       rgba(16, 14, 27, 0.26) 45%, rgba(16, 14, 27, 0) 62%);
   }
+}
+
+/* Phones: a 16:9 box is too short to hold the copy, and cropping to fit cut
+   the art down to a fraction (one HexStacker board, half of Tiny Track's
+   split screen). So the card becomes a tile like the shelf's: full 16:9 art
+   with only the title on it, the rest on the surface below. The inner
+   wrappers dissolve (display: contents) so the title can share the art's
+   grid cell while the tagline, platforms and CTA stack under it. */
+@media (max-width: 720px) {
+  .feature {
+    display: grid;
+    aspect-ratio: auto;
+    min-height: 0;
+    background: var(--surface-lowest);
+    color: var(--on-surface);
+    border-radius: var(--radius-lg);
+  }
+  .feature__inner, .feature__copy { display: contents; }
+  .feature__bg, .feature__veil, .feature h2, .feature h3 { grid-area: 1 / 1; }
+  .feature__bg { position: static; height: auto; aspect-ratio: 16 / 9; }
+  .feature__veil {
+    position: static;
+    background: linear-gradient(0deg, rgba(16, 14, 27, 0.75) 0%, rgba(16, 14, 27, 0) 45%);
+  }
+  .feature h2, .feature h3 { align-self: end; color: #fff; padding: 0 1.1rem 0.75rem; }
+  .feature p, .feature .platforms, .feature .cta { margin-inline: 1.1rem; }
+  .feature p { margin-top: 0.85rem; font-weight: 600; color: var(--on-surface-variant); }
+  .feature__sub { opacity: 1; }
+  .feature .platform { color: var(--on-surface); }
+  .feature .cta { justify-self: start; margin-top: 1rem; margin-bottom: 1.25rem; }
+  .feature .cta:focus-visible { outline-color: var(--on-surface); }
 }
 
 /* Status pill on artwork. No landing markup uses it; room.html's join-state
