@@ -37,7 +37,9 @@ light/dark setting. Tokens live in `assets/theme.css`.
   ships under a new name (`…-v2.webp`) here, in both app bundles and in the
   landing-page `srcset`; never as a `?v=` bump, which the filename match would
   swallow. `video` is a trailer on the game's own server; the apps cache it by
-  URL forever too, so a re-rendered trailer also needs a new file name there
+  full URL forever too, but ship no copy to match, so a re-rendered trailer is a
+  `?v=` bump on `video` (here and in both app bundles), made only once the new
+  file is live on the game's server
 - `controller-test.html` + `assets/controller-test.{css,js}` — a stand-in game
   controller that exercises every touchpoint in the controller repo's
   `CONTRACT.md`, so the launcher can be tested without a real game and a game
