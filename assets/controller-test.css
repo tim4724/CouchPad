@@ -32,6 +32,12 @@ p { margin: 0 0 14px; }
 .badge.shell { background: #1d3a24; color: #7ee69a; }
 .badge.browser { background: #3a2a1d; color: #f0b464; }
 
+/* 16px: iOS zooms the page into any focused field set smaller. */
+input {
+  font: inherit; font-size: 16px; color: #f3f3f5; background: #17171b;
+  border: 1px solid #35353d; border-radius: 10px; padding: 9px 12px; width: 100%;
+}
+
 .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .gap-top { margin-top: 10px; }
 

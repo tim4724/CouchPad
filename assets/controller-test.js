@@ -134,6 +134,25 @@
     e.currentTarget.setAttribute('aria-pressed', String(on));
   };
 
+  // ---- Keyboard: a keyboard that reaches the page shrinks the visual viewport.
+  function readViewport() {
+    $('ih').textContent = innerHeight + 'px';
+    $('vvh').textContent = window.visualViewport
+      ? Math.round(visualViewport.height) + 'px'
+      : '— (unsupported)';
+  }
+  readViewport();
+  addEventListener('resize', readViewport);
+  if (window.visualViewport) {
+    var lastVvh = Math.round(visualViewport.height);
+    visualViewport.addEventListener('resize', function () {
+      readViewport();
+      var h = Math.round(visualViewport.height);
+      if (h !== lastVvh) log('visualViewport ' + lastVvh + ' → ' + h + 'px');
+      lastVvh = h;
+    });
+  }
+
   // ---- §10 orientation: ask the launcher to rotate. Default portrait, reset on
   // every page load, and only the literal 'landscape' rotates — hence the nonsense
   // button, which must land back in portrait rather than doing nothing.

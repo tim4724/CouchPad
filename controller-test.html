@@ -9,7 +9,7 @@
 <!-- §4: the launcher tints its chrome from these and re-reads them on every change. -->
 <meta name="theme-color" content="#101014">
 <meta name="cp-accent-color" content="#f2555a">
-<link rel="stylesheet" href="/assets/controller-test.css?v=1">
+<link rel="stylesheet" href="/assets/controller-test.css?v=2">
 <!-- §10: the earliest a controller can ask for landscape (?orient=landscape). An
      external file, not inline — this origin ships `script-src 'self'`, which blocks
      inline script. Not deferred: it must run during head parsing. -->
@@ -78,6 +78,18 @@
   </section>
 
   <section>
+    <h2>Keyboard</h2>
+    <p>This field's keyboard must reach the page: the visual viewport shrinks and
+      the field scrolls into view. The launcher's rename sheet must change neither
+      height.</p>
+    <input id="field" type="text" placeholder="Type here" autocomplete="off">
+    <dl class="gap-top">
+      <dt>innerHeight</dt><dd id="ih">—</dd>
+      <dt>visualViewport</dt><dd id="vvh">—</dd>
+    </dl>
+  </section>
+
+  <section>
     <h2>Events</h2>
     <pre id="log"></pre>
   </section>
@@ -89,6 +101,6 @@
 </dialog>
 
 <div id="envprobe"></div>
-<script src="/assets/controller-test.js?v=2"></script>
+<script src="/assets/controller-test.js?v=3"></script>
 </body>
 </html>
