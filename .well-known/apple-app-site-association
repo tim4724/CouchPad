@@ -12,5 +12,8 @@
         ]
       }
     ]
+  },
+  "appclips": {
+    "apps": ["5ZH48MPAM3.games.couchpad.controller.Clip"]
   }
 }
