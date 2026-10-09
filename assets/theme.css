@@ -59,18 +59,18 @@
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s ease;
 
-  /* ---- Light scheme (default): warm paper ---- */
-  --bg: #FBF9F4;
-  --surface: #FBF9F4;
+  /* ---- Light scheme (default): faintly warm paper ---- */
+  --bg: #FAF9F7;
+  --surface: #FAF9F7;
   --surface-lowest: #FFFFFF;
-  --surface-low: #F0EDE6;
-  --surface-container: #E9E4D9;
-  --surface-high: #E0DACC;
-  --surface-highest: #D8D1C1;
+  --surface-low: #EFEDEA;
+  --surface-container: #E7E4DF;
+  --surface-high: #DDDAD3;
+  --surface-highest: #D5D1C9;
   --on-surface: #26242C;
   --on-surface-variant: #5E5A66;
   --outline: #77717F;
-  --outline-variant: #DFD9CD;
+  --outline-variant: #DCD9D3;
   --primary: #26242C;
   --on-primary: #FFFFFF;
   --scrim: rgba(20, 19, 24, 0.55);
@@ -88,11 +88,11 @@
     --surface-container: #211E2B;
     --surface-high: #2A2735;
     --surface-highest: #332F3F;
-    --on-surface: #F2EFE9;
+    --on-surface: #F1EFEC;
     --on-surface-variant: #A8A3B1;
     --outline: #8D8798;
     --outline-variant: #2F2B3A;
-    --primary: #F2EFE9;
+    --primary: #F1EFEC;
     --on-primary: #26242C;
     --scrim: rgba(0, 0, 0, 0.65);
   }
@@ -105,11 +105,11 @@
   --surface-container: #211E2B;
   --surface-high: #2A2735;
   --surface-highest: #332F3F;
-  --on-surface: #F2EFE9;
+  --on-surface: #F1EFEC;
   --on-surface-variant: #A8A3B1;
   --outline: #8D8798;
   --outline-variant: #2F2B3A;
-  --primary: #F2EFE9;
+  --primary: #F1EFEC;
   --on-primary: #26242C;
   --scrim: rgba(0, 0, 0, 0.65);
 }
