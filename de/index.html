@@ -22,8 +22,8 @@
   <link rel="preload" href="/assets/fonts/baloo2-latin-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/nunito-latin-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/theme.css?v=5">
-  <link rel="stylesheet" href="/assets/landing.css?v=17">
-  <script src="/assets/theme.js?v=2"></script>
+  <link rel="stylesheet" href="/assets/landing.css?v=20">
+  <script src="/assets/theme.js?v=4"></script>
 </head>
 <body>
 
@@ -49,12 +49,16 @@
       <h1>Dein Fernseher wird zur <mark>Partykonsole</mark></h1>
       <p class="hero__sub">Zum Mitspielen reicht ein Handy.</p>
 
-      <section class="feature" aria-labelledby="feature-title">
-        <img class="feature__bg" src="/assets/artwork/hexstacker-16x9-v2.webp"
+      <section class="feature ambient" aria-labelledby="feature-title">
+        <img class="ambient__bg" src="/assets/artwork/hexstacker-16x9-v2.webp"
              srcset="/assets/artwork/hexstacker-16x9-v2-960.webp 960w, /assets/artwork/hexstacker-16x9-v2.webp 1920w"
-             sizes="(max-width: 1160px) 100vw, 1040px"
-             alt="HexStacker Party – Artwork" width="1600" height="900" fetchpriority="high">
-        <div class="feature__veil" aria-hidden="true"></div>
+             sizes="(max-width: 1160px) 100vw, 1040px" alt="" width="1600" height="900">
+        <div class="feature__media ambient__frame">
+          <img class="feature__poster" src="/assets/artwork/hexstacker-16x9-v2.webp"
+               srcset="/assets/artwork/hexstacker-16x9-v2-960.webp 960w, /assets/artwork/hexstacker-16x9-v2.webp 1920w"
+               sizes="(max-width: 1160px) 100vw, 1040px"
+               alt="HexStacker Party – Artwork" width="1600" height="900" fetchpriority="high">
+        </div>
         <div class="feature__inner">
           <div class="feature__copy">
             <h2 id="feature-title">HexStacker Party</h2>
@@ -151,12 +155,16 @@
     <section class="section" aria-labelledby="more-heading">
       <h2 id="more-heading">Weitere Spiele <mark>folgen</mark></h2>
 
-      <section class="feature feature--minor" aria-labelledby="tinytrack-title">
-        <img class="feature__bg" src="/assets/artwork/tinytrack-16x9-v3.webp"
+      <section class="feature feature--minor ambient" aria-labelledby="tinytrack-title">
+        <img class="ambient__bg" src="/assets/artwork/tinytrack-16x9-v3.webp"
              srcset="/assets/artwork/tinytrack-16x9-v3-960.webp 960w, /assets/artwork/tinytrack-16x9-v3.webp 1920w"
-             sizes="(max-width: 1160px) 100vw, 1040px"
-             alt="Tiny Track – Artwork" width="1600" height="900" loading="lazy">
-        <div class="feature__veil" aria-hidden="true"></div>
+             sizes="(max-width: 1160px) 100vw, 1040px" alt="" width="1600" height="900" loading="lazy">
+        <div class="feature__media ambient__frame">
+          <img class="feature__poster" src="/assets/artwork/tinytrack-16x9-v3.webp"
+               srcset="/assets/artwork/tinytrack-16x9-v3-960.webp 960w, /assets/artwork/tinytrack-16x9-v3.webp 1920w"
+               sizes="(max-width: 1160px) 100vw, 1040px"
+               alt="Tiny Track – Artwork" width="1600" height="900" loading="lazy">
+        </div>
         <div class="feature__inner">
           <div class="feature__copy">
             <h3 id="tinytrack-title">Tiny Track</h3>
@@ -167,8 +175,11 @@
       </section>
       <div class="shelf">
 
-        <article class="tile tile--soon">
-          <div class="tile__poster">
+        <article class="tile tile--soon ambient">
+          <img class="ambient__bg" src="/assets/artwork/powder-16x9.webp"
+               srcset="/assets/artwork/powder-16x9-960.webp 960w, /assets/artwork/powder-16x9.webp 1920w"
+               sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 330px" alt="" width="1600" height="900" loading="lazy">
+          <div class="tile__poster ambient__frame">
             <img src="/assets/artwork/powder-16x9.webp"
                  srcset="/assets/artwork/powder-16x9-960.webp 960w, /assets/artwork/powder-16x9.webp 1920w"
                  sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 330px"
@@ -201,6 +212,6 @@
     </div>
   </footer>
 
-  <script src="/assets/lang.js?v=3"></script>
+  <script src="/assets/lang.js?v=4"></script>
 </body>
 </html>

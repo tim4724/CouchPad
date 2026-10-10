@@ -35,8 +35,10 @@ light/dark setting. Tokens live in `assets/theme.css`.
   launcher). The apps match their bundled copy by **filename**, and cache
   anything they didn't ship by URL without revalidating — so re-rendered artwork
   ships under a new name (`…-v2.webp`) here, in both app bundles and in the
-  landing-page `srcset`; never as a `?v=` bump, which the filename match would
-  swallow. `video` is a trailer on the game's own server; the apps cache it by
+  landing page (each poster's `srcset` appears twice, on the poster and on its
+  blurred `.ambient__bg` copy; keep the two identical so they share one
+  download); never as a `?v=` bump, which the filename match would swallow.
+  `video` is a trailer on the game's own server; the apps cache it by
   full URL forever too, but ship no copy to match, so a re-rendered trailer is a
   `?v=` bump on `video` (here and in both app bundles), made only once the new
   file is live on the game's server

@@ -125,63 +125,60 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   margin: 0 auto 2.1rem;
 }
 
-/* Game cards take their poster's own 16:9 so the art shows uncropped. The
-   min-height is the floor the copy needs; where it wins (narrow desktop
-   windows) cover crops the sides. Phones get the tile layout below instead. */
-.feature {
+/* ---- Ambient card: a game's poster shown whole (16:9, never cropped) in a
+   frame, on a blurred, darkened copy of itself that fills the card. Words sit
+   on the blur, never on the art: the posters are busy edge to edge (split
+   screens, HUD in every corner), so any copy on them covered something.
+   Shared by the game cards and shelf tiles here and room.html's room card;
+   each sets its own radii and padding. ---- */
+.ambient {
   position: relative;
-  border-radius: var(--radius-xl);
+  isolation: isolate; /* keeps the backdrop's z-index: -1 inside the card */
   overflow: hidden;
-  aspect-ratio: 16 / 9;
-  min-height: clamp(340px, 52vh, 520px);
-  /* Required, not belt-and-braces: once min-height wins, the aspect ratio is
-     transferred back into `width: auto` and the card grows past its column. */
-  max-width: 100%;
-  display: flex;
-  align-items: flex-end;
-}
-/* top/right/bottom/left instead of `inset` so Safari < 14.5 keeps the hero. */
-.feature__bg {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  /* Off-center: only reached where min-height wins (narrow desktop windows),
-     and cover crops the sides. */
-  object-position: 70% center;
-}
-/* Darkening hugs the bottom edge where the copy sits; the art stays clear
-   toward the top. The tint is cooler (more blue) than the art's warm board
-   colors on purpose: a neutral dark here let the maroon boards bleed through
-   as a muddy brown band. */
-.feature__veil {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  background: linear-gradient(8deg,
-    rgba(16, 14, 27, 0.92) 10%, rgba(16, 14, 27, 0.55) 40%,
-    rgba(16, 14, 27, 0) 68%);
-}
-.feature__inner {
-  position: relative;
-  width: 100%;
+  background: #141318;
   color: #fff;
+  border: 1px solid var(--outline-variant);
+}
+/* Oversized so the blur's soft edge falls outside the card. Same src/srcset/
+   sizes as the poster in the markup, so it reuses that download. */
+.ambient__bg {
+  position: absolute;
+  top: -12%; left: -12%;
+  width: 124%; height: 124%;
+  object-fit: cover;
+  filter: blur(46px) saturate(1.5) brightness(0.55);
+  z-index: -1;
+}
+.ambient__frame {
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Game cards ---- */
+.feature {
+  border-radius: var(--radius-xl);
+  padding: clamp(0.7rem, 1.8vw, 1.2rem);
+}
+.feature__media { border-radius: var(--radius-lg); }
+.feature__poster { display: block; width: 100%; height: auto; }
+.feature__inner {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: clamp(1.25rem, 3.5vw, 2.5rem);
+  padding: clamp(0.9rem, 2.2vw, 1.4rem) clamp(0.3rem, 1vw, 0.7rem) clamp(0.2rem, 0.8vw, 0.5rem);
   text-align: left;
 }
 .feature h2,
 .feature h3 {
-  font-size: clamp(1.9rem, 4.4vw, 3rem);
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
   font-weight: 800;
   line-height: 1.02;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 }
-.feature p { font-weight: 700; color: rgba(255, 255, 255, 0.9); }
-.feature__sub { opacity: 0.75; font-size: 0.9em; }
+.feature p { margin-top: 0.35rem; font-weight: 600; color: rgba(255, 255, 255, 0.78); }
+.feature__sub { font-size: 0.9em; }
 
 /* Where a game runs natively: status, not buttons. The glyph does the
    identifying, so the row stays flat text and never competes with the CTA
@@ -211,50 +208,8 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 /* Second-billing game card: it leads the games shelf, under that section's
    heading, so the spacing above it is the heading's and only the gap down to
    the tiles is ours. */
-.feature--minor { margin-bottom: clamp(1.1rem, 2.5vw, 1.5rem); }
-.feature--minor h3 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); }
-/* Steeper than the hero's veil, and clear sooner: this art's bottom band is
-   bright daylight where HexStacker's is a dark board, so the copy needs more
-   cover — but the poster shows in full here and shouldn't be dimmed overall.
-   Phones use the tile layout, where only the title sits on the art. */
-@media (min-width: 721px) {
-  .feature--minor .feature__veil {
-    background: linear-gradient(0deg,
-      rgba(16, 14, 27, 0.94) 0%, rgba(16, 14, 27, 0.74) 22%,
-      rgba(16, 14, 27, 0.26) 45%, rgba(16, 14, 27, 0) 62%);
-  }
-}
-
-/* Phones: a 16:9 box is too short to hold the copy, and cropping to fit cut
-   the art down to a fraction (one HexStacker board, half of Tiny Track's
-   split screen). So the card becomes a tile like the shelf's: full 16:9 art
-   with only the title on it, the rest on the surface below. The inner
-   wrappers dissolve (display: contents) so the title can share the art's
-   grid cell while the tagline, platforms and CTA stack under it. */
-@media (max-width: 720px) {
-  .feature {
-    display: grid;
-    aspect-ratio: auto;
-    min-height: 0;
-    background: var(--surface-lowest);
-    color: var(--on-surface);
-    border-radius: var(--radius-lg);
-  }
-  .feature__inner, .feature__copy { display: contents; }
-  .feature__bg, .feature__veil, .feature h2, .feature h3 { grid-area: 1 / 1; }
-  .feature__bg { position: static; height: auto; aspect-ratio: 16 / 9; }
-  .feature__veil {
-    position: static;
-    background: linear-gradient(0deg, rgba(16, 14, 27, 0.75) 0%, rgba(16, 14, 27, 0) 45%);
-  }
-  .feature h2, .feature h3 { align-self: end; color: #fff; padding: 0 1.1rem 0.75rem; }
-  .feature p, .feature .platforms, .feature .cta { margin-inline: 1.1rem; }
-  .feature p { margin-top: 0.85rem; font-weight: 600; color: var(--on-surface-variant); }
-  .feature__sub { opacity: 1; }
-  .feature .platform { color: var(--on-surface); }
-  .feature .cta { justify-self: start; margin-top: 1rem; margin-bottom: 1.25rem; }
-  .feature .cta:focus-visible { outline-color: var(--on-surface); }
-}
+.feature--minor { margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+.feature--minor h3 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
 
 /* Status pill on artwork. No landing markup uses it; room.html's join-state
    badge builds on this shape (room.css adds the color variants). */
@@ -387,16 +342,15 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 .tile {
   display: flex;
   flex-direction: column;
-  background: var(--surface-lowest);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  padding: 0.6rem;
   transition: transform var(--transition-normal);
 }
 .tile:hover { transform: translateY(-5px) rotate(-0.4deg); }
-.tile__poster { position: relative; aspect-ratio: 16 / 9; background: var(--surface-container); }
+.tile__poster { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius-md); }
 .tile__poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tile--soon .tile__poster img { filter: saturate(0.85) brightness(0.9); opacity: 0.9; }
-/* Chrome ribbon pinned to the poster's left edge (clipped flush by the tile). */
+/* Chrome ribbon pinned to the poster's left edge (clipped flush by the frame). */
 .tile__status {
   position: absolute;
   top: 0.8rem; left: -0.4rem;
@@ -409,9 +363,9 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
-.tile__body { padding: 0.95rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.tile__body { padding: 0.8rem 0.45rem 0.4rem; display: flex; flex-direction: column; gap: 0.15rem; }
 .tile__body h3 { font-size: 1.25rem; font-weight: 800; }
-.tile__body p { font-size: 0.92rem; font-weight: 600; color: var(--on-surface-variant); }
+.tile__body p { font-size: 0.92rem; font-weight: 600; color: rgba(255, 255, 255, 0.78); }
 
 /* ---- Footer stripe ---- */
 .footer-row {
