@@ -66,10 +66,10 @@
     de: {
       name: 'Deutsch',
       title_join: 'Raum beitreten · CouchPad', title_room: 'Raum {code} · CouchPad',
-      checking: 'Suche Raum…', not_found: 'Raum nicht gefunden',
+      checking: 'Raum wird gesucht…', not_found: 'Raum nicht gefunden',
       invalid_link: 'Ungültiger Link', no_code: 'Dieser Link enthält keinen Raumcode. Scanne den Code auf dem Fernseher.',
       ways_to_play: 'Mitspielen', play_browser: 'Im Browser spielen',
-      ios_app: 'iOS-App laden', android_app: 'Android-App laden', coming_soon: 'Bald verfügbar', app_size: 'nur {mb} MB',
+      ios_app: 'iOS-App herunterladen', android_app: 'Android-App herunterladen', coming_soon: 'Bald verfügbar', app_size: 'nur {mb} MB',
       privacy: 'Datenschutz', imprint: 'Impressum', contact: 'Kontakt', language: 'Sprache', dark_mode: 'Dunkles Design'
     },
     fr: {
