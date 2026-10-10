@@ -58,9 +58,22 @@ light/dark setting. Tokens live in `assets/theme.css`.
 
 ## Local preview
 
+Serve the repo through the production nginx config, so room links
+(`/<CODE>`), extensionless pages (`/privacy`) and the security headers (CSP)
+behave as deployed. The repo is mounted, so edits show on reload, but CSS/JS
+are served `immutable`: bump their `?v=` or disable the browser cache while
+iterating.
+
 ```sh
-python3 -m http.server 8000
+docker run --rm -p 8000:8080 \
+  -v "$PWD":/usr/share/nginx/html:ro \
+  -v "$PWD/nginx.conf":/etc/nginx/conf.d/default.conf:ro \
+  -v "$PWD/security-headers.conf":/etc/nginx/snippets/security-headers.conf:ro \
+  nginxinc/nginx-unprivileged:1.27-alpine
 ```
+
+`python3 -m http.server 8000` is enough for the landing page alone; it knows
+none of the nginx routes, so room links and `/privacy` 404 there.
 
 ## Reaching the test controller from the app
 
