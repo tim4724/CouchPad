@@ -14,7 +14,9 @@ Flagship game: **HexStacker Party** — live at
 The Android TV builds and the phone controller are in closed testing, gated on
 the [testers Google Group](https://groups.google.com/g/couchpadgames) — a Play
 listing 404s for anyone who isn't a member yet. The landing page deliberately
-says nothing about that: it links only what a visitor can actually open.
+says nothing about that: it links only what a visitor can actually open. Testers
+are recruited by link instead, through `/beta` (`/de/beta`); delete those pages
+and `assets/beta.css` once the apps are in production.
 
 ## Design
 
@@ -50,6 +52,9 @@ light/dark setting. Tokens live in `assets/theme.css`.
   executable statement of that spec, and bump the `?v=` on its CSS/JS when you do,
   or the year-long `immutable` cache hides the change. See "Reaching it from the
   app" below
+- `beta.html`, `de/beta.html` + `assets/beta.css` — closed-test sign-up steps
+  (group, per-app opt-in links, install, 14 days), shared by link. `noindex`, not
+  in the sitemap
 - `privacy.html`, `imprint.html` — legal pages (German, umbrella policy for all
   CouchPad infra); English versions in `en/`
 - `assets/` — CSS (design tokens in `theme.css`), 16×9 game posters and square

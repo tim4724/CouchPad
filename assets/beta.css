@@ -1,0 +1,95 @@
+/* Closed-testing sign-up page (/beta, /de/beta) — layered on theme.css +
+   landing.css: the start page's chrome stripes and centered hero, with each
+   step as a paper card like its "Scan to play" card.
+   Temporary: delete the page and this file once the apps are in production. */
+
+/* Short page: the flex column lets main take the slack below the cards, so
+   the footer stripe sits on the viewport's bottom edge. */
+body { display: flex; flex-direction: column; }
+.beta { flex: 1 0 auto; }
+
+.beta .hero h1 { margin-bottom: clamp(1.5rem, 4vh, 2.5rem); }
+
+/* ---- Steps: three paper cards stacked full width, so every card stays
+   short and none sits next to a taller one. Number and title share a line;
+   the content sits below, indented to the title on wider screens. ---- */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: clamp(0.9rem, 1.8vw, 1.25rem);
+}
+
+.step {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 0.8rem;
+  background: var(--surface-low);
+  border-radius: var(--radius-xl);
+  padding: clamp(1.15rem, 2vw, 1.5rem) clamp(1.1rem, 2.5vw, 2rem);
+}
+.step__body { grid-column: 1 / -1; margin-top: 0.75rem; }
+@media (min-width: 880px) { .step__body { grid-column: 2; } }
+/* Confetti-colored number dot, like the start page's .howfacts markers. */
+.step::before {
+  content: counter(step);
+  width: 2.2rem; height: 2.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--confetti-coral);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+.step:nth-child(2)::before { background: var(--confetti-amber); color: var(--chrome); }
+.step:nth-child(3)::before { background: var(--confetti-teal); }
+
+.step h2 { font-size: 1.3rem; font-weight: 800; line-height: 1.2; }
+.step p { font-weight: 600; line-height: 1.5; color: var(--on-surface-variant); }
+.step p + p { margin-top: 0.4rem; }
+.step p a { color: var(--on-surface); }
+.step__hint { margin-top: 0.75rem; font-size: 0.9rem; }
+
+/* Every web link leaves the site, so each one shows where it goes: the ↗ icon,
+   plus the group's address as its link text and the host on the app cards. */
+.ext { width: 1em; height: 1em; flex: none; }
+.betalink { font-weight: 800; }
+.betalink .ext { margin-left: 0.25em; vertical-align: -0.1em; }
+
+/* Per-app opt-in links: the room page's .appbtn shape, white on the paper.
+   Side by side where they fit, stacked on phones. */
+.betaapps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.6rem;
+}
+.betaapp {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--surface-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: transform var(--transition-normal), border-color var(--transition-normal);
+}
+.betaapp:hover { transform: translateY(-2px); border-color: var(--outline); }
+.betaapp img { width: 2.5rem; height: 2.5rem; flex: none; border-radius: var(--radius-md); }
+.betaapp__text { display: flex; flex-direction: column; line-height: 1.35; }
+.betaapp__title { font-weight: 800; }
+.betaapp__sub { font-size: 0.85rem; font-weight: 600; color: var(--on-surface-variant); }
+.betaapp__host { font-size: 0.78rem; color: var(--on-surface-variant); }
+.betaapp .ext { margin-left: auto; color: var(--on-surface-variant); }
+
+.beta__privacy {
+  margin: clamp(2rem, 5vh, 3rem) auto 0;
+  max-width: 62ch;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--on-surface-variant);
+}
