@@ -20,7 +20,7 @@
   <link rel="preload" href="/assets/fonts/nunito-latin-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/theme.css?v=5">
   <link rel="stylesheet" href="/assets/landing.css?v=24">
-  <link rel="stylesheet" href="/assets/room.css?v=18">
+  <link rel="stylesheet" href="/assets/room.css?v=21">
   <script src="/assets/theme.js?v=4"></script>
 </head>
 <body>
@@ -67,6 +67,16 @@
         <a class="joinbtn" id="join-browser" hidden>
           <span class="joinbtn__label" data-i18n="play_browser">Play in browser</span>
         </a>
+
+        <!-- Shown when there is no room to join (404, near-miss or unknown
+             code). No autocapitalize: base58 codes are case-sensitive. -->
+        <form class="codeform" id="codeform" hidden>
+          <input class="codeform__input" id="codeform-input" type="text" maxlength="6"
+                 autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"
+                 enterkeyhint="go" placeholder="Room code" aria-label="Room code"
+                 data-i18n-placeholder="room_code" data-i18n-aria-label="room_code">
+          <button class="joinbtn codeform__btn" type="submit" data-i18n="join">Join</button>
+        </form>
 
         <div class="join__apps" id="join-apps">
           <!-- hrefs + availability are filled in by room.js (store URLs are constants there) -->
@@ -118,6 +128,6 @@
   </div>
 
   <script src="/assets/lang.js?v=4"></script>
-  <script src="/assets/room.js?v=12"></script>
+  <script src="/assets/room.js?v=14"></script>
 </body>
 </html>

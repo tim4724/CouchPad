@@ -143,6 +143,47 @@
   text-box-edge: cap alphabetic;
 }
 
+/* Code entry (404 / room not found): a pill field with the join button
+   inside it, in place of the primary button (hidden in these states). The
+   field uses the code's mono, tracked face. */
+.codeform {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-low);
+  border: 1px solid var(--outline-variant);
+  transition: border-color var(--transition-fast);
+}
+.codeform:focus-within { border-color: var(--outline); }
+.codeform__input {
+  flex: 1;
+  width: 0; /* else its default 20-char width sets the grid column on phones */
+  padding: 0 0.9rem;
+  border: 0;
+  background: none;
+  color: var(--on-surface);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.codeform__input:focus { outline: none; }
+.codeform__input::placeholder {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--on-surface-variant);
+}
+/* .joinbtn supplies the look; sized down to sit inside the field. */
+.codeform__btn {
+  min-height: 2.9rem;
+  padding: 0 1.5em;
+  border: 0;
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+
 .join__apps {
   display: grid;
   grid-template-columns: 1fr 1fr;

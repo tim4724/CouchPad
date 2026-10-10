@@ -30,7 +30,8 @@ light/dark setting. Tokens live in `assets/theme.css`.
 - `index.html`, `de/index.html` — landing page (EN / DE)
 - `room.html` + `assets/room.js` — room join page, served at `/<CODE>#<instance>`
   (nginx maps any 6-char base58 path to it); browser fallback for the app deep
-  links in `.well-known/`
+  links in `.well-known/`. Also the site's 404 page (with status 404), offering
+  code entry, since a stray path is usually a mistyped code
 - `games-manifest.json` — drives the room page and is fetched by the controller
   apps. Keep in sync with the controller repo's bundled copy. `art` is the 16:9
   cover, `icon` the square brand mark (nearby-room / rejoin cards in the

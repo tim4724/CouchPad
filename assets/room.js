@@ -58,7 +58,8 @@
       name: 'English',
       title_join: 'Join room · CouchPad', title_room: 'Room {code} · CouchPad',
       checking: 'Checking room…', not_found: 'Room not found',
-      invalid_link: 'Invalid link', no_code: 'No room code in this link. Scan the code on your TV.',
+      page_not_found: 'Page not found', enter_code: 'Joining a room? Enter the code from your TV.',
+      code_length: 'Room codes have 6 characters.', room_code: 'Room code', join: 'Join',
       ways_to_play: 'Ways to play', play_browser: 'Play in browser',
       ios_app: 'Download iOS app', android_app: 'Download Android app', coming_soon: 'Coming soon', app_size: 'only {mb} MB',
       privacy: 'Privacy', imprint: 'Imprint', contact: 'Contact', language: 'Language', dark_mode: 'Dark mode'
@@ -67,7 +68,8 @@
       name: 'Deutsch',
       title_join: 'Raum beitreten · CouchPad', title_room: 'Raum {code} · CouchPad',
       checking: 'Raum wird gesucht…', not_found: 'Raum nicht gefunden',
-      invalid_link: 'Ungültiger Link', no_code: 'Dieser Link enthält keinen Raumcode. Scanne den Code auf dem Fernseher.',
+      page_not_found: 'Seite nicht gefunden', enter_code: 'Du willst einem Raum beitreten? Gib den Code vom Fernseher ein.',
+      code_length: 'Raumcodes haben 6 Zeichen.', room_code: 'Raumcode', join: 'Beitreten',
       ways_to_play: 'Mitspielen', play_browser: 'Im Browser spielen',
       ios_app: 'iOS-App herunterladen', android_app: 'Android-App herunterladen', coming_soon: 'Bald verfügbar', app_size: 'nur {mb} MB',
       privacy: 'Datenschutz', imprint: 'Impressum', contact: 'Kontakt', language: 'Sprache', dark_mode: 'Dunkles Design'
@@ -76,7 +78,8 @@
       name: 'Français',
       title_join: 'Rejoindre la salle · CouchPad', title_room: 'Salle {code} · CouchPad',
       checking: 'Recherche de la salle…', not_found: 'Salle introuvable',
-      invalid_link: 'Lien invalide', no_code: 'Ce lien ne contient pas de code de salle. Scanne le code sur ta télé.',
+      page_not_found: 'Page introuvable', enter_code: 'Tu veux rejoindre une salle ? Saisis le code affiché sur ta télé.',
+      code_length: 'Les codes de salle ont 6 caractères.', room_code: 'Code de salle', join: 'Rejoindre',
       ways_to_play: 'Façons de jouer', play_browser: 'Jouer dans le navigateur',
       ios_app: 'Télécharger l’app iOS', android_app: 'Télécharger l’app Android', coming_soon: 'Bientôt disponible', app_size: 'seulement {mb} Mo',
       privacy: 'Confidentialité', imprint: 'Mentions légales', contact: 'Contact', language: 'Langue', dark_mode: 'Mode sombre'
@@ -85,7 +88,8 @@
       name: 'Português',
       title_join: 'Entrar na sala · CouchPad', title_room: 'Sala {code} · CouchPad',
       checking: 'Procurando a sala…', not_found: 'Sala não encontrada',
-      invalid_link: 'Link inválido', no_code: 'Este link não tem código de sala. Escaneia o código na TV.',
+      page_not_found: 'Página não encontrada', enter_code: 'Quer entrar numa sala? Digita o código da TV.',
+      code_length: 'Os códigos de sala têm 6 caracteres.', room_code: 'Código da sala', join: 'Entrar',
       ways_to_play: 'Formas de jogar', play_browser: 'Jogar no navegador',
       ios_app: 'Baixar o app para iOS', android_app: 'Baixar o app para Android', coming_soon: 'Em breve', app_size: 'só {mb} MB',
       privacy: 'Privacidade', imprint: 'Aviso legal', contact: 'Contato', language: 'Idioma', dark_mode: 'Modo escuro'
@@ -94,7 +98,8 @@
       name: 'Español',
       title_join: 'Unirse a la sala · CouchPad', title_room: 'Sala {code} · CouchPad',
       checking: 'Buscando la sala…', not_found: 'Sala no encontrada',
-      invalid_link: 'Enlace no válido', no_code: 'Este enlace no tiene código de sala. Escanea el código de tu tele.',
+      page_not_found: 'Página no encontrada', enter_code: '¿Quieres unirte a una sala? Escribe el código de tu tele.',
+      code_length: 'Los códigos de sala tienen 6 caracteres.', room_code: 'Código de sala', join: 'Unirse',
       ways_to_play: 'Formas de jugar', play_browser: 'Jugar en el navegador',
       ios_app: 'Descargar la app de iOS', android_app: 'Descargar la app de Android', coming_soon: 'Próximamente', app_size: 'solo {mb} MB',
       privacy: 'Privacidad', imprint: 'Aviso legal', contact: 'Contacto', language: 'Idioma', dark_mode: 'Modo oscuro'
@@ -103,7 +108,8 @@
       name: '中文',
       title_join: '加入房间 · CouchPad', title_room: '房间 {code} · CouchPad',
       checking: '正在查找房间…', not_found: '房间未找到',
-      invalid_link: '链接无效', no_code: '此链接中没有房间代码。请扫描电视上的二维码。',
+      page_not_found: '页面未找到', enter_code: '想加入房间？请输入电视上的代码。',
+      code_length: '房间代码为 6 个字符。', room_code: '房间代码', join: '加入',
       ways_to_play: '游戏方式', play_browser: '在浏览器中玩',
       ios_app: '下载 iOS 应用', android_app: '下载 Android 应用', coming_soon: '即将推出', app_size: '仅 {mb} MB',
       privacy: '隐私', imprint: '法律声明', contact: '联系', language: '语言', dark_mode: '深色模式'
@@ -112,7 +118,8 @@
       name: '日本語',
       title_join: 'ルームに参加 · CouchPad', title_room: 'ルーム {code} · CouchPad',
       checking: 'ルームを確認中…', not_found: 'ルームが見つからない',
-      invalid_link: '無効なリンク', no_code: 'このリンクにはルームコードがない。テレビのコードをスキャンしてね。',
+      page_not_found: 'ページが見つからない', enter_code: 'ルームに参加する？テレビのコードを入力してね。',
+      code_length: 'ルームコードは6文字だよ。', room_code: 'ルームコード', join: '参加',
       ways_to_play: 'プレイ方法', play_browser: 'ブラウザでプレイ',
       ios_app: 'iOSアプリをダウンロード', android_app: 'Androidアプリをダウンロード', coming_soon: '近日公開', app_size: 'わずか{mb}MB',
       privacy: 'プライバシー', imprint: '運営者情報', contact: 'お問い合わせ', language: '言語', dark_mode: 'ダークモード'
@@ -121,7 +128,8 @@
       name: '한국어',
       title_join: '방 참가 · CouchPad', title_room: '방 {code} · CouchPad',
       checking: '방을 확인하는 중…', not_found: '방을 찾을 수 없어',
-      invalid_link: '잘못된 링크', no_code: '이 링크에는 방 코드가 없어. TV의 코드를 스캔해.',
+      page_not_found: '페이지를 찾을 수 없어', enter_code: '방에 참가하려면 TV의 코드를 입력해.',
+      code_length: '방 코드는 6자리야.', room_code: '방 코드', join: '참가',
       ways_to_play: '플레이 방법', play_browser: '브라우저에서 플레이',
       ios_app: 'iOS 앱 다운로드', android_app: 'Android 앱 다운로드', coming_soon: '출시 예정', app_size: '단 {mb}MB',
       privacy: '개인정보', imprint: '법적 고지', contact: '문의', language: '언어', dark_mode: '다크 모드'
@@ -130,7 +138,8 @@
       name: 'Русский',
       title_join: 'Войти в комнату · CouchPad', title_room: 'Комната {code} · CouchPad',
       checking: 'Ищем комнату…', not_found: 'Комната не найдена',
-      invalid_link: 'Неверная ссылка', no_code: 'В этой ссылке нет кода комнаты. Сканируй код на телевизоре.',
+      page_not_found: 'Страница не найдена', enter_code: 'Хочешь войти в комнату? Введи код с телевизора.',
+      code_length: 'Код комнаты состоит из 6 символов.', room_code: 'Код комнаты', join: 'Войти',
       ways_to_play: 'Как играть', play_browser: 'Играть в браузере',
       ios_app: 'Скачать приложение для iOS', android_app: 'Скачать приложение для Android', coming_soon: 'Скоро', app_size: 'всего {mb} МБ',
       privacy: 'Конфиденциальность', imprint: 'Выходные данные', contact: 'Контакты', language: 'Язык', dark_mode: 'Тёмная тема'
@@ -139,7 +148,8 @@
       name: 'Italiano',
       title_join: 'Unisciti alla stanza · CouchPad', title_room: 'Stanza {code} · CouchPad',
       checking: 'Ricerca della stanza…', not_found: 'Stanza non trovata',
-      invalid_link: 'Link non valido', no_code: 'Questo link non contiene un codice stanza. Scansiona il codice sulla TV.',
+      page_not_found: 'Pagina non trovata', enter_code: 'Vuoi unirti a una stanza? Inserisci il codice della TV.',
+      code_length: 'I codici stanza hanno 6 caratteri.', room_code: 'Codice stanza', join: 'Entra',
       ways_to_play: 'Modi per giocare', play_browser: 'Gioca nel browser',
       ios_app: 'Scarica l’app iOS', android_app: 'Scarica l’app Android', coming_soon: 'Prossimamente', app_size: 'solo {mb} MB',
       privacy: 'Privacy', imprint: 'Note legali', contact: 'Contatti', language: 'Lingua', dark_mode: 'Modalità scura'
@@ -148,7 +158,8 @@
       name: 'Türkçe',
       title_join: 'Odaya katıl · CouchPad', title_room: 'Oda {code} · CouchPad',
       checking: 'Oda aranıyor…', not_found: 'Oda bulunamadı',
-      invalid_link: 'Geçersiz bağlantı', no_code: 'Bu bağlantıda oda kodu yok. Televizyondaki kodu tara.',
+      page_not_found: 'Sayfa bulunamadı', enter_code: 'Bir odaya mı katılacaksın? Televizyondaki kodu gir.',
+      code_length: 'Oda kodları 6 karakterden oluşur.', room_code: 'Oda kodu', join: 'Katıl',
       ways_to_play: 'Oynama yolları', play_browser: 'Tarayıcıda oyna',
       ios_app: 'iOS uygulamasını indir', android_app: 'Android uygulamasını indir', coming_soon: 'Yakında', app_size: 'yalnızca {mb} MB',
       privacy: 'Gizlilik', imprint: 'Künye', contact: 'İletişim', language: 'Dil', dark_mode: 'Karanlık mod'
@@ -174,6 +185,9 @@
   });
   document.querySelectorAll('[data-i18n-aria-label]').forEach(function (node) {
     node.setAttribute('aria-label', t(node.getAttribute('data-i18n-aria-label')));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function (node) {
+    node.placeholder = t(node.getAttribute('data-i18n-placeholder'));
   });
   // The legal pages exist in German (root) and English (/en/) only.
   if (lang === 'de') {
@@ -206,8 +220,18 @@
     ios: document.getElementById('app-ios'),
     iosSub: document.getElementById('app-ios-sub'),
     android: document.getElementById('app-android'),
-    androidSub: document.getElementById('app-android-sub')
+    androidSub: document.getElementById('app-android-sub'),
+    form: document.getElementById('codeform'),
+    input: document.getElementById('codeform-input')
   };
+
+  // Code entry: the server sorts it out. A real code gets looked up, anything
+  // else comes back here as a 404 with the entry prefilled.
+  el.form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var typed = el.input.value.trim();
+    if (typed) location.href = '/' + encodeURIComponent(typed);
+  });
 
   function setStatus(text, mod) {
     el.status.textContent = text;
@@ -231,8 +255,13 @@
   // ---- Parse the link ----
   var m = location.pathname.match(/^\/([1-9A-HJ-NP-Za-km-z]{6})$/);
   if (!m) {
-    setStatus(t('invalid_link'), 'err');
-    metaMessage(t('no_code'));
+    // Not a room code, so this is the site's 404 (nginx error_page). A short
+    // alphanumeric path (4 to 8 characters, a near miss) is most likely a
+    // mistyped code: prefill it, so a one-character slip is one edit away.
+    var guess = (location.pathname.match(/^\/([A-Za-z0-9]{4,8})$/) || [])[1];
+    document.title = t('page_not_found') + ' · CouchPad';
+    noRoom(t('page_not_found'), guess);
+    metaMessage(t(guess && guess.length !== 6 ? 'code_length' : 'enter_code'));
     return;
   }
   var code = m[1];
@@ -266,15 +295,17 @@
     el.meta.hidden = false;
   }
 
-  // One headline, no badge — the viewfinder-with-question-mark carries the
-  // rest. (People land here from a QR/link, so a stale link is the usual
-  // cause; the looked-up code stays visible below.)
-  function notFound() {
+  // Nothing to join: one headline, no badge (the viewfinder-with-question-mark
+  // carries the rest), and code entry prefilled with the code tried.
+  function noRoom(headline, prefill) {
     el.status.hidden = true;
     // SVG elements lack the HTMLElement `hidden` property — toggle the attribute.
     el.mark.removeAttribute('hidden');
-    el.game.textContent = t('not_found');
+    el.game.textContent = headline;
     el.game.hidden = false;
+    el.code.hidden = true; // the entry below holds it, editable
+    el.input.value = prefill || '';
+    el.form.hidden = false;
   }
 
   fetch('/games-manifest.json')
@@ -350,7 +381,7 @@
         }
         // Unknown, unreachable, or unvetted — we can't tell which game this
         // is, so there is nothing safe to join. One honest answer.
-        notFound();
+        noRoom(t('not_found'), code);
       });
     });
 })();
