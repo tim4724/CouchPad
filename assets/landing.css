@@ -52,21 +52,16 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   justify-content: space-between;
   padding: 1.1rem 0;
 }
-/* The landing brand is wordmark-only; room.html still pairs it with the
-   viewfinder icon, which the svg rule below sizes. */
 .brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
   font-size: 1.4rem;
   font-weight: 800;
   text-decoration: none;
   transition: opacity var(--transition-fast);
 }
 .brand:active { opacity: 0.6; }
-.brand svg { width: 1.7em; height: 1.7em; display: block; flex: none; }
 /* Default to token colors: room.html reuses this topbar/footer on the plain
-   page background. The chrome stripes override to white below. */
+   page background. The chrome stripes override to white below (here and for
+   the theme toggle). */
 .topbar__mail {
   font-size: 0.88rem;
   font-weight: 800;
@@ -86,7 +81,7 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 .theme-toggle {
   border: 0;
   background: none;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--on-surface-variant);
   width: 2rem; height: 2rem;
   display: grid;
   place-items: center;
@@ -94,7 +89,9 @@ h1 mark, h2 mark { background: none; color: var(--action); }
   border-radius: var(--radius-pill);
   transition: color var(--transition-fast), background var(--transition-fast);
 }
-.theme-toggle:hover { color: #fff; background: rgba(255, 255, 255, 0.12); }
+.theme-toggle:hover { color: var(--on-surface); background: var(--surface-low); }
+.headstripe .theme-toggle { color: rgba(255, 255, 255, 0.85); }
+.headstripe .theme-toggle:hover { color: #fff; background: rgba(255, 255, 255, 0.12); }
 .theme-toggle svg { width: 1.2rem; height: 1.2rem; }
 .theme-toggle__sun { display: none; }
 .theme-toggle__moon { display: block; }

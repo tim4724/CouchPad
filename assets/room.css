@@ -1,7 +1,7 @@
 /* Room join page (couchpad.games/<CODE>) — layered on theme.css + landing.css.
-   The card starts as neutral chrome and becomes a full-card game banner (key
-   art + the landing hero's veil treatment) once the relay tells us which game
-   owns the room. */
+   The card starts as neutral chrome around an empty art slot and becomes the
+   landing page's ambient game card (.ambient, landing.css) once the relay
+   tells us which game owns the room. */
 
 /* room.js toggles most of the page via the hidden attribute; author display
    values (flex, grid, …) would silently beat the UA's [hidden] rule, which
@@ -19,10 +19,11 @@
 }
 
 .room {
-  /* A gentle viewport-proportional gap below the topbar; the auto bottom
-     margin takes all remaining slack, pinning the footer to the viewport
-     bottom edge (the footer's own clamp() margin stays as the minimum gap). */
-  margin-top: clamp(0.5rem, 6vh, 3rem);
+  /* The topbar's own padding is the gap on phones, growing a little on tall
+     screens; the auto bottom margin takes all remaining slack, pinning the
+     footer to the viewport bottom edge (the footer's own clamp() margin stays
+     as the minimum gap). */
+  margin-top: clamp(0rem, 6vh - 2.5rem, 2.5rem);
   margin-bottom: auto;
   display: grid;
   gap: clamp(1.25rem, 3vh, 2rem);
@@ -31,77 +32,69 @@
 
 /* ---- Room card ---- */
 .roomcard {
-  position: relative;
   border-radius: var(--radius-xl);
-  overflow: hidden;
   border: 1px solid var(--outline-variant);
   background: var(--surface-low);
-  min-height: clamp(260px, 36vh, 380px);
-  display: flex;
-  align-items: flex-end;
+  padding: clamp(0.75rem, 2.4vw, 1.25rem);
 }
-.roomcard__bg {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: 58% center;
+.roomcard__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
 }
-/* Cinematic bottom veil: darkest where the type sits, art stays clear toward
-   the top. Mirrors the landing hero's desktop .feature__veil (slightly lighter peak —
-   the text block here is smaller); keep the two in step. */
-.roomcard__veil {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  visibility: hidden;
-  background: linear-gradient(8deg,
-    rgba(20, 19, 24, 0.82) 10%, rgba(20, 19, 24, 0.45) 40%,
-    rgba(20, 19, 24, 0) 68%);
+/* No poster (looking up, or not found): a quiet slot, not the frame's black. */
+.roomcard:not(.ambient) .roomcard__media {
+  background: var(--surface-container);
+  box-shadow: none;
 }
-/* Once key art is behind the text, flip the card to hero-style white type. */
-.roomcard--art { color: #fff; }
-.roomcard--art .roomcard__veil { visibility: visible; }
+/* While the lookup runs (the wait badge is up), the empty slot breathes. */
+.roomcard:has(.badge--wait:not([hidden])) .roomcard__media {
+  animation: roomcard-wait 1.6s ease-in-out infinite alternate;
+}
+@keyframes roomcard-wait { to { background: var(--surface-high); } }
+.roomcard__poster { display: block; width: 100%; height: 100%; }
 
-/* Not-found placeholder mark: floats in the card's clear upper area, dimmed
-   and theme-aware (currentColor). */
+/* Not-found placeholder mark, centered in the slot, dimmed and theme-aware
+   (currentColor). */
 .roomcard__mark {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(96px, 22vw, 132px);
+  width: clamp(64px, 20%, 120px);
   height: auto;
-  transform: translate(-50%, -62%);
+  transform: translate(-50%, -50%);
   color: var(--on-surface-variant);
   opacity: 0.4;
 }
 
-.roomcard__inner {
-  position: relative;
-  padding: clamp(1.4rem, 4vw, 2rem);
-}
+/* The game name is the headline; the code sits quietly beneath it, small
+   enough not to compete. */
+.roomcard__inner { padding: 1rem 0.35rem 0.3rem; }
 
-/* The game name is the headline; the code sits quietly beneath it. */
 .roomcard__game {
-  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 2.6rem);
   font-weight: 800;
   letter-spacing: -0.01em;
-  line-height: 1.2;
-  margin-bottom: 0.3rem;
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
   color: var(--on-surface);
 }
-.roomcard--art .roomcard__game { color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,0.45); }
 
-/* Continuous mono, wide-tracked and slightly dimmed — the typeface says
-   "code"; codes are case-sensitive (base58), never restyle their case. */
+/* Continuous mono, tracked and dimmed: the typeface says "code"; codes are
+   case-sensitive (base58), never restyle their case. */
 .roomcard__code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: clamp(1.4rem, 5.5vw, 1.9rem);
+  font-size: 1.1rem;
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: 0.22em;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
   color: var(--on-surface-variant);
 }
-.roomcard--art .roomcard__code { color: rgba(255,255,255,0.88); }
+
+/* On the ambient blur the type turns white. */
+.roomcard.ambient .roomcard__game { color: #fff; }
+.roomcard.ambient .roomcard__code { color: rgba(255, 255, 255, 0.72); }
 
 /* Transitional/error copy under the code. */
 .roomcard__meta {
@@ -112,16 +105,15 @@
 
 /* Status badge variants (dot color signals state; landing's .badge supplies
    the shape). The badge only communicates transitional/error states — once
-   the room is live, room.js hides it. */
-.roomcard .badge { margin-bottom: 0.6rem; }
-.badge--wait::before { background: var(--outline); }
-.badge--err::before  { background: #E5484D; }
-/* The badge sits on chrome (not art) until the game is known, so give it a
-   readable fill in both schemes; on art the landing default takes over. */
-.roomcard:not(.roomcard--art) .badge {
+   the room is live, room.js hides it — so it always sits on chrome: give it
+   a readable fill in both schemes. */
+.roomcard .badge {
+  margin-bottom: 0.6rem;
   background: var(--surface-highest);
   color: var(--on-surface);
 }
+.badge--wait::before { background: var(--outline); }
+.badge--err::before  { background: #E5484D; }
 
 /* ---- Join options ---- */
 .join {
@@ -132,18 +124,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4em;
-  padding: 1em 1.5em;
+  min-height: 3.6rem;
+  padding: 0.9em 1.5em;
   border-radius: var(--radius-pill);
   background: var(--primary);
   color: var(--on-primary);
-  font-weight: 700;
-  font-size: 1.05rem;
+  /* The page's one primary action: the landing CTA's display face and weight. */
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
   text-decoration: none;
   transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
-/* Empty alt text keeps the arrow out of the accessible name — see .cta::after. */
-.joinbtn::after { content: "→"; content: "→" / ""; }
 .joinbtn:hover { opacity: 0.92; }
 .joinbtn:active { transform: translateY(1px); }
 .joinbtn__label {
@@ -188,6 +180,36 @@
   max-width: 62ch;
 }
 
+/* ---- Footer language picker: a pill with a globe in front and a chevron
+   behind, so it reads as a control rather than one more link. The native
+   select fills the whole pill (the tap target) and opens the system picker;
+   the icons are decoration on top of it. ---- */
+.footer-links { align-items: center; }
+.langpick { position: relative; display: inline-flex; align-items: center; }
+.langpick select {
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  color: var(--on-surface);
+  background: var(--surface-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-pill);
+  min-height: 2.5rem;
+  padding: 0.35rem 2rem 0.35rem 2.1rem;
+  cursor: pointer;
+  field-sizing: content; /* as wide as the chosen name, where supported */
+  transition: border-color var(--transition-fast);
+}
+.langpick select:hover { border-color: var(--outline); }
+.langpick svg {
+  position: absolute;
+  width: 1.05rem; height: 1.05rem;
+  pointer-events: none;
+  color: var(--on-surface-variant);
+}
+.langpick__globe { left: 0.8rem; }
+.langpick__chevron { right: 0.75rem; width: 0.8rem; height: 0.8rem; }
+
 /* ---- Wide screens: card and options side by side. Two ways in: a real
    desktop (880px+), or a landscape phone — wide but short, where the stacked
    layout would bury the buttons below the fold. ---- */
@@ -195,26 +217,26 @@
   .room {
     max-width: 1060px;
     grid-template-columns: minmax(0, 7fr) minmax(300px, 5fr);
-    align-items: stretch;
+    align-items: start;
   }
-  /* Stretch to the join column, but never collapse flatter than this — the
-     not-found column is short (no play button), which would squash the card. */
-  .roomcard { min-height: clamp(220px, 56vh, 340px); }
   .join { align-content: start; }
   .join__apps { grid-template-columns: 1fr; }
 }
-/* Only genuinely tall desktop screens get the big cinematic card. */
-@media (min-width: 880px) and (min-height: 600px) {
-  .roomcard { min-height: 420px; }
-}
-/* On landscape-phone-height cards the centered mark would sit behind the
-   headline — park it in the top-right corner instead. */
+/* Landscape phone: too short for the art and the caption under it, so the
+   card dissolves: the art takes the left column and the caption moves above
+   the buttons. Without the card there is no blur to sit on, so the type goes
+   back to the page colors. */
 @media (min-width: 640px) and (max-height: 520px) {
-  .roomcard__mark {
-    left: auto;
-    right: 1.25rem;
-    top: 1.25rem;
-    transform: none;
-    width: 64px;
+  .room {
+    grid-template-areas: "media info" "media join";
+    grid-template-rows: auto 1fr;
   }
+  .roomcard { display: contents; }
+  .roomcard .ambient__bg { display: none; }
+  .roomcard__media { grid-area: media; }
+  .roomcard__inner { grid-area: info; padding: 0; }
+  .join { grid-area: join; }
+  .roomcard__game { font-size: 1.9rem; }
+  .roomcard.ambient .roomcard__game { color: var(--on-surface); }
+  .roomcard.ambient .roomcard__code { color: var(--on-surface-variant); }
 }
