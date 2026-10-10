@@ -22,7 +22,7 @@
   <link rel="preload" href="/assets/fonts/baloo2-latin-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/nunito-latin-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/theme.css?v=5">
-  <link rel="stylesheet" href="/assets/landing.css?v=20">
+  <link rel="stylesheet" href="/assets/landing.css?v=24">
   <script src="/assets/theme.js?v=4"></script>
 </head>
 <body>
@@ -49,9 +49,12 @@
          German. Suggests, never redirects; dismissing it or choosing English
          (saved in localStorage) hides it. -->
     <aside class="langbar" id="langbar" lang="de" hidden>
-      <span>Diese Seite gibt es auch auf Deutsch.</span>
-      <a class="langbar__accept" href="/de/" data-lang-set="de">Auf Deutsch anzeigen →</a>
-      <button class="langbar__dismiss" type="button" aria-label="Schließen">✕</button>
+      <svg class="langbar__globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5c2.6 2.6 3.9 5.8 3.9 9.5s-1.3 6.9-3.9 9.5c-2.6-2.6-3.9-5.8-3.9-9.5s1.3-6.9 3.9-9.5z"/></svg>
+      <span class="langbar__text">Diese Seite gibt es auch auf Deutsch.</span>
+      <a class="langbar__accept" href="/de/" data-lang-set="de">Auf Deutsch anzeigen</a>
+      <button class="langbar__dismiss" type="button" aria-label="Schließen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </aside>
 
     <section class="hero">

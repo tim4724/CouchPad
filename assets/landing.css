@@ -387,40 +387,72 @@ h1 mark, h2 mark { background: none; color: var(--action); }
 .footstripe .footer-links a:hover,
 .footstripe .footer-links a:active { color: #fff; }
 
-/* ---- Language-suggestion banner (offers the other language) ---- */
+/* ---- Language-suggestion banner (offers the other language) ----
+   Globe + sentence, a pill link, a round close button. One row where it
+   fits; on phones the pill drops under the sentence so the sentence keeps the
+   full width. The globe matches the room page's language picker. */
 .langbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-areas: "globe text accept close";
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  gap: 0.75rem;
   margin: 0.25rem 0 0.75rem;
-  padding: 0.7rem 1rem;
+  padding: 0.55rem 0.55rem 0.55rem 1rem;
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius-lg);
   background: var(--surface-low);
-  font-size: 0.9rem;
-  color: var(--on-surface-variant);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--on-surface);
 }
 .langbar[hidden] { display: none; }
+.langbar__globe { grid-area: globe; width: 1.2rem; height: 1.2rem; color: var(--on-surface-variant); }
+.langbar__text { grid-area: text; }
 .langbar__accept {
-  color: var(--on-surface);
-  font-weight: 600;
+  grid-area: accept;
+  justify-self: start;
+  padding: 0.5em 1.1em;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 800;
   text-decoration: none;
   white-space: nowrap;
   transition: opacity var(--transition-fast);
 }
+.langbar__accept:hover { opacity: 0.92; }
 .langbar__accept:active { opacity: 0.6; }
 .langbar__dismiss {
-  margin-left: auto;
+  grid-area: close;
+  width: 2.25rem; height: 2.25rem;
+  display: grid;
+  place-items: center;
   border: 0;
   background: none;
   color: var(--on-surface-variant);
-  font-size: 1.1rem;
-  line-height: 1;
-  padding: 0.2rem 0.4rem;
   cursor: pointer;
   border-radius: var(--radius-pill);
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), background var(--transition-fast);
 }
-.langbar__dismiss:hover { color: var(--on-surface); }
+.langbar__dismiss:hover { color: var(--on-surface); background: var(--surface-container); }
+.langbar__dismiss svg { width: 1.1rem; height: 1.1rem; }
+/* Phones: the sentence may take two lines, so the row aligns to its first
+   line, the padding is even on every side, and the accept pill spans the box
+   under the sentence. Both icons are centered on the first line (1.35 x
+   0.95rem = 1.28rem tall): the 1.2rem globe drops by half the difference;
+   the close button's 2.25rem tap area rises by (2.25 - 1.28) / 2 and shifts
+   right by its (2.25 - 1.1) / 2 inset, so the 1.1rem glyph, not the tap
+   area, sits on the right padding edge. */
+@media (max-width: 560px) {
+  .langbar {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "globe text close" "accept accept accept";
+    align-items: start;
+    padding: 0.9rem;
+  }
+  .langbar__text { line-height: 1.35; text-wrap: balance; }
+  .langbar__globe { margin-top: 0.04rem; }
+  .langbar__dismiss { margin: -0.48rem -0.575rem 0 0; }
+  .langbar__accept { justify-self: stretch; text-align: center; }
+}
