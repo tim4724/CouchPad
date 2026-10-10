@@ -1,15 +1,18 @@
 <!doctype html>
-<html lang="en">
+<!-- The class and the two metas below are THEMES[0] in controller-test.js. -->
+<html lang="en" class="t-dark">
 <head>
 <meta charset="utf-8">
 <!-- viewport-fit=cover is what makes env(safe-area-inset-*) non-zero under the launcher (§5). -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>CouchPad contract test controller</title>
-<!-- §4: the launcher tints its chrome from these and re-reads them on every change. -->
+<!-- §4: the launcher's status-bar icons follow this, watched live. §2: the name sheet
+     reads it, theme-color and :root's accent-color when editName() is called. The §4
+     buttons rewrite all three. -->
+<meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#101014">
-<meta name="cp-accent-color" content="#f2555a">
-<link rel="stylesheet" href="/assets/controller-test.css?v=2">
+<link rel="stylesheet" href="/assets/controller-test.css?v=3">
 <!-- §10: the earliest a controller can ask for landscape (?orient=landscape). An
      external file, not inline — this origin ships `script-src 'self'`, which blocks
      inline script. Not deferred: it must run during head parsing. -->
@@ -17,16 +20,51 @@
 </head>
 <body>
 <div id="zone" hidden><i></i></div>
+<!-- §3: the page's own close — the launcher draws none over a running game. -->
+<button id="leave" aria-label="Leave" hidden>✕</button>
 <main>
   <h1>Contract test controller</h1>
   <p class="row"><span id="mode" class="badge">…</span></p>
+  <dl>
+    <dt>CouchPadHost</dt><dd id="bridge">—</dd>
+  </dl>
 
   <section>
-    <h2>§1–2 Identity</h2>
+    <h2>§1–2 Name</h2>
     <dl>
-      <dt>cpName</dt><dd id="cpname">—</dd>
-      <dt>setName calls</dt><dd id="setname">0</dd>
-      <dt>current name</dt><dd id="name">—</dd>
+      <dt>name</dt><dd id="name">—</dd>
+    </dl>
+    <div class="row gap-top">
+      <button id="rename">Rename</button>
+      <button id="rename2">Rename ×2</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>§3 Leaving</h2>
+    <p>✕ calls leave(). The second pair races both exits; the first call wins.</p>
+    <div class="row" id="ends"></div>
+    <div class="row gap-top">
+      <button id="leavefirst">leave + gameEnded</button>
+      <button id="endfirst">gameEnded + leave</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>§4 Theming</h2>
+    <p>Sets color-scheme, theme-color and accent-color together; Rename shows the
+      sheet in them.</p>
+    <div class="row" id="themes"></div>
+    <dl class="gap-top">
+      <dt>status icons</dt><dd id="icons">—</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>§5 Safe area</h2>
+    <div class="row"><button id="zonetoggle" aria-pressed="false">Show frame</button></div>
+    <dl class="gap-top">
+      <dt>env(safe-area)</dt><dd id="env">—</dd>
     </dl>
   </section>
 
@@ -47,20 +85,6 @@
   </section>
 
   <section>
-    <h2>§4 Theming</h2>
-    <div class="row" id="themes"></div>
-  </section>
-
-  <section>
-    <h2>§5 Safe zone</h2>
-    <div class="row"><button id="zonetoggle" aria-pressed="false">Show frame</button></div>
-    <dl class="gap-top">
-      <dt>--cp-safe-*</dt><dd id="vars">—</dd>
-      <dt>env(safe-area)</dt><dd id="env">—</dd>
-    </dl>
-  </section>
-
-  <section>
     <h2>§10 Orientation</h2>
     <div class="row">
       <button data-orient="portrait" aria-pressed="true">portrait</button>
@@ -73,8 +97,36 @@
   </section>
 
   <section>
-    <h2>§3 Session end</h2>
-    <div class="row" id="ends"></div>
+    <h2>§11 Vibrate</h2>
+    <div class="row">
+      <button id="vtap">Tap 20</button>
+      <button id="vrhythm">Rhythm [10,50,10]</button>
+      <button id="vhold">Hold to buzz</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>§12 Haptic</h2>
+    <div class="row">
+      <label for="scale">scale</label>
+      <input id="scale" type="range" min="0" max="1" step="0.05" value="0.7">
+      <output id="scaleout" for="scale">0.70</output>
+    </div>
+    <div class="row gap-top" id="prims"></div>
+    <p class="gap-top">Must play nothing:</p>
+    <div class="row">
+      <button id="hbogus">"bogus"</button>
+      <button id="hnan">click, NaN</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tilt</h2>
+    <div class="row"><button id="tilt">Enable tilt</button></div>
+    <dl class="gap-top">
+      <dt>orientation</dt><dd id="tiltor">—</dd>
+      <dt>motion</dt><dd id="tiltmo">—</dd>
+    </dl>
   </section>
 
   <section>
@@ -101,6 +153,6 @@
 </dialog>
 
 <div id="envprobe"></div>
-<script src="/assets/controller-test.js?v=3"></script>
+<script src="/assets/controller-test.js?v=4"></script>
 </body>
 </html>

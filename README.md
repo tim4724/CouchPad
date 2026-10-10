@@ -102,7 +102,7 @@ which is what `test.couchpad.games` exists for.
 
   ```sh
   python3 -m http.server 8000
-  qrencode -t ANSIUTF8 "http://$(ipconfig getifaddr en0):8000/controller-test"
+  qrencode -t ANSIUTF8 "http://$(ipconfig getifaddr en0):8000/controller-test.html"
   ```
 
 Either way **no room, no relay and no display are involved** — `joinVerbatim`
