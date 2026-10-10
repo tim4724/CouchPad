@@ -10,10 +10,14 @@
 
 /* Overscroll (rubber-band) paints the root background. Where the page is
    capped top and bottom by chrome stripes, make that chrome so the bounce
-   extends the stripes; body keeps --bg and fills the viewport (min-height),
+   extends the stripes; body looks --bg and fills the viewport (min-height),
    so this never shows on screen otherwise. room.html shares this file but
-   has no stripes, so it keeps the default. */
+   has no stripes, so it keeps the default.
+   iOS 26+ Safari ignores theme-color and tints the status bar from body's
+   background-color, so body's color is chrome too, with a solid --bg
+   gradient layer painted over it. */
 html:has(.headstripe) { background: var(--chrome); }
+html:has(.headstripe) body { background: linear-gradient(var(--bg), var(--bg)) var(--chrome); }
 
 body {
   background: var(--bg);
