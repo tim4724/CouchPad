@@ -301,6 +301,17 @@
   $('cspins').onclick = function () {
     call('hapticComposition', [[step('spin', 0), step('spin', 0), step('spin', 0)]]);
   };
+  // The two caps, each tripped on its own: 33 steps well inside 5 s, so only the step
+  // cap cuts the thud; one delay past 5 s, so only the run-time cap cuts it.
+  $('csteps').onclick = function () {
+    var steps = [];
+    for (var i = 0; i < 32; i++) steps.push(step('tick', i ? 100 : 0));
+    steps.push(step('thud', 100));
+    call('hapticComposition', [steps]);
+  };
+  $('crun').onclick = function () {
+    call('hapticComposition', [[step('click', 0), step('thud', 6000)]]);
+  };
   // No valid step, and no sequence at all: neither is the empty sequence's stop, so
   // a rumble held with another finger must keep going.
   $('cbogus').onclick = function () { call('hapticComposition', [[step('bogus', 0)]]); };
