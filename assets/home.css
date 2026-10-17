@@ -1,8 +1,9 @@
 /* Home page (EN root + /de/), on site.css: a centred pitch over the flagship
    poster, shown whole on a drawn TV (lighting the room behind it in light). */
 
-/* Pitch, buttons, then the TV; on phones the buttons drop below the TV (see
-   the media query), so they sit under the game they launch. */
+/* Pitch, then the TV, then its caption row: the game's name on the left and
+   the buttons on the right, so they sit on the game they launch and "Play
+   now" needs no further label. On phones the row stacks, centred. */
 .hero { position: relative; isolation: isolate; overflow: hidden; }
 .hero__grid {
   display: flex;
@@ -24,10 +25,9 @@
 .hero__lead {
   font-size: 20px;
   color: var(--on-surface-variant);
-  margin-bottom: 28px;
+  margin-bottom: 56px;
 }
-.hero__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 56px; }
-.feature { order: 1; width: 100%; max-width: 980px; }
+.feature { width: 100%; max-width: 980px; }
 
 /* The TV: bezel, neck and base. The poster on it is shown whole. */
 .tv { position: relative; }
@@ -64,9 +64,18 @@
     radial-gradient(38% 55% at 82% 58%, var(--confetti-teal), transparent),
     radial-gradient(30% 40% at 62% 88%, var(--confetti-amber), transparent);
 }
-.feature figcaption { padding-top: 28px; }
-.feature__name { font-size: 21px; font-weight: 600; letter-spacing: -0.03em; }
-.feature__tagline { font-size: 15px; color: var(--on-surface-variant); margin-top: 2px; }
+.feature figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 24px;
+  padding-top: 32px;
+  text-align: left;
+}
+.feature__name { font-size: 24px; font-weight: 600; letter-spacing: -0.03em; }
+.feature__tagline { font-size: 16px; color: var(--on-surface-variant); margin-top: 2px; }
+.hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* ---- Sections ---- */
 .section { padding-top: 104px; }
@@ -265,13 +274,13 @@
   .section h2 { font-size: 32px; }
   .hero__grid { padding: 40px 0 64px; }
   .hero__lead { margin-bottom: 32px; }
-  .hero__ctas { order: 2; margin: 28px 0 0; }
   .tv__screen { padding: 6px; border-radius: 12px; }
   .feature__poster { border-radius: 7px; }
   .tv__stand { width: 32px; height: 16px; }
   .tv__stand::after { width: 150px; height: 5px; margin-left: -75px; border-radius: 5px 5px 2px 2px; }
   .tv__light { filter: blur(40px); }
-  .feature figcaption { padding-top: 20px; }
+  .feature figcaption { flex-direction: column; gap: 24px; padding-top: 20px; text-align: center; }
+  .hero__ctas { justify-content: center; }
   .section { padding-top: 72px; }
   /* Phones: heading and sentence first, the drawing centred below them. */
   .how__top { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 28px 20px 24px; }
