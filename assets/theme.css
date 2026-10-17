@@ -21,6 +21,8 @@
 }
 
 :root {
+  /* Native UI (scrollbars, form controls) follows the scheme of the tokens. */
+  color-scheme: light;
   --font-sans: "Outfit", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* Brand constants (scheme-independent) */
@@ -59,6 +61,7 @@
    data-theme from localStorage; keep both blocks identical when editing. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #110F17;
     --surface-low: #1C1A24;
     --surface-high: #2A2735;
@@ -81,6 +84,7 @@
   }
 }
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #110F17;
   --surface-low: #1C1A24;
   --surface-high: #2A2735;
