@@ -296,6 +296,15 @@
   $('cprefix').onclick = function () {
     call('hapticComposition', [[step('click', 0), step('bogus', 100), step('click', 100)]]);
   };
+  // Three shaped primitives with no rest between them: on iOS each is a parameter
+  // curve, and curves of the same parameter follow each other back to back here.
+  $('cspins').onclick = function () {
+    call('hapticComposition', [[step('spin', 0), step('spin', 0), step('spin', 0)]]);
+  };
+  // No valid step, and no sequence at all: neither is the empty sequence's stop, so
+  // a rumble held with another finger must keep going.
+  $('cbogus').onclick = function () { call('hapticComposition', [[step('bogus', 0)]]); };
+  $('carray').onclick = function () { call('hapticComposition', ['nope']); };
 
   // ---- Tilt: iOS gates the sensors behind requestPermission(), which must come
   // from a tap; the launcher grants it for allow-listed origins without a dialog.
@@ -355,6 +364,7 @@
   // backgrounds; the engine fires the real visibilitychange on return.
   addEventListener('pagehide', function (e) {
     holdStop();
+    rumbleStop();
     log('pagehide (persisted=' + e.persisted + ') — close the relay socket here');
   });
   addEventListener('visibilitychange', function () {
