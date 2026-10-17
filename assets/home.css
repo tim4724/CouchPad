@@ -1,5 +1,5 @@
 /* Home page (EN root + /de/), on site.css: a centred pitch over the flagship
-   poster, shown whole on a drawn TV that lights the room behind it. */
+   poster, shown whole on a drawn TV (lighting the room behind it in light). */
 
 /* Pitch, buttons, then the TV; on phones the buttons drop below the TV (see
    the media query), so they sit under the game they launch. */
@@ -49,13 +49,15 @@
   background: var(--tv-body);
 }
 /* Screen light: the controller's confetti colours spill out behind the TV
-   (a blur of the poster itself turns grey, the poster is mostly dark). */
+   (a blur of the poster itself turns grey, the poster is mostly dark).
+   Light scheme only: on near-black it bands, so dark hides it. */
 .tv__light {
   position: absolute;
   inset: 4% -4% 10%;
   z-index: -1;
   filter: blur(64px);
-  opacity: var(--tv-light-opacity);
+  display: var(--tv-light-display);
+  opacity: 0.55;
   background:
     radial-gradient(38% 55% at 18% 60%, var(--confetti-coral), transparent),
     radial-gradient(40% 55% at 48% 38%, var(--confetti-violet), transparent),

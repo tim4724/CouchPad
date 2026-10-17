@@ -51,7 +51,7 @@
   --tv-body: #18171C;
   --tv-edge: rgba(255, 255, 255, 0.06);
   --tv-shadow: 0 40px 90px rgba(20, 18, 26, 0.28);
-  --tv-light-opacity: 0.55;
+  --tv-light-display: block;
 }
 
 /* Dark values appear twice on purpose: once for the system setting (unless the
@@ -76,8 +76,8 @@
     --glow-opacity: 1;
     --tv-body: #25232C;
     --tv-edge: rgba(255, 255, 255, 0.10);
-    --tv-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
-    --tv-light-opacity: 0.42;
+    --tv-shadow: 0 0 transparent;
+    --tv-light-display: none;
   }
 }
 :root[data-theme="dark"] {
@@ -98,8 +98,8 @@
   --glow-opacity: 1;
   --tv-body: #25232C;
   --tv-edge: rgba(255, 255, 255, 0.10);
-  --tv-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
-  --tv-light-opacity: 0.42;
+  --tv-shadow: 0 0 transparent;
+  --tv-light-display: none;
 }
 
 /* Kill the blue tap-highlight box mobile browsers overlay on links

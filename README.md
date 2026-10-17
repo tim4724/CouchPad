@@ -27,8 +27,9 @@ live in `assets/theme.css`; fonts are self-hosted in `assets/fonts/`.
 One face (Outfit) everywhere. `assets/site.css` holds what the home, room and
 beta pages share: a bar-less header, the blurred-poster glow (behind the room
 page's top), pill buttons and the footer panel. The home hero instead shows the
-flagship poster on a drawn TV with a confetti-coloured light behind it. Posters
-are shown whole, never cropped. Coral fills only a page's one primary button.
+flagship poster on a drawn TV, with a confetti-coloured light behind it in the
+light scheme only. Posters are shown whole, never cropped. Coral fills only a
+page's one primary button.
 The legal pages (`assets/legal.css`) have no header or footer: the controller
 apps show them in-app under their own title bar and hide the page's
 `.legal-shell > h1`, so keep that selector working.
