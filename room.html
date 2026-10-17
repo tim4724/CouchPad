@@ -16,116 +16,117 @@
   <meta property="og:title" content="Join my CouchPad room">
   <meta property="og:description" content="The TV is the game, your phone is the controller. Tap to join the room.">
   <meta property="og:image" content="https://couchpad.games/assets/artwork/hexstacker-16x9-v2.webp">
-  <link rel="preload" href="/assets/fonts/baloo2-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/nunito-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/theme.css?v=5">
-  <link rel="stylesheet" href="/assets/landing.css?v=26">
-  <link rel="stylesheet" href="/assets/room.css?v=21">
-  <script src="/assets/theme.js?v=4"></script>
+  <link rel="preload" href="/assets/fonts/outfit-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/theme.css?v=9">
+  <link rel="stylesheet" href="/assets/site.css?v=3">
+  <link rel="stylesheet" href="/assets/room.css?v=22">
+  <script src="/assets/theme.js?v=6"></script>
 </head>
 <body>
-  <div class="wrap">
+  <!-- room.js fills the glow with the room's game poster once it knows the game. -->
+  <div class="glow roomtop">
+    <img class="glow__img" id="room-ambient" alt="" hidden>
+    <div class="wrap">
 
-    <header class="topbar">
-      <a class="brand" href="/">CouchPad</a>
-      <div class="topbar__side">
-        <a class="topbar__mail" href="mailto:info@couchpad.games">info@couchpad.games</a>
+      <header class="topbar">
+        <a class="brand" href="/">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><rect class="mark__tile" x="2" y="2" width="96" height="96" rx="22"/><path class="mark__glyph" transform="matrix(1.3867 0 0 1.3867 -24.883 -24.883)" fill-rule="evenodd" d="M34.55 43.86 69.9 38.89A7.65 7.65 0 0 1 78.54 45.4L79.96 55.5A7.65 7.65 0 0 1 73.45 64.14L38.1 69.11A7.65 7.65 0 0 1 29.46 62.6L28.04 52.5A7.65 7.65 0 0 1 34.55 43.86ZM40.48 49.46 42.17 49.22A1.27 1.27 0 0 1 43.61 50.31L44.02 53.25 46.97 52.84A1.27 1.27 0 0 1 48.41 53.92L48.65 55.61A1.27 1.27 0 0 1 47.57 57.05L44.62 57.47 45.03 60.41A1.27 1.27 0 0 1 43.94 61.85L42.26 62.08A1.27 1.27 0 0 1 40.83 61L40.41 58.05 37.46 58.47A1.27 1.27 0 0 1 36.02 57.38L35.78 55.7A1.27 1.27 0 0 1 36.87 54.26L39.81 53.85 39.41 50.9A1.27 1.27 0 0 1 40.48 49.46ZM63.83 53.74A2.72 2.72 0 1 1 64.59 59.12 2.72 2.72 0 1 1 63.83 53.74ZM67.82 45.45A2.72 2.72 0 1 1 68.58 50.84 2.72 2.72 0 1 1 67.82 45.45Z"/></svg>
+          CouchPad
+        </a>
         <button class="theme-toggle" type="button" aria-label="Dark mode" data-i18n-aria-label="dark_mode">
           <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z"/></svg>
           <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
         </button>
-      </div>
-    </header>
+      </header>
 
-    <main class="room">
+      <main class="room">
 
-      <section class="roomcard" id="roomcard" aria-labelledby="room-code">
-        <img class="ambient__bg" id="room-ambient" alt="" hidden>
-        <div class="roomcard__media ambient__frame">
-          <img class="roomcard__poster" id="room-art" alt="" width="1600" height="900" hidden>
-          <!-- Not-found placeholder: the brand viewfinder, play triangle swapped
-               for a question mark. -->
-          <svg class="roomcard__mark" id="room-mark" viewBox="0 0 100 100" aria-hidden="true" fill="none" hidden>
-            <g stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M39 23 H31 a8 8 0 0 0 -8 8 V39"/>
-              <path d="M61 23 H69 a8 8 0 0 1 8 8 V39"/>
-              <path d="M61 77 H69 a8 8 0 0 0 8 -8 V61"/>
-              <path d="M39 77 H31 a8 8 0 0 1 -8 -8 V61"/>
-            </g>
-            <text x="50" y="64" text-anchor="middle" fill="currentColor" font-size="42" font-weight="800">?</text>
-          </svg>
-        </div>
-        <div class="roomcard__inner">
-          <span class="badge badge--wait" id="room-status" role="status" data-i18n="checking">Checking room…</span>
-          <p class="roomcard__game" id="room-game" role="status" hidden></p>
-          <p class="roomcard__code" id="room-code"></p>
-          <p class="roomcard__meta" id="room-meta" hidden></p>
-        </div>
-      </section>
-
-      <section class="join" aria-label="Ways to play" data-i18n-aria-label="ways_to_play">
-        <a class="joinbtn" id="join-browser" hidden>
-          <span class="joinbtn__label" data-i18n="play_browser">Play in browser</span>
-        </a>
-
-        <!-- Shown when there is no room to join (404, near-miss or unknown
-             code). No autocapitalize: base58 codes are case-sensitive. -->
-        <form class="codeform" id="codeform" hidden>
-          <input class="codeform__input" id="codeform-input" type="text" maxlength="6"
-                 autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"
-                 enterkeyhint="go" placeholder="Room code" aria-label="Room code"
-                 data-i18n-placeholder="room_code" data-i18n-aria-label="room_code">
-          <button class="joinbtn codeform__btn" type="submit" data-i18n="join">Join</button>
-        </form>
-
-        <div class="join__apps" id="join-apps">
-          <!-- hrefs + availability are filled in by room.js (store URLs are constants there) -->
-          <a class="appbtn" id="app-ios">
-            <svg class="appbtn__icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-              <path d="M17.05 12.54c-.03-2.55 2.08-3.77 2.17-3.83-1.18-1.73-3.02-1.97-3.68-2-1.56-.16-3.05.92-3.84.92-.79 0-2.02-.9-3.32-.87-1.7.03-3.28.99-4.16 2.52-1.78 3.08-.45 7.63 1.28 10.13.85 1.22 1.85 2.6 3.17 2.55 1.28-.05 1.76-.83 3.3-.83 1.54 0 1.98.83 3.32.8 1.38-.02 2.25-1.24 3.08-2.47.97-1.42 1.37-2.8 1.39-2.87-.03-.01-2.67-1.02-2.71-4.05z"/>
-              <path d="M14.51 4.99c.7-.85 1.18-2.03 1.05-3.21-1.01.04-2.24.67-2.97 1.52-.65.75-1.22 1.96-1.07 3.11 1.13.09 2.28-.57 2.99-1.42z"/>
+        <section class="roomcard" id="roomcard" aria-labelledby="room-code">
+          <div class="roomcard__media">
+            <img class="roomcard__poster" id="room-art" alt="" width="1600" height="900" hidden>
+            <!-- Not-found placeholder: the brand viewfinder, play triangle swapped
+                 for a question mark. -->
+            <svg class="roomcard__mark" id="room-mark" viewBox="0 0 100 100" aria-hidden="true" fill="none" hidden>
+              <g stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M39 23 H31 a8 8 0 0 0 -8 8 V39"/>
+                <path d="M61 23 H69 a8 8 0 0 1 8 8 V39"/>
+                <path d="M61 77 H69 a8 8 0 0 0 8 -8 V61"/>
+                <path d="M39 77 H31 a8 8 0 0 1 -8 -8 V61"/>
+              </g>
+              <text x="50" y="64" text-anchor="middle" fill="currentColor" font-size="42" font-weight="700">?</text>
             </svg>
-            <span class="appbtn__text">
-              <span class="appbtn__title" data-i18n="ios_app">Download iOS app</span>
-              <span class="appbtn__sub" id="app-ios-sub">App Store</span>
-            </span>
+          </div>
+          <div class="roomcard__inner">
+            <span class="badge badge--wait" id="room-status" role="status" data-i18n="checking">Checking room…</span>
+            <p class="roomcard__game" id="room-game" role="status" hidden></p>
+            <p class="roomcard__code" id="room-code"></p>
+            <p class="roomcard__meta" id="room-meta" hidden></p>
+          </div>
+        </section>
+
+        <section class="join" aria-label="Ways to play" data-i18n-aria-label="ways_to_play">
+          <a class="btn btn--primary joinbtn" id="join-browser" hidden>
+            <span data-i18n="play_browser">Play in browser</span>
           </a>
-          <a class="appbtn" id="app-android">
-            <svg class="appbtn__icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-              <path d="M15.6 6.36l1.33-2.3a.42.42 0 0 0-.15-.57.42.42 0 0 0-.57.15l-1.35 2.34A8.9 8.9 0 0 0 12 5.5a8.9 8.9 0 0 0-2.86.48L7.79 3.64a.42.42 0 0 0-.57-.15.42.42 0 0 0-.15.57l1.33 2.3A8.06 8.06 0 0 0 4 13.5h16a8.06 8.06 0 0 0-4.4-7.14zM8.75 10.75a.94.94 0 1 1 0-1.88.94.94 0 0 1 0 1.88zm6.5 0a.94.94 0 1 1 0-1.88.94.94 0 0 1 0 1.88z"/>
-            </svg>
-            <span class="appbtn__text">
-              <span class="appbtn__title" data-i18n="android_app">Download Android app</span>
-              <span class="appbtn__sub" id="app-android-sub">Google Play</span>
-            </span>
-          </a>
-        </div>
 
-        <noscript>
-          <p class="join__hint">JavaScript is needed to look up this room.</p>
-        </noscript>
-      </section>
+          <!-- Shown when there is no room to join (404, near-miss or unknown
+               code). No autocapitalize: base58 codes are case-sensitive. -->
+          <form class="codeform" id="codeform" hidden>
+            <input class="codeform__input" id="codeform-input" type="text" maxlength="6"
+                   autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"
+                   enterkeyhint="go" placeholder="Room code" aria-label="Room code"
+                   data-i18n-placeholder="room_code" data-i18n-aria-label="room_code">
+            <button class="btn btn--primary" type="submit" data-i18n="join">Join</button>
+          </form>
 
-    </main>
+          <div class="join__apps" id="join-apps">
+            <!-- hrefs + availability are filled in by room.js (store URLs are constants there) -->
+            <a class="appbtn" id="app-ios">
+              <svg class="appbtn__icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M17.05 12.54c-.03-2.55 2.08-3.77 2.17-3.83-1.18-1.73-3.02-1.97-3.68-2-1.56-.16-3.05.92-3.84.92-.79 0-2.02-.9-3.32-.87-1.7.03-3.28.99-4.16 2.52-1.78 3.08-.45 7.63 1.28 10.13.85 1.22 1.85 2.6 3.17 2.55 1.28-.05 1.76-.83 3.3-.83 1.54 0 1.98.83 3.32.8 1.38-.02 2.25-1.24 3.08-2.47.97-1.42 1.37-2.8 1.39-2.87-.03-.01-2.67-1.02-2.71-4.05z"/>
+                <path d="M14.51 4.99c.7-.85 1.18-2.03 1.05-3.21-1.01.04-2.24.67-2.97 1.52-.65.75-1.22 1.96-1.07 3.11 1.13.09 2.28-.57 2.99-1.42z"/>
+              </svg>
+              <span class="appbtn__text">
+                <span class="appbtn__title" data-i18n="ios_app">Download iOS app</span>
+                <span class="appbtn__sub" id="app-ios-sub">App Store</span>
+              </span>
+            </a>
+            <a class="appbtn" id="app-android">
+              <svg class="appbtn__icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path d="M15.6 6.36l1.33-2.3a.42.42 0 0 0-.15-.57.42.42 0 0 0-.57.15l-1.35 2.34A8.9 8.9 0 0 0 12 5.5a8.9 8.9 0 0 0-2.86.48L7.79 3.64a.42.42 0 0 0-.57-.15.42.42 0 0 0-.15.57l1.33 2.3A8.06 8.06 0 0 0 4 13.5h16a8.06 8.06 0 0 0-4.4-7.14zM8.75 10.75a.94.94 0 1 1 0-1.88.94.94 0 0 1 0 1.88zm6.5 0a.94.94 0 1 1 0-1.88.94.94 0 0 1 0 1.88z"/>
+              </svg>
+              <span class="appbtn__text">
+                <span class="appbtn__title" data-i18n="android_app">Download Android app</span>
+                <span class="appbtn__sub" id="app-android-sub">Google Play</span>
+              </span>
+            </a>
+          </div>
 
-    <footer>
-      <div class="footer-row">
-        <span>© 2026 CouchPad · Tim Vogel</span>
-        <nav class="footer-links">
-          <a id="link-privacy" href="/en/privacy" data-i18n="privacy">Privacy</a>
-          <a id="link-imprint" href="/en/imprint" data-i18n="imprint">Imprint</a>
-          <a href="mailto:info@couchpad.games" data-i18n="contact">Contact</a>
-          <!-- Options are filled in by room.js (its string table is the list). -->
-          <span class="langpick" hidden>
-            <select id="langpick" aria-label="Language" data-i18n-aria-label="language"></select>
-            <svg class="langpick__globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5c2.6 2.6 3.9 5.8 3.9 9.5s-1.3 6.9-3.9 9.5c-2.6-2.6-3.9-5.8-3.9-9.5s1.3-6.9 3.9-9.5z"/></svg>
-            <svg class="langpick__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-          </span>
-        </nav>
-      </div>
-    </footer>
+          <noscript>
+            <p class="join__hint">JavaScript is needed to look up this room.</p>
+          </noscript>
+        </section>
 
+      </main>
+    </div>
   </div>
+
+  <footer class="footer footer--slim">
+    <div class="wrap footer__row">
+      <span>© 2026 CouchPad · Tim Vogel</span>
+      <nav class="footer__links" aria-label="Footer">
+        <a id="link-privacy" href="/en/privacy" data-i18n="privacy">Privacy</a>
+        <a id="link-imprint" href="/en/imprint" data-i18n="imprint">Imprint</a>
+        <a href="mailto:info@couchpad.games" data-i18n="contact">Contact</a>
+        <!-- Options are filled in by room.js (its string table is the list). -->
+        <span class="langpick" hidden>
+          <select id="langpick" aria-label="Language" data-i18n-aria-label="language"></select>
+          <svg class="langpick__globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5c2.6 2.6 3.9 5.8 3.9 9.5s-1.3 6.9-3.9 9.5c-2.6-2.6-3.9-5.8-3.9-9.5s1.3-6.9 3.9-9.5z"/></svg>
+          <svg class="langpick__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </nav>
+    </div>
+  </footer>
 
   <script src="/assets/lang.js?v=4"></script>
   <script src="/assets/room.js?v=14"></script>

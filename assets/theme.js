@@ -1,6 +1,6 @@
 // Light/dark override for the CouchPad site. Shared by every page so a choice
-// made on one follows the visitor everywhere; the landing and room pages carry
-// the .theme-toggle button. No stored choice = follow the system setting
+// made on one follows the visitor everywhere; the home, room and beta pages
+// carry the .theme-toggle button. No stored choice = follow the system setting
 // (theme.css handles that via prefers-color-scheme alone).
 // Loaded synchronously in <head> so the override lands before first paint.
 (function () {
@@ -10,11 +10,10 @@
   try { choice = localStorage.getItem(STORE); } catch (e) { choice = null; }
   if (choice === 'light' || choice === 'dark') root.setAttribute('data-theme', choice);
 
-  // Pages whose browser-bar color follows the page background declare one
-  // theme-color per scheme (media="(prefers-color-scheme: …)"); a forced
-  // scheme has to win over the system one there too, or the bar keeps the
-  // other scheme's color. Pages with a single, unconditional theme-color (the
-  // landing's chrome stripe) are left alone.
+  // Pages declare one theme-color per scheme (media="(prefers-color-scheme:
+  // …)") so the browser bar follows the page background; a forced scheme has
+  // to win over the system one there too, or the bar keeps the other scheme's
+  // color.
   var bars = [].map.call(document.querySelectorAll('meta[name="theme-color"][media]'), function (m) {
     return { el: m, color: m.content, scheme: m.media.indexOf('dark') !== -1 ? 'dark' : 'light' };
   });

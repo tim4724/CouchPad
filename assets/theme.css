@@ -1,79 +1,57 @@
 /* ==========================================================
-   CouchPad — design tokens ("Ink & Confetti")
-   Neutral charcoal chrome carries the structure (stripes,
-   waves, ribbons); color is confined to the game art and a
-   few deliberate accents. Role rules:
-   - --chrome: header/footer stripes, waves, status ribbons.
-     Same value in both schemes so the stripes are the brand's
-     constant; the page background changes around them.
-   - --action (coral): CTA + text marks ONLY, and only at
-     large/bold sizes — it is 3.4:1 against the light bg, so
-     small text must use --on-surface instead.
-   - --confetti-*: decorative dots (facts markers, scan-art
-     buttons). Never used for text.
+   CouchPad: design tokens
+   Neutral ink and paper; the game posters carry the color.
+   Role rules:
+   - --action-solid (coral): the fill of a page's one primary
+     button, behind white label text (AA, 4.6:1). Nothing else.
+   - --confetti-*: the controller buttons in the scan drawing.
+     Never used for text.
    Follows the system light/dark setting; dark is near-black
    by design, not a tinted grey.
    ========================================================== */
 
 /* Self-hosted (CSP font-src 'self'), latin subset, variable weight. */
 @font-face {
-  font-family: "Baloo 2";
-  src: url("/assets/fonts/baloo2-latin-var.woff2") format("woff2");
-  font-weight: 700 800;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Nunito";
-  src: url("/assets/fonts/nunito-latin-var.woff2") format("woff2");
-  font-weight: 600 800;
+  font-family: "Outfit";
+  src: url("/assets/fonts/outfit-latin-var.woff2") format("woff2");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 :root {
-  --font-sans: "Nunito", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Baloo 2", var(--font-sans);
+  --font-sans: "Outfit", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* Brand constants (scheme-independent) */
-  --chrome: #26242C;
-  --action: #F04A50;
+  --action-solid: #D63C43;
+  --action-solid-hover: #C2333A;
   --confetti-coral: #F04A50;
   --confetti-amber: #FFB020;
   --confetti-teal: #2AA198;
   --confetti-violet: #8B7CF0;
 
-  /* Game accents (from games-manifest.json) — used sparingly; the
-     poster art does the real color work. */
-  --accent-hexstacker: #FF6B6B;
-  --accent-tinytrack: #4ECDC4;
-  --accent-powder: #A78BFA;
-
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 22px;
-  --radius-pill: 999px;
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.25s ease;
-
   /* ---- Light scheme (default): faintly warm paper ---- */
   --bg: #FAF9F7;
-  --surface: #FAF9F7;
-  --surface-lowest: #FFFFFF;
   --surface-low: #EFEDEA;
-  --surface-container: #E7E4DF;
   --surface-high: #DDDAD3;
   --surface-highest: #D5D1C9;
   --on-surface: #26242C;
   --on-surface-variant: #5E5A66;
   --outline: #77717F;
   --outline-variant: #DCD9D3;
-  --primary: #26242C;
-  --on-primary: #FFFFFF;
-  --scrim: rgba(20, 19, 24, 0.55);
+  /* Cards, outlined (ghost) controls, status tags, poster glow, home TV */
+  --card: #FFFFFF;
+  --ghost-bg: #FFFFFF;
+  --ghost-line: #CFCBC4;
+  --tag-beta-bg: #FCEBD0;
+  --tag-beta-ink: #7A4B00;
+  --glow-filter: blur(80px) saturate(1.4);
+  --glow-opacity: 0.3;
+  --tv-body: #18171C;
+  --tv-edge: rgba(255, 255, 255, 0.06);
+  --tv-shadow: 0 40px 90px rgba(20, 18, 26, 0.28);
+  --tv-light-opacity: 0.55;
 }
 
 /* Dark values appear twice on purpose: once for the system setting (unless the
@@ -82,44 +60,53 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #110F17;
-    --surface: #110F17;
-    --surface-lowest: #0B0A10;
     --surface-low: #1C1A24;
-    --surface-container: #211E2B;
     --surface-high: #2A2735;
     --surface-highest: #332F3F;
     --on-surface: #F1EFEC;
     --on-surface-variant: #A8A3B1;
     --outline: #8D8798;
     --outline-variant: #2F2B3A;
-    --primary: #F1EFEC;
-    --on-primary: #26242C;
-    --scrim: rgba(0, 0, 0, 0.65);
+    --card: #1C1A24;
+    --ghost-bg: rgba(255, 255, 255, 0.08);
+    --ghost-line: rgba(255, 255, 255, 0.18);
+    --tag-beta-bg: rgba(255, 193, 77, 0.14);
+    --tag-beta-ink: #FFC14D;
+    --glow-filter: blur(70px) saturate(1.5) brightness(0.42);
+    --glow-opacity: 1;
+    --tv-body: #25232C;
+    --tv-edge: rgba(255, 255, 255, 0.10);
+    --tv-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+    --tv-light-opacity: 0.42;
   }
 }
 :root[data-theme="dark"] {
   --bg: #110F17;
-  --surface: #110F17;
-  --surface-lowest: #0B0A10;
   --surface-low: #1C1A24;
-  --surface-container: #211E2B;
   --surface-high: #2A2735;
   --surface-highest: #332F3F;
   --on-surface: #F1EFEC;
   --on-surface-variant: #A8A3B1;
   --outline: #8D8798;
   --outline-variant: #2F2B3A;
-  --primary: #F1EFEC;
-  --on-primary: #26242C;
-  --scrim: rgba(0, 0, 0, 0.65);
+  --card: #1C1A24;
+  --ghost-bg: rgba(255, 255, 255, 0.08);
+  --ghost-line: rgba(255, 255, 255, 0.18);
+  --tag-beta-bg: rgba(255, 193, 77, 0.14);
+  --tag-beta-ink: #FFC14D;
+  --glow-filter: blur(70px) saturate(1.5) brightness(0.42);
+  --glow-opacity: 1;
+  --tv-body: #25232C;
+  --tv-edge: rgba(255, 255, 255, 0.10);
+  --tv-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+  --tv-light-opacity: 0.42;
 }
 
 /* Kill the blue tap-highlight box mobile browsers overlay on links
-   and buttons; our own :active/:hover states carry the feedback. */
+   and buttons; our own :hover states carry the feedback. */
 * { -webkit-tap-highlight-color: transparent; }
 
-/* Site-wide keyboard-focus ring. Components with their own ring (e.g. the
-   hero CTA on dark artwork) override this with a more specific selector. */
+/* Site-wide keyboard-focus ring. */
 :focus-visible {
   outline: 2px solid var(--outline);
   outline-offset: 3px;

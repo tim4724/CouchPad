@@ -20,14 +20,22 @@ and `assets/beta.css` once the apps are in production.
 
 ## Design
 
-Neutral **MONO graphite chrome**, mirroring the CouchPad Controller launcher
-(console-shell pattern — the game posters carry the color, the chrome stays
-neutral). Stock system type, Material 3 surface values, follows the system
-light/dark setting. Tokens live in `assets/theme.css`.
+Neutral ink and paper; the game posters carry the color. Follows the system
+light/dark setting (with a toggle), and both schemes share one layout. Tokens
+live in `assets/theme.css`; fonts are self-hosted in `assets/fonts/`.
+
+One face (Outfit) everywhere. `assets/site.css` holds what the home, room and
+beta pages share: a bar-less header, the blurred-poster glow (behind the room
+page's top), pill buttons and the footer panel. The home hero instead shows the
+flagship poster on a drawn TV with a confetti-coloured light behind it. Posters
+are shown whole, never cropped. Coral fills only a page's one primary button.
+The legal pages (`assets/legal.css`) have no header or footer: the controller
+apps show them in-app under their own title bar and hide the page's
+`.legal-shell > h1`, so keep that selector working.
 
 ## Structure
 
-- `index.html`, `de/index.html` — landing page (EN / DE)
+- `index.html`, `de/index.html` + `assets/home.css` — home page (EN / DE)
 - `room.html` + `assets/room.js` — room join page, served at `/<CODE>#<instance>`
   (nginx maps any 6-char base58 path to it); browser fallback for the app deep
   links in `.well-known/`. Also the site's 404 page (with status 404), offering
@@ -38,9 +46,8 @@ light/dark setting. Tokens live in `assets/theme.css`.
   launcher). The apps match their bundled copy by **filename**, and cache
   anything they didn't ship by URL without revalidating — so re-rendered artwork
   ships under a new name (`…-v2.webp`) here, in both app bundles and in the
-  landing page (each poster's `srcset` appears twice, on the poster and on its
-  blurred `.ambient__bg` copy; keep the two identical so they share one
-  download); never as a `?v=` bump, which the filename match would swallow.
+  home page's hero `srcset`; never as a `?v=` bump, which the filename match
+  would swallow.
   `video` is a trailer on the game's own server; the apps cache it by
   full URL forever too, but ship no copy to match, so a re-rendered trailer is a
   `?v=` bump on `video` (here and in both app bundles), made only once the new
@@ -58,7 +65,8 @@ light/dark setting. Tokens live in `assets/theme.css`.
   in the sitemap
 - `privacy.html`, `imprint.html` — legal pages (German, umbrella policy for all
   CouchPad infra); English versions in `en/`
-- `assets/` — CSS (design tokens in `theme.css`), 16×9 game posters and square
+- `assets/` — CSS (tokens in `theme.css`, shared page parts in `site.css`, one
+  stylesheet per page), 16×9 game posters and square
   brand icons in `artwork/`
 - `nginx.conf`, `Dockerfile` — the deployed container; fully static otherwise
 

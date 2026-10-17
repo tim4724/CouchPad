@@ -1,0 +1,287 @@
+/* Home page (EN root + /de/), on site.css: a centred pitch over the flagship
+   poster, shown whole on a drawn TV that lights the room behind it. */
+
+/* Pitch, buttons, then the TV; on phones the buttons drop below the TV (see
+   the media query), so they sit under the game they launch. */
+.hero { position: relative; isolation: isolate; overflow: hidden; }
+.hero__grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 64px 0 96px;
+}
+.hero h1 {
+  max-width: 820px;
+  font-size: 66px;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  margin-bottom: 18px;
+  text-wrap: balance;
+}
+/* Keeps "a party console." together so the headline breaks before it. */
+.hero h1 span { white-space: nowrap; }
+.hero__lead {
+  font-size: 20px;
+  color: var(--on-surface-variant);
+  margin-bottom: 28px;
+}
+.hero__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 56px; }
+.feature { order: 1; width: 100%; max-width: 980px; }
+
+/* The TV: bezel, neck and base. The poster on it is shown whole. */
+.tv { position: relative; }
+.tv__screen {
+  padding: 12px;
+  border-radius: 22px;
+  background: var(--tv-body);
+  box-shadow: var(--tv-shadow), inset 0 0 0 1px var(--tv-edge);
+}
+.feature__poster { display: block; width: 100%; height: auto; border-radius: 11px; }
+.tv__stand { position: relative; width: 64px; height: 30px; margin: 0 auto; background: var(--tv-body); }
+.tv__stand::after {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 0;
+  width: 300px; height: 9px;
+  margin-left: -150px;
+  border-radius: 9px 9px 3px 3px;
+  background: var(--tv-body);
+}
+/* Screen light: the controller's confetti colours spill out behind the TV
+   (a blur of the poster itself turns grey, the poster is mostly dark). */
+.tv__light {
+  position: absolute;
+  inset: 4% -4% 10%;
+  z-index: -1;
+  filter: blur(64px);
+  opacity: var(--tv-light-opacity);
+  background:
+    radial-gradient(38% 55% at 18% 60%, var(--confetti-coral), transparent),
+    radial-gradient(40% 55% at 48% 38%, var(--confetti-violet), transparent),
+    radial-gradient(38% 55% at 82% 58%, var(--confetti-teal), transparent),
+    radial-gradient(30% 40% at 62% 88%, var(--confetti-amber), transparent);
+}
+.feature figcaption { padding-top: 28px; }
+.feature__name { font-size: 21px; font-weight: 600; letter-spacing: -0.03em; }
+.feature__tagline { font-size: 15px; color: var(--on-surface-variant); margin-top: 2px; }
+
+/* ---- Sections ---- */
+.section { padding-top: 104px; }
+/* The hero's bottom padding already spaces the first section. */
+.section:first-child { padding-top: 16px; }
+.section__head { margin-bottom: 32px; }
+.section h2 { font-size: 42px; line-height: 1.05; }
+
+/* ---- Game cards ---- */
+.games {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.game {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--outline-variant);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.game__art { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #141318; }
+.game--soon .game__art { filter: saturate(0.85); }
+.game__body { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px 22px; flex: 1; }
+.game__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.game h3 { font-size: 22px; }
+.game p { color: var(--on-surface-variant); font-size: 16px; }
+.game__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.players { display: inline-flex; align-items: center; gap: 7px; }
+.players svg { width: 20px; height: 20px; color: var(--on-surface-variant); }
+/* Where a game runs, in .btn--ghost's outline, linking to the game. Only
+   platforms visitors can open today are listed. */
+.plats { display: flex; gap: 6px; }
+.plat {
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  background: var(--ghost-bg);
+  border: 1.5px solid var(--ghost-line);
+  color: var(--on-surface);
+}
+.plat:hover { border-color: var(--on-surface); }
+.plat svg { width: 16px; height: 16px; }
+.game__foot {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--outline-variant);
+  font-size: 15px;
+  font-weight: 600;
+}
+/* The link fills the whole strip, which tints on hover like a button bar. */
+.game__foot a {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  margin: -14px -22px;
+  padding: 14px 22px;
+  text-decoration: none;
+}
+.game__foot a:hover { background: color-mix(in srgb, currentColor 7%, transparent); }
+/* Empty alt text keeps the arrow out of the accessible name. A margin, not a
+   space: the link is a flex box, which drops the pseudo's leading space. */
+.game__foot a::after { content: "→"; content: "→" / ""; margin-left: 0.3em; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.tag--beta { background: var(--tag-beta-bg); color: var(--tag-beta-ink); }
+.tag--soon { background: var(--surface-high); color: var(--on-surface-variant); }
+
+/* ---- Scan to play ---- */
+/* One panel: the drawing (straight on the panel, no inner box) beside the
+   pitch, the four facts as its bottom strip. The facts get a confetti dot
+   each and no dividers, so they read as a list, not as tabs or buttons. */
+.how {
+  background: var(--surface-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: 28px;
+}
+.how__top {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+  padding: 36px 48px;
+}
+.how__art { color: var(--on-surface); }
+.how__art svg { display: block; width: 100%; height: auto; }
+.how__cut { fill: var(--surface-low); }
+.how__lead { color: var(--on-surface-variant); font-size: 19px; margin-top: 14px; }
+.howfacts {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  gap: 16px 32px;
+  padding: 24px 48px;
+  border-top: 1px solid var(--outline-variant);
+}
+.howfacts li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+/* Centred on the first line when a fact wraps. */
+.howfacts li::before {
+  content: "";
+  flex: none;
+  width: 10px; height: 10px;
+  margin-top: 0.4em;
+  border-radius: 50%;
+  background: var(--confetti-coral);
+}
+.howfacts li:nth-child(2)::before { background: var(--confetti-amber); }
+.howfacts li:nth-child(3)::before { background: var(--confetti-teal); }
+.howfacts li:nth-child(4)::before { background: var(--confetti-violet); }
+
+/* ---- Language-suggestion banner (EN root only; lang.js shows it) ----
+   Globe + sentence, a pill link, a round close button. One row where it fits;
+   on phones the pill drops under the sentence. */
+.langbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-areas: "globe text accept close";
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 9px 9px 9px 16px;
+  border: 1px solid var(--outline-variant);
+  border-radius: 16px;
+  background: var(--card);
+  font-size: 15px;
+}
+.langbar[hidden] { display: none; }
+.langbar__globe { grid-area: globe; width: 19px; height: 19px; color: var(--on-surface-variant); }
+.langbar__text { grid-area: text; }
+.langbar__accept {
+  grid-area: accept;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--on-surface);
+  color: var(--bg);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.langbar__dismiss {
+  grid-area: close;
+  width: 36px; height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  border-radius: 999px;
+}
+.langbar__dismiss:hover { color: var(--on-surface); background: var(--surface-low); }
+.langbar__dismiss svg { width: 18px; height: 18px; }
+
+@media (max-width: 960px) {
+  .hero h1 { font-size: 54px; }
+  .how__top { grid-template-columns: 220px minmax(0, 1fr); gap: 40px; }
+  .howfacts { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: normal; }
+  .games { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .hero h1 { font-size: 36px; }
+  .section h2 { font-size: 32px; }
+  .hero__grid { padding: 40px 0 64px; }
+  .hero__lead { margin-bottom: 32px; }
+  .hero__ctas { order: 2; margin: 28px 0 0; }
+  .tv__screen { padding: 6px; border-radius: 12px; }
+  .feature__poster { border-radius: 7px; }
+  .tv__stand { width: 32px; height: 16px; }
+  .tv__stand::after { width: 150px; height: 5px; margin-left: -75px; border-radius: 5px 5px 2px 2px; }
+  .tv__light { filter: blur(40px); }
+  .feature figcaption { padding-top: 20px; }
+  .section { padding-top: 72px; }
+  /* Phones: heading and sentence first, the drawing centred below them. */
+  .how__top { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 28px 20px 24px; }
+  .how__art { order: 1; width: 220px; justify-self: center; }
+  .howfacts { gap: 14px 16px; padding: 20px; }
+  .howfacts li { gap: 10px; font-size: 18px; }
+  .langbar {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "globe text close" "accept accept accept";
+    align-items: start;
+    padding: 14px;
+  }
+  .langbar__dismiss { margin: -8px -9px 0 0; }
+  .langbar__accept { text-align: center; }
+}

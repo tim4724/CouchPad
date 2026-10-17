@@ -1,61 +1,49 @@
-/* Room join page (couchpad.games/<CODE>) — layered on theme.css + landing.css.
-   The card starts as neutral chrome around an empty art slot and becomes the
-   landing page's ambient game card (.ambient, landing.css) once the relay
-   tells us which game owns the room. */
+/* Room join page (couchpad.games/<CODE>, also the site's 404), on site.css.
+   Starts as an empty art slot; once the relay says which game owns the room,
+   room.js shows its poster (frameless, like the home page's) and puts the
+   same poster in the page glow behind it. */
 
 /* room.js toggles most of the page via the hidden attribute; author display
    values (flex, grid, …) would silently beat the UA's [hidden] rule, which
    has bitten us more than once. Settle it wholesale for this page. */
 [hidden] { display: none !important; }
 
-/* Fill the viewport: the content keeps its place below the topbar and the
-   spare height collects above the footer, pinning it to the bottom edge.
-   (Scoped to this page — room.css only loads on room.html.) */
-.wrap {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-}
+/* Fill the viewport: the glow area takes the spare height, pinning the footer
+   to the bottom edge. */
+body { display: flex; flex-direction: column; }
+.roomtop { flex: 1 0 auto; }
 
 .room {
-  /* The topbar's own padding is the gap on phones, growing a little on tall
-     screens; the auto bottom margin takes all remaining slack, pinning the
-     footer to the viewport bottom edge (the footer's own clamp() margin stays
-     as the minimum gap). */
-  margin-top: clamp(0rem, 6vh - 2.5rem, 2.5rem);
-  margin-bottom: auto;
   display: grid;
-  gap: clamp(1.25rem, 3vh, 2rem);
+  gap: 32px;
   max-width: 760px;
+  padding: 40px 0 64px;
 }
 
-/* ---- Room card ---- */
-.roomcard {
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--outline-variant);
-  background: var(--surface-low);
-  padding: clamp(0.75rem, 2.4vw, 1.25rem);
-}
+/* ---- Room card: the poster slot and the caption under it ---- */
 .roomcard__media {
   position: relative;
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius-lg);
+  border-radius: 18px;
+  overflow: hidden;
 }
-/* No poster (looking up, or not found): a quiet slot, not the frame's black. */
+/* No poster (looking up, or not found): a quiet slot. */
 .roomcard:not(.ambient) .roomcard__media {
-  background: var(--surface-container);
-  box-shadow: none;
+  background: var(--surface-low);
+  border: 1px solid var(--outline-variant);
 }
 /* While the lookup runs (the wait badge is up), the empty slot breathes. */
 .roomcard:has(.badge--wait:not([hidden])) .roomcard__media {
   animation: roomcard-wait 1.6s ease-in-out infinite alternate;
 }
 @keyframes roomcard-wait { to { background: var(--surface-high); } }
+/* Shown whole (never cropped), no frame: the glow behind it is the frame. */
+.roomcard.ambient .roomcard__media {
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--outline-variant);
+}
 .roomcard__poster { display: block; width: 100%; height: 100%; }
 
-/* Not-found placeholder mark, centered in the slot, dimmed and theme-aware
-   (currentColor). */
+/* Not-found placeholder mark, centered in the slot and dimmed. */
 .roomcard__mark {
   position: absolute;
   top: 50%;
@@ -67,217 +55,158 @@
   opacity: 0.4;
 }
 
-/* The game name is the headline; the code sits quietly beneath it, small
-   enough not to compete. */
-.roomcard__inner { padding: 1rem 0.35rem 0.3rem; }
-
+/* The game name is the headline; the code sits quietly beneath it. */
+.roomcard__inner { padding-top: 20px; }
 .roomcard__game {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 8vw, 2.6rem);
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
   line-height: 1.1;
-  margin-bottom: 0.35rem;
-  color: var(--on-surface);
+  margin-bottom: 6px;
 }
-
 /* Continuous mono, tracked and dimmed: the typeface says "code"; codes are
    case-sensitive (base58), never restyle their case. */
 .roomcard__code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 1.1rem;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 17px;
+  font-weight: 600;
   letter-spacing: 0.16em;
   color: var(--on-surface-variant);
 }
+.roomcard__meta { margin-top: 8px; font-size: 16px; color: var(--on-surface-variant); }
 
-/* On the ambient blur the type turns white. */
-.roomcard.ambient .roomcard__game { color: #fff; }
-.roomcard.ambient .roomcard__code { color: rgba(255, 255, 255, 0.72); }
-
-/* Transitional/error copy under the code. */
-.roomcard__meta {
-  margin-top: 0.5rem;
-  font-size: 0.98rem;
-  color: var(--on-surface-variant);
+/* Transitional and error states only; room.js hides it once the room is live.
+   The dot carries the state. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--surface-low);
+  font-size: 13px;
+  font-weight: 600;
 }
-
-/* Status badge variants (dot color signals state; landing's .badge supplies
-   the shape). The badge only communicates transitional/error states — once
-   the room is live, room.js hides it — so it always sits on chrome: give it
-   a readable fill in both schemes. */
-.roomcard .badge {
-  margin-bottom: 0.6rem;
-  background: var(--surface-highest);
-  color: var(--on-surface);
-}
-.badge--wait::before { background: var(--outline); }
-.badge--err::before  { background: #E5484D; }
+.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--outline); }
+.badge--err::before { background: #E5484D; }
 
 /* ---- Join options ---- */
-.join {
-  display: grid;
-  gap: 0.9rem;
-}
-.joinbtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 3.6rem;
-  padding: 0.9em 1.5em;
-  border-radius: var(--radius-pill);
-  background: var(--primary);
-  color: var(--on-primary);
-  /* The page's one primary action: the landing CTA's display face and weight. */
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.3rem;
-  text-decoration: none;
-  transition: transform var(--transition-fast), opacity var(--transition-fast);
-}
-.joinbtn:hover { opacity: 0.92; }
-.joinbtn:active { transform: translateY(1px); }
-.joinbtn__label {
-  text-box-trim: trim-both;
-  text-box-edge: cap alphabetic;
-}
+.join { display: grid; gap: 12px; align-content: start; }
+.joinbtn { min-height: 56px; font-size: 18px; }
 
-/* Code entry (404 / room not found): a pill field with the join button
-   inside it, in place of the primary button (hidden in these states). The
-   field uses the code's mono, tracked face. */
+/* Code entry (404 / room not found): a pill field with the join button inside
+   it, in place of the play button. The field uses the code's mono face. */
 .codeform {
   display: flex;
-  gap: 0.5rem;
-  padding: 0.4rem;
-  border-radius: var(--radius-pill);
-  background: var(--surface-low);
-  border: 1px solid var(--outline-variant);
-  transition: border-color var(--transition-fast);
+  gap: 8px;
+  padding: 5px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1.5px solid var(--ghost-line);
 }
-.codeform:focus-within { border-color: var(--outline); }
+.codeform:focus-within { border-color: var(--on-surface); }
 .codeform__input {
   flex: 1;
   width: 0; /* else its default 20-char width sets the grid column on phones */
-  padding: 0 0.9rem;
+  padding: 0 14px;
   border: 0;
   background: none;
   color: var(--on-surface);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
   letter-spacing: 0.16em;
 }
 .codeform__input:focus { outline: none; }
 .codeform__input::placeholder {
   font-family: var(--font-sans);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0;
   color: var(--on-surface-variant);
 }
-/* .joinbtn supplies the look; sized down to sit inside the field. */
-.codeform__btn {
-  min-height: 2.9rem;
-  padding: 0 1.5em;
-  border: 0;
-  font-size: 1.15rem;
-  cursor: pointer;
-}
 
-.join__apps {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.9rem;
-}
-@media (max-width: 560px) {
-  .join__apps { grid-template-columns: 1fr; }
-}
+/* Store links, in .btn--ghost's outline. */
+.join__apps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .appbtn {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
-  padding: 0.9rem 1.1rem;
-  background: var(--surface-low);
-  border: 1px solid var(--outline-variant);
-  border-radius: var(--radius-lg);
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1.5px solid var(--ghost-line);
+  border-radius: 18px;
   text-decoration: none;
-  transition: transform var(--transition-normal), border-color var(--transition-normal);
 }
-.appbtn:hover { transform: translateY(-2px); border-color: var(--outline); }
-.appbtn__icon { width: 1.9rem; height: 1.9rem; flex: none; }
+.appbtn:hover { border-color: var(--on-surface); }
+.appbtn__icon { width: 28px; height: 28px; flex: none; }
 .appbtn__text { display: flex; flex-direction: column; line-height: 1.35; }
-.appbtn__title { font-weight: 700; font-size: 0.98rem; }
-.appbtn__sub { font-size: 0.82rem; color: var(--on-surface-variant); }
+.appbtn__title { font-size: 16px; font-weight: 600; }
+.appbtn__sub { font-size: 14px; color: var(--on-surface-variant); }
 /* Store listing not live yet (room.js leaves the href off). */
-.appbtn[aria-disabled="true"] {
-  opacity: 0.55;
-  cursor: default;
-}
-.appbtn[aria-disabled="true"]:hover { transform: none; border-color: var(--outline-variant); }
+.appbtn[aria-disabled="true"] { opacity: 0.55; cursor: default; }
+.appbtn[aria-disabled="true"]:hover { border-color: var(--ghost-line); }
 
-.join__hint {
-  font-size: 0.92rem;
-  color: var(--on-surface-variant);
-  max-width: 62ch;
-}
+.join__hint { font-size: 15px; color: var(--on-surface-variant); }
 
 /* ---- Footer language picker: a pill with a globe in front and a chevron
    behind, so it reads as a control rather than one more link. The native
    select fills the whole pill (the tap target) and opens the system picker;
    the icons are decoration on top of it. ---- */
-.footer-links { align-items: center; }
 .langpick { position: relative; display: inline-flex; align-items: center; }
 .langpick select {
   appearance: none;
   -webkit-appearance: none;
   font: inherit;
   color: var(--on-surface);
-  background: var(--surface-low);
-  border: 1px solid var(--outline-variant);
-  border-radius: var(--radius-pill);
-  min-height: 2.5rem;
-  padding: 0.35rem 2rem 0.35rem 2.1rem;
+  background: var(--card);
+  border: 1.5px solid var(--ghost-line);
+  border-radius: 999px;
+  min-height: 40px;
+  padding: 6px 32px 6px 34px;
   cursor: pointer;
   field-sizing: content; /* as wide as the chosen name, where supported */
-  transition: border-color var(--transition-fast);
 }
-.langpick select:hover { border-color: var(--outline); }
+.langpick select:hover { border-color: var(--on-surface); }
 .langpick svg {
   position: absolute;
-  width: 1.05rem; height: 1.05rem;
+  width: 17px; height: 17px;
   pointer-events: none;
   color: var(--on-surface-variant);
 }
-.langpick__globe { left: 0.8rem; }
-.langpick__chevron { right: 0.75rem; width: 0.8rem; height: 0.8rem; }
+.langpick__globe { left: 12px; }
+.langpick__chevron { right: 12px; width: 13px; height: 13px; }
 
 /* ---- Wide screens: card and options side by side. Two ways in: a real
-   desktop (880px+), or a landscape phone — wide but short, where the stacked
+   desktop (880px+), or a landscape phone, wide but short, where the stacked
    layout would bury the buttons below the fold. ---- */
 @media (min-width: 880px), (min-width: 640px) and (max-height: 520px) {
   .room {
-    max-width: 1060px;
+    max-width: none;
     grid-template-columns: minmax(0, 7fr) minmax(300px, 5fr);
+    gap: 48px;
     align-items: start;
+    padding: 56px 0 88px;
   }
-  .join { align-content: start; }
   .join__apps { grid-template-columns: 1fr; }
 }
 /* Landscape phone: too short for the art and the caption under it, so the
-   card dissolves: the art takes the left column and the caption moves above
-   the buttons. Without the card there is no blur to sit on, so the type goes
-   back to the page colors. */
+   caption moves above the buttons. */
 @media (min-width: 640px) and (max-height: 520px) {
   .room {
     grid-template-areas: "media info" "media join";
     grid-template-rows: auto 1fr;
+    gap: 16px 32px;
+    padding: 24px 0 32px;
   }
   .roomcard { display: contents; }
-  .roomcard .ambient__bg { display: none; }
   .roomcard__media { grid-area: media; }
   .roomcard__inner { grid-area: info; padding: 0; }
   .join { grid-area: join; }
-  .roomcard__game { font-size: 1.9rem; }
-  .roomcard.ambient .roomcard__game { color: var(--on-surface); }
-  .roomcard.ambient .roomcard__code { color: var(--on-surface-variant); }
+  .roomcard__game { font-size: 30px; }
+}
+@media (max-width: 560px) {
+  .room { padding: 24px 0 40px; gap: 24px; }
+  .roomcard__game { font-size: 32px; }
+  .join__apps { grid-template-columns: 1fr; }
 }

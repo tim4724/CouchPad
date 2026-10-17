@@ -1,0 +1,173 @@
+/* Shared look of the web pages (home, room, beta): base type, header, glow,
+   buttons and footer. Tokens (--bg, --card, --glow-*, …) come from theme.css,
+   linked first; each page adds its own stylesheet after this one. The legal
+   pages are also shown inside the apps and keep their own legal.css.
+   Coral (--action-solid) fills the one primary button of a page only;
+   everything else is ink, muted ink and lines. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--on-surface);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  min-height: 100vh; /* fallback for browsers without dvh (Safari < 15.4) */
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; }
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
+
+.wrap {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ---- Glow: a game poster again, blurred far past recognition, behind the
+   top of a page (faint in light). Oversized so the blur's soft edge falls
+   outside the box; a fade at the bottom hands over to plain --bg. ---- */
+.glow { position: relative; isolation: isolate; overflow: hidden; }
+.glow__img {
+  position: absolute;
+  top: -10%; left: -10%;
+  width: 120%; height: 120%;
+  object-fit: cover;
+  filter: var(--glow-filter);
+  opacity: var(--glow-opacity);
+  z-index: -2;
+}
+.glow::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  z-index: -1;
+}
+
+/* ---- Header: no bar, a hairline under it ---- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 76px;
+  border-bottom: 1px solid var(--outline-variant);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+.brand svg { width: 30px; height: 30px; flex: none; }
+/* The gamepad mark: tile in ink, glyph cut in the page colour. The glyph is
+   the launcher app icon's shape; favicon.svg has fatter controls for 16px and
+   looks clumsy at this size, so don't copy it from there. */
+.mark__tile { fill: var(--on-surface); }
+.mark__glyph { fill: var(--bg); }
+.topnav { display: flex; gap: 28px; }
+.topnav a, .topbar__lang {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  text-decoration: none;
+}
+.topnav a:hover, .topbar__lang:hover { color: var(--on-surface); }
+
+/* Shows the scheme it switches TO: moon in light mode, sun in dark. The
+   visibility rules mirror theme.css's forced/system split; keep in sync. */
+.theme-toggle {
+  border: 0;
+  background: none;
+  color: var(--on-surface-variant);
+  width: 36px; height: 36px;
+  margin-right: -8px; /* glyph, not tap area, on the content edge */
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border-radius: 999px;
+}
+.theme-toggle:hover { color: var(--on-surface); background: var(--ghost-bg); }
+.theme-toggle svg { width: 19px; height: 19px; }
+.theme-toggle__sun { display: none; }
+.theme-toggle__moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle__sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle__moon { display: none; }
+}
+:root[data-theme="dark"] .theme-toggle__sun { display: block; }
+:root[data-theme="dark"] .theme-toggle__moon { display: none; }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn--primary { background: var(--action-solid); color: #fff; }
+.btn--primary:hover { background: var(--action-solid-hover); }
+.btn--ghost {
+  background: var(--ghost-bg);
+  color: var(--on-surface);
+  border: 1.5px solid var(--ghost-line);
+}
+.btn--ghost:hover { border-color: var(--on-surface); }
+.btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ---- Footer: a soft panel. The home page's has the brand and a base row;
+   the other pages use the one-row --slim variant. ---- */
+.footer {
+  margin-top: 112px;
+  background: var(--surface-low);
+  border-top: 1px solid var(--outline-variant);
+  color: var(--on-surface-variant);
+  padding: 56px 0 40px;
+  font-size: 15px;
+}
+.footer .mark__glyph { fill: var(--surface-low); }
+.footer__top, .footer__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px 48px;
+}
+.footer .brand { color: var(--on-surface); margin-bottom: 12px; }
+.footer__links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding-top: 4px; }
+.footer a { text-decoration: none; }
+.footer__links a:hover { color: var(--on-surface); }
+.footer__base {
+  border-top: 1px solid var(--outline-variant);
+  margin-top: 40px;
+  padding-top: 24px;
+  font-size: 14px;
+}
+.footer--slim { margin-top: 0; padding: 22px 0; }
+.footer--slim .footer__row { align-items: center; gap: 12px 32px; }
+.footer--slim .footer__links { padding-top: 0; }
+
+@media (max-width: 960px) {
+  .topnav { display: none; }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 0 16px; }
+}
