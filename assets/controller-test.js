@@ -265,6 +265,38 @@
   $('hbogus').onclick = function () { call('haptic', ['bogus', scale()]); };
   $('hnan').onclick = function () { call('haptic', ['click', NaN]); };
 
+  // ---- §12 hapticComposition(steps): a held rumble (25 low ticks 60 ms apart,
+  // ~1.8 s, re-issued every 1.5 s, stopped with an empty sequence on release), a
+  // timed knock, and a malformed middle step that must cut the sequence to one click.
+  function step(primitive, delay) { return { primitive: primitive, scale: scale(), delay: delay }; }
+  var rumbleTimer = null;
+  function rumble() {
+    var steps = [];
+    for (var i = 0; i < 25; i++) steps.push(step('low_tick', i ? 60 : 0));
+    call('hapticComposition', [steps]);
+  }
+  function rumbleStop() {
+    if (rumbleTimer === null) return;
+    clearInterval(rumbleTimer);
+    rumbleTimer = null;
+    call('hapticComposition', [[]]);
+  }
+  $('chold').addEventListener('pointerdown', function (e) {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    rumbleStop();
+    rumble();
+    rumbleTimer = setInterval(rumble, 1500);
+  });
+  $('chold').addEventListener('pointerup', rumbleStop);
+  $('chold').addEventListener('pointercancel', rumbleStop);
+  $('chold').addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  $('cknock').onclick = function () {
+    call('hapticComposition', [[step('click', 0), step('thud', 100), step('click', 300)]]);
+  };
+  $('cprefix').onclick = function () {
+    call('hapticComposition', [[step('click', 0), step('bogus', 100), step('click', 100)]]);
+  };
+
   // ---- Tilt: iOS gates the sensors behind requestPermission(), which must come
   // from a tap; the launcher grants it for allow-listed origins without a dialog.
   var tilting = false;
