@@ -6,7 +6,7 @@
 <!-- viewport-fit=cover is what makes env(safe-area-inset-*) non-zero under the launcher (§5). -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>CouchPad contract test controller</title>
+<title>Paper Balloon contract test controller</title>
 <!-- §4: the launcher's status-bar icons follow this, watched live. §2: the name sheet
      reads it, theme-color and :root's accent-color when editName() is called. The §4
      buttons rewrite all three. -->
@@ -16,7 +16,7 @@
 <!-- §10: the earliest a controller can ask for landscape (?orient=landscape). An
      external file, not inline — this origin ships `script-src 'self'`, which blocks
      inline script. Not deferred: it must run during head parsing. -->
-<script src="/assets/controller-orient.js?v=1"></script>
+<script src="/assets/controller-orient.js?v=2"></script>
 </head>
 <body>
 <div id="zone" hidden><i></i></div>
@@ -26,7 +26,7 @@
   <h1>Contract test controller</h1>
   <p class="row"><span id="mode" class="badge">…</span></p>
   <dl>
-    <dt>CouchPadHost</dt><dd id="bridge">—</dd>
+    <dt>PaperBalloonHost</dt><dd id="bridge">—</dd>
   </dl>
 
   <section>
@@ -170,6 +170,6 @@
 </dialog>
 
 <div id="envprobe"></div>
-<script src="/assets/controller-test.js?v=6"></script>
+<script src="/assets/controller-test.js?v=7"></script>
 </body>
 </html>

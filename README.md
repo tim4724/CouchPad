@@ -1,6 +1,6 @@
-# couchpad.games
+# paperballoon.games
 
-Static landing site for **CouchPad** — the umbrella brand for party games
+Static landing site for **Paper Balloon** — the umbrella brand for party games
 where everyone plays together on the TV/screen and phones are the controllers
 (scan a QR to play, no install required).
 
@@ -8,11 +8,11 @@ Flagship game: **HexStacker Party** — live at
 [hexstacker.com](https://hexstacker.com) and on the
 [Apple TV App Store](https://apps.apple.com/app/hexstacker-party/id6788876779).
 **Tiny Track Party** (kart racer) is playable at
-[tinytrack.couchpad.games](https://tinytrack.couchpad.games);
+[tinytrack.paperballoon.games](https://tinytrack.paperballoon.games);
 **Powder** (skiing) is still in development.
 
 The Android TV builds and the phone controller are in closed testing, gated on
-the [testers Google Group](https://groups.google.com/g/couchpadgames) — a Play
+the [testers Google Group](https://groups.google.com/g/paperballoongames) — a Play
 listing 404s for anyone who isn't a member yet. The landing page deliberately
 says nothing about that: it links only what a visitor can actually open. Testers
 are recruited by link instead, through `/beta` (`/de/beta`); delete those pages
@@ -65,7 +65,7 @@ apps show them in-app under their own title bar and hide the page's
   (group, per-app opt-in links, install, 14 days), shared by link. `noindex`, not
   in the sitemap
 - `privacy.html`, `imprint.html` — legal pages (German, umbrella policy for all
-  CouchPad infra); English versions in `en/`
+  Paper Balloon infra); English versions in `en/`
 - `assets/` — CSS (tokens in `theme.css`, shared page parts in `site.css`, one
   stylesheet per page), 16×9 game posters and square
   brand icons in `artwork/`
@@ -93,12 +93,12 @@ none of the nginx routes, so room links and `/privacy` 404 there.
 ## Reaching the test controller from the app
 
 The launcher only loads a page as a controller if `JoinResolver` hands it to
-`joinVerbatim`. **The apex can never do that**: every `couchpad.games` /
-`www.couchpad.games` URL is routed to the sole live game's `controllerBaseUrl`
-instead, whatever its path. A `couchpad.games` **subdomain** does load verbatim,
-which is what `test.couchpad.games` exists for.
+`joinVerbatim`. **The apex can never do that**: every `paperballoon.games` /
+`www.paperballoon.games` URL is routed to the sole live game's `controllerBaseUrl`
+instead, whatever its path. A `paperballoon.games` **subdomain** does load verbatim,
+which is what `test.paperballoon.games` exists for.
 
-- **Any build — tap <https://test.couchpad.games/CPTEST>.** The 6-character path
+- **Any build — tap <https://test.paperballoon.games/PBTEST>.** The 6-character path
   is not decoration: it is all the Android App Links intent filter claims, so a
   shorter or longer one opens the browser instead of the app. Traefik maps it to
   `controller-test.html` (host-scoped, in the private cluster repo — the same

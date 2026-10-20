@@ -45,7 +45,7 @@ jobs:
             type=semver,pattern={{major}}
 
       # The image name follows github.repository, so it became
-      # ghcr.io/tim4724/couchpad with the repo rename. The cluster pulls it
+      # ghcr.io/tim4724/paperballoon with the repo rename. The cluster pulls it
       # anonymously (the Deployment carries no imagePullSecret), so this package
       # must be public — a newly created GHCR package may start out private.
       - name: Build and push image
@@ -97,17 +97,17 @@ jobs:
 
           echo "Deploying ${IMAGE} to production"
           cd deploy
-          kustomize edit set image "ghcr.io/tim4724/couchpad=${IMAGE}"
+          kustomize edit set image "ghcr.io/tim4724/paperballoon=${IMAGE}"
 
           echo "--- rendered manifest ---"
           kustomize build .
 
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/couchpad-site \
-            -n couchpad-site --timeout=120s
+          kubectl rollout status deployment/paperballoon-site \
+            -n paperballoon-site --timeout=120s
 
           {
             echo "### Production Deploy ${TAG}"
             echo "- Image: \`${IMAGE}\`"
-            echo "- URL: https://couchpad.games"
+            echo "- URL: https://paperballoon.games"
           } >> "$GITHUB_STEP_SUMMARY"

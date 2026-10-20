@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="CouchPad">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Paper Balloon">
   <!-- The gamepad mark, matching the launcher app icon (Couch-Games-Controller
-       ios/CouchPad/AppIcon.icon/Assets/controller.svg): same silhouette, same -8°
+       ios/PaperBalloon/AppIcon.icon/Assets/controller.svg): same silhouette, same -8°
        tilt. The body sits tighter in the tile and the d-pad arms and buttons are
        fatter than the app icon's, because at a 16px tab favicon the app icon's
        proportions put a d-pad arm under half a pixel and it vanishes. Controls are

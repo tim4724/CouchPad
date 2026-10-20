@@ -28,11 +28,11 @@
       "maxPlayers": 4,
       "art": "/assets/artwork/tinytrack-16x9-v3.webp",
       "icon": "/assets/artwork/tinytrack-icon-v2.png",
-      "video": "https://tinytrack.couchpad.games/assets/trailer/trailer.mp4",
+      "video": "https://tinytrack.paperballoon.games/assets/trailer/trailer.mp4",
       "accentColor": "#4ECDC4",
-      "controllerBaseUrl": "https://tinytrack.couchpad.games",
+      "controllerBaseUrl": "https://tinytrack.paperballoon.games",
       "hosts": [
-        "tinytrack.couchpad.games"
+        "tinytrack.paperballoon.games"
       ]
     },
     {

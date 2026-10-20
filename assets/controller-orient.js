@@ -18,7 +18,7 @@
   // Recorded either way so the page can report what actually happened rather than
   // assuming the call landed — a silently skipped call here is exactly the bug this
   // file was written to fix.
-  var host = window.CouchPadHost;
+  var host = window.PaperBalloonHost;
   if (host && host.setOrientation) {
     host.setOrientation('landscape');
     window.__cpOrientAsked = 'called';

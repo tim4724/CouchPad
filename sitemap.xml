@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://couchpad.games/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://couchpad.games/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://couchpad.games/de/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://couchpad.games/"/>
+    <loc>https://paperballoon.games/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paperballoon.games/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://paperballoon.games/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://paperballoon.games/"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://couchpad.games/de/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://couchpad.games/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://couchpad.games/de/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://couchpad.games/"/>
+    <loc>https://paperballoon.games/de/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paperballoon.games/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://paperballoon.games/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://paperballoon.games/"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

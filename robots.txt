@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://couchpad.games/sitemap.xml
+Sitemap: https://paperballoon.games/sitemap.xml

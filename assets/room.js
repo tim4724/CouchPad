@@ -1,4 +1,4 @@
-// Room join page. The URL is couchpad.games/<CODE>#<instance> — the same link
+// Room join page. The URL is paperballoon.games/<CODE>#<instance> — the same link
 // a display's QR encodes for app deep-linking (see .well-known/). When the app
 // isn't installed the browser lands here instead: we look the code up on the
 // relay directory, show what we know about the room, and offer browser play
@@ -9,7 +9,7 @@
 // bundled manifest, so a new game is a site deploy, not a code change here.
 //
 // Resolution mirrors the controller apps (RoomDirectory in
-// CouchPad Controller): probe the game relays and the shared relay in
+// Paper Balloon Controller): probe the game relays and the shared relay in
 // parallel and prefer a host-declared controller URL over the declared origin.
 // Relay answers are UNTRUSTED — a join target that doesn't vet against the
 // manifest allow-list is treated as "room not found": we won't send anyone to
@@ -18,8 +18,8 @@
   'use strict';
 
   // ---- Store listings (fill in when the apps go live) ----
-  var IOS_APP_URL = null;      // e.g. 'https://apps.apple.com/app/couchpad/id<APPSTORE_ID>'
-  var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=games.couchpad.controller'
+  var IOS_APP_URL = null;      // e.g. 'https://apps.apple.com/app/paper-balloon/id<APPSTORE_ID>'
+  var ANDROID_APP_URL = null;  // 'https://play.google.com/store/apps/details?id=games.paperballoon.controller'
   // Store download size in MB, rounded, shown as "only N MB": a small app is a
   // reason to install it now, so say so. Both apps are the same size today;
   // split this per store if that ever changes.
@@ -34,14 +34,14 @@
   // switch, not a rename: whatever registers rooms with the in-cluster relay has
   // to move in the same change, or it will keep writing to the cluster while
   // this page looks on Fly.
-  var SHARED_RELAYS = ['https://ws.couchpad.games'];
+  var SHARED_RELAYS = ['https://ws.paperballoon.games'];
   // Allow-list for room links — a different question from the relay above: this
   // vets the join URL a relay hands back. Subdomains are matched too, so every
-  // game served from *.couchpad.games is covered by the single entry.
+  // game served from *.paperballoon.games is covered by the single entry.
   //
   // A game still serving from another domain resolves to "Room not found" by
   // design — an unvettable join target is not something we send players to.
-  var OWN_HOSTS = ['couchpad.games'];
+  var OWN_HOSTS = ['paperballoon.games'];
 
   // ---- Strings ----
   // The room URL is one URL for every language (it is what the TV's QR code
@@ -56,7 +56,7 @@
   var STRINGS = {
     en: {
       name: 'English',
-      title_join: 'Join room · CouchPad', title_room: 'Room {code} · CouchPad',
+      title_join: 'Join room · Paper Balloon', title_room: 'Room {code} · Paper Balloon',
       checking: 'Checking room…', not_found: 'Room not found',
       page_not_found: 'Page not found', enter_code: 'Joining a room? Enter the code from your TV.',
       code_length: 'Room codes have 6 characters.', room_code: 'Room code', join: 'Join',
@@ -66,7 +66,7 @@
     },
     de: {
       name: 'Deutsch',
-      title_join: 'Raum beitreten · CouchPad', title_room: 'Raum {code} · CouchPad',
+      title_join: 'Raum beitreten · Paper Balloon', title_room: 'Raum {code} · Paper Balloon',
       checking: 'Raum wird gesucht…', not_found: 'Raum nicht gefunden',
       page_not_found: 'Seite nicht gefunden', enter_code: 'Du willst einem Raum beitreten? Gib den Code vom Fernseher ein.',
       code_length: 'Raumcodes haben 6 Zeichen.', room_code: 'Raumcode', join: 'Beitreten',
@@ -76,7 +76,7 @@
     },
     fr: {
       name: 'Français',
-      title_join: 'Rejoindre la salle · CouchPad', title_room: 'Salle {code} · CouchPad',
+      title_join: 'Rejoindre la salle · Paper Balloon', title_room: 'Salle {code} · Paper Balloon',
       checking: 'Recherche de la salle…', not_found: 'Salle introuvable',
       page_not_found: 'Page introuvable', enter_code: 'Tu veux rejoindre une salle ? Saisis le code affiché sur ta télé.',
       code_length: 'Les codes de salle ont 6 caractères.', room_code: 'Code de salle', join: 'Rejoindre',
@@ -86,7 +86,7 @@
     },
     pt: {
       name: 'Português',
-      title_join: 'Entrar na sala · CouchPad', title_room: 'Sala {code} · CouchPad',
+      title_join: 'Entrar na sala · Paper Balloon', title_room: 'Sala {code} · Paper Balloon',
       checking: 'Procurando a sala…', not_found: 'Sala não encontrada',
       page_not_found: 'Página não encontrada', enter_code: 'Quer entrar numa sala? Digita o código da TV.',
       code_length: 'Os códigos de sala têm 6 caracteres.', room_code: 'Código da sala', join: 'Entrar',
@@ -96,7 +96,7 @@
     },
     es: {
       name: 'Español',
-      title_join: 'Unirse a la sala · CouchPad', title_room: 'Sala {code} · CouchPad',
+      title_join: 'Unirse a la sala · Paper Balloon', title_room: 'Sala {code} · Paper Balloon',
       checking: 'Buscando la sala…', not_found: 'Sala no encontrada',
       page_not_found: 'Página no encontrada', enter_code: '¿Quieres unirte a una sala? Escribe el código de tu tele.',
       code_length: 'Los códigos de sala tienen 6 caracteres.', room_code: 'Código de sala', join: 'Unirse',
@@ -106,7 +106,7 @@
     },
     zh: {
       name: '中文',
-      title_join: '加入房间 · CouchPad', title_room: '房间 {code} · CouchPad',
+      title_join: '加入房间 · Paper Balloon', title_room: '房间 {code} · Paper Balloon',
       checking: '正在查找房间…', not_found: '房间未找到',
       page_not_found: '页面未找到', enter_code: '想加入房间？请输入电视上的代码。',
       code_length: '房间代码为 6 个字符。', room_code: '房间代码', join: '加入',
@@ -116,7 +116,7 @@
     },
     ja: {
       name: '日本語',
-      title_join: 'ルームに参加 · CouchPad', title_room: 'ルーム {code} · CouchPad',
+      title_join: 'ルームに参加 · Paper Balloon', title_room: 'ルーム {code} · Paper Balloon',
       checking: 'ルームを確認中…', not_found: 'ルームが見つからない',
       page_not_found: 'ページが見つからない', enter_code: 'ルームに参加する？テレビのコードを入力してね。',
       code_length: 'ルームコードは6文字だよ。', room_code: 'ルームコード', join: '参加',
@@ -126,7 +126,7 @@
     },
     ko: {
       name: '한국어',
-      title_join: '방 참가 · CouchPad', title_room: '방 {code} · CouchPad',
+      title_join: '방 참가 · Paper Balloon', title_room: '방 {code} · Paper Balloon',
       checking: '방을 확인하는 중…', not_found: '방을 찾을 수 없어',
       page_not_found: '페이지를 찾을 수 없어', enter_code: '방에 참가하려면 TV의 코드를 입력해.',
       code_length: '방 코드는 6자리야.', room_code: '방 코드', join: '참가',
@@ -136,7 +136,7 @@
     },
     ru: {
       name: 'Русский',
-      title_join: 'Войти в комнату · CouchPad', title_room: 'Комната {code} · CouchPad',
+      title_join: 'Войти в комнату · Paper Balloon', title_room: 'Комната {code} · Paper Balloon',
       checking: 'Ищем комнату…', not_found: 'Комната не найдена',
       page_not_found: 'Страница не найдена', enter_code: 'Хочешь войти в комнату? Введи код с телевизора.',
       code_length: 'Код комнаты состоит из 6 символов.', room_code: 'Код комнаты', join: 'Войти',
@@ -146,7 +146,7 @@
     },
     it: {
       name: 'Italiano',
-      title_join: 'Unisciti alla stanza · CouchPad', title_room: 'Stanza {code} · CouchPad',
+      title_join: 'Unisciti alla stanza · Paper Balloon', title_room: 'Stanza {code} · Paper Balloon',
       checking: 'Ricerca della stanza…', not_found: 'Stanza non trovata',
       page_not_found: 'Pagina non trovata', enter_code: 'Vuoi unirti a una stanza? Inserisci il codice della TV.',
       code_length: 'I codici stanza hanno 6 caratteri.', room_code: 'Codice stanza', join: 'Entra',
@@ -156,7 +156,7 @@
     },
     tr: {
       name: 'Türkçe',
-      title_join: 'Odaya katıl · CouchPad', title_room: 'Oda {code} · CouchPad',
+      title_join: 'Odaya katıl · Paper Balloon', title_room: 'Oda {code} · Paper Balloon',
       checking: 'Oda aranıyor…', not_found: 'Oda bulunamadı',
       page_not_found: 'Sayfa bulunamadı', enter_code: 'Bir odaya mı katılacaksın? Televizyondaki kodu gir.',
       code_length: 'Oda kodları 6 karakterden oluşur.', room_code: 'Oda kodu', join: 'Katıl',
@@ -259,7 +259,7 @@
     // alphanumeric path (4 to 8 characters, a near miss) is most likely a
     // mistyped code: prefill it, so a one-character slip is one edit away.
     var guess = (location.pathname.match(/^\/([A-Za-z0-9]{4,8})$/) || [])[1];
-    document.title = t('page_not_found') + ' · CouchPad';
+    document.title = t('page_not_found') + ' · Paper Balloon';
     noRoom(t('page_not_found'), guess);
     metaMessage(t(guess && guess.length !== 6 ? 'code_length' : 'enter_code'));
     return;
