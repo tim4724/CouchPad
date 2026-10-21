@@ -1,4 +1,4 @@
-/* Room join page (couchpad.games/<CODE>, also the site's 404), on site.css.
+/* Room join page (paperballoon.games/<CODE>, also the site's 404), on site.css.
    Starts as an empty art slot; once the relay says which game owns the room,
    room.js shows its poster (frameless, like the home page's) and puts the
    same poster in the page glow behind it. */

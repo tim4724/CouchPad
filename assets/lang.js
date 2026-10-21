@@ -1,4 +1,4 @@
-// Language preference + German-suggestion banner for the CouchPad site.
+// Language preference + German-suggestion banner for the Paper Balloon site.
 // Shared by every page: the landing (index.html carries #langbar; /de/ does not),
 // the legal pages (/privacy, /imprint and their /en/ counterparts) and the room
 // page. The blocks below each no-op on pages missing the elements they target,

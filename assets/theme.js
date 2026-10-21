@@ -1,4 +1,4 @@
-// Light/dark override for the CouchPad site. Shared by every page so a choice
+// Light/dark override for the Paper Balloon site. Shared by every page so a choice
 // made on one follows the visitor everywhere; the home, room and beta pages
 // carry the .theme-toggle button. No stored choice = follow the system setting
 // (theme.css handles that via prefers-color-scheme alone).

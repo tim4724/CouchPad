@@ -1,5 +1,5 @@
 /* Contract test controller — a stand-in game controller that exercises every
-   launcher⇄game touchpoint in CouchPad Controller's CONTRACT.md, so the shell can
+   launcher⇄game touchpoint in Paper Balloon Controller's CONTRACT.md, so the shell can
    be tested without a real game and a game author can see each one behave.
    Every shell call is feature-detected, so this page is also a working (inert)
    browser page — which is the contract's central rule, not a nicety. */
@@ -9,7 +9,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var params = new URLSearchParams(location.search);
   // The shell gate: only the launcher defines it, before any page script runs.
-  var host = window.CouchPadHost;
+  var host = window.PaperBalloonHost;
 
   $('mode').textContent = host ? 'launcher shell' : 'plain browser';
   $('mode').className = 'badge ' + (host ? 'shell' : 'browser');
@@ -141,14 +141,14 @@
     call('enableSystemBack', [on]);
   }
 
-  window.CouchPad = window.CouchPad || {};
+  window.PaperBalloon = window.PaperBalloon || {};
   // §9 requires a SYNCHRONOUS decision: a Promise counts as unconsumed.
   function installBack() {
     if (backMode === 'absent') {
-      delete window.CouchPad.back;
+      delete window.PaperBalloon.back;
       return;
     }
-    window.CouchPad.back = function () {
+    window.PaperBalloon.back = function () {
       backCalls++;
       $('backs').textContent = backCalls;
       // The realistic shape: consume only when there is something to close.
