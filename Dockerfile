@@ -1,5 +1,5 @@
 # Static site image for paperballoon.games — unprivileged nginx, no build step.
-FROM nginxinc/nginx-unprivileged:1.27-alpine
+FROM nginxinc/nginx-unprivileged:1.30-alpine
 
 # Server block: listens on 8080 (non-root), security headers, /health, no SPA fallback.
 COPY nginx.conf /etc/nginx/conf.d/default.conf
