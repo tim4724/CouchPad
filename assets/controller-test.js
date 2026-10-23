@@ -113,7 +113,7 @@
   });
   $('icons').textContent = THEMES[0][4];
 
-  // ---- §5 safe area, read live: rotation (§10) and arming back (§9) change it,
+  // ---- §5 safe area, read live: rotation (§10) and back turning on (§9) change it,
   // and nothing fires for the latter, so poll. The name rides along (§1).
   function readZone() {
     var p = getComputedStyle($('envprobe'));
@@ -129,22 +129,27 @@
     e.currentTarget.setAttribute('aria-pressed', String(on));
   };
 
-  // ---- §9 system back.
-  var armed = false;
+  // ---- §9 system back. Every page load starts in 'leave', so the buttons open
+  // there without a call; anything but the three modes is 'off' — hence the
+  // nonsense button. The dialog switches to 'page' and puts the mode back on close.
+  var mode = 'leave';
+  var modeBeforeDialog = null;
   var backCalls = 0;
-  var backMode = 'decline';
+  var backAnswer = 'decline';
 
-  function setArmed(on) {
-    armed = on;
-    $('arm').setAttribute('aria-pressed', String(on));
-    $('arm').textContent = 'Armed: ' + (on ? 'yes' : 'no');
-    call('enableSystemBack', [on]);
+  function setMode(m) {
+    mode = m;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-mode]'), function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.mode === m));
+    });
+    call('setBackMode', [m]);
   }
 
   window.PaperBalloon = window.PaperBalloon || {};
-  // §9 requires a SYNCHRONOUS decision: a Promise counts as unconsumed.
+  // Called only in 'page' mode. §9 requires a SYNCHRONOUS decision: a Promise
+  // counts as unconsumed.
   function installBack() {
-    if (backMode === 'absent') {
+    if (backAnswer === 'absent') {
       delete window.PaperBalloon.back;
       return;
     }
@@ -157,7 +162,7 @@
         closeDialog();
         return true;
       }
-      var consume = backMode === 'consume';
+      var consume = backAnswer === 'consume';
       log('back() → ' + consume + ' (nothing open)');
       return consume;
     };
@@ -166,23 +171,31 @@
 
   function closeDialog() {
     $('dlg').close();
-    setArmed(false);   // §9: disarm the moment the reason for arming is gone.
+    // §9: give 'page' up the moment the dialog is gone.
+    if (modeBeforeDialog !== null) setMode(modeBeforeDialog);
+    modeBeforeDialog = null;
   }
 
-  $('arm').onclick = function () { setArmed(!armed); };
-  $('open').onclick = function () { $('dlg').showModal(); setArmed(true); };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-mode]'), function (b) {
+    b.onclick = function () { setMode(b.dataset.mode); };
+  });
+  $('open').onclick = function () {
+    modeBeforeDialog = mode;
+    $('dlg').showModal();
+    setMode('page');
+  };
   $('close').onclick = closeDialog;
   // Esc in a browser, and <dialog>'s own close-request path.
   $('dlg').addEventListener('cancel', function (e) { e.preventDefault(); closeDialog(); });
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-back]'), function (b) {
     b.onclick = function () {
-      backMode = b.dataset.back;
+      backAnswer = b.dataset.back;
       Array.prototype.forEach.call(document.querySelectorAll('[data-back]'), function (o) {
         o.setAttribute('aria-pressed', String(o === b));
       });
       installBack();
-      log('back() mode: ' + backMode);
+      log('back() answer: ' + backAnswer);
     };
   });
 

@@ -71,7 +71,12 @@
   <section>
     <h2>§9 System back</h2>
     <div class="row">
-      <button id="arm" aria-pressed="false">Armed: no</button>
+      <button data-mode="off" aria-pressed="false">off</button>
+      <button data-mode="page" aria-pressed="false">page</button>
+      <button data-mode="leave" aria-pressed="true">leave</button>
+      <button data-mode="nonsense" aria-pressed="false">"nonsense"</button>
+    </div>
+    <div class="row gap-top">
       <button id="open">Open dialog</button>
     </div>
     <div class="row gap-top">
@@ -165,11 +170,11 @@
 </main>
 
 <dialog id="dlg">
-  <p>A dialog. System back is armed while it's open; back() closes it and returns true.</p>
+  <p>A dialog. Back is in page mode while it's open; back() closes it and returns true.</p>
   <button id="close">Close</button>
 </dialog>
 
 <div id="envprobe"></div>
-<script src="/assets/controller-test.js?v=7"></script>
+<script src="/assets/controller-test.js?v=8"></script>
 </body>
 </html>
