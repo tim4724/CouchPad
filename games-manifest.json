@@ -27,7 +27,7 @@
       "minPlayers": 1,
       "maxPlayers": 4,
       "art": "/assets/artwork/tinytrack-16x9-v3.webp",
-      "icon": "/assets/artwork/tinytrack-icon-v2.png",
+      "icon": "/assets/artwork/tinytrack-icon-v3.png",
       "video": "https://tinytrack.paperballoon.games/assets/trailer/trailer.mp4",
       "accentColor": "#4ECDC4",
       "controllerBaseUrl": "https://tinytrack.paperballoon.games",

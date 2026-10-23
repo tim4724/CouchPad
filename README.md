@@ -20,16 +20,22 @@ and `assets/beta.css` once the apps are in production.
 
 ## Design
 
-Neutral ink and paper; the game posters carry the color. Follows the system
-light/dark setting (with a toggle), and both schemes share one layout. Tokens
-live in `assets/theme.css`; fonts are self-hosted in `assets/fonts/`.
+One design language with the controller apps: warm paper and ink under a dusk
+sky, the game posters carry the colour. Follows the system light/dark setting
+(with a toggle), and both schemes share one layout. Tokens live in
+`assets/theme.css` with the rules for what the sunset, the fleet and the sky
+may be used for; the apps use the same values with the system font. Fonts are
+self-hosted in `assets/fonts/`.
 
 One face (Outfit) everywhere. `assets/site.css` holds what the home, room and
-beta pages share: a bar-less header, the blurred-poster glow (behind the room
-page's top), pill buttons and the footer panel. The home hero instead shows the
-flagship poster on a drawn TV, with a confetti-coloured light behind it in the
-light scheme only. Posters are shown whole, never cropped. Coral fills only a
-page's one primary button.
+beta pages share: a bar-less header (the wordmark alone; the balloon mark is
+the favicon and launcher icon), the blurred-poster glow (behind the room page's
+top), pill buttons, the footer panel and the sky parts the home and beta pages
+open with. The home hero shows the flagship poster on a drawn TV under the
+dusk, with the fleet's balloons in it; the beta page is that opening in a
+lighter dose. Posters are shown whole, never cropped, and nothing sits on them.
+The sunset gradient fills only a page's one primary button; nothing has a
+shadow or glow, except the room page's poster glow behind art.
 The legal pages (`assets/legal.css`) have no header or footer: the controller
 apps show them in-app under their own title bar and hide the page's
 `.legal-shell > h1`, so keep that selector working.

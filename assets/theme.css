@@ -1,13 +1,30 @@
 /* ==========================================================
    Paper Balloon: design tokens
-   Neutral ink and paper; the game posters carry the color.
+   Warm paper and ink; the sky and its balloons carry the brand,
+   the game posters carry the colour.
    Role rules:
-   - --action-solid (coral): the fill of a page's one primary
-     button, behind white label text (AA, 4.6:1). Nothing else.
-   - --confetti-*: the controller buttons in the scan drawing.
-     Never used for text.
-   Follows the system light/dark setting; dark is near-black
-   by design, not a tinted grey.
+   - --action-top/-bottom: the sunset gradient of a page's one
+     primary button, pink to red-orange, white label text at
+     4.6:1 or better end to end. Nothing else is pink.
+   - --sun/sea/gold/dusk-top/-bottom: the fleet, the four balloon
+     gradients: the balloons in the sky, the fact dots and the
+     controller buttons in the scan drawing, nowhere else; never
+     for text.
+     Dark brightens the sunset and the dusk so they lift off the
+     night. The app icon's own tile (favicon.svg) is a touch
+     lighter than --sun; the balloon is deepened so it holds on
+     the peach sky.
+   - --sky-high / --sky: the dusk, lilac up high and peach at the
+     horizon, fading into --bg on the home and beta pages. The
+     controller app's home screen runs the same stops over a
+     shorter height. Dark is one near-black with stars instead of
+     clouds.
+   No shadows or glows on buttons, cards or the TV; depth is a
+   hairline. (The room page's blurred-poster glow is the one
+   exception, behind art, never a control.)
+   Follows the system light/dark setting; dark is near-black by
+   design, not a grey: a hint of the night sky's violet in the
+   ground, a step more on cards.
    ========================================================== */
 
 /* Self-hosted (CSP font-src 'self'), latin subset, variable weight. */
@@ -26,84 +43,103 @@
   --font-sans: "Outfit", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* Brand constants (scheme-independent) */
-  --action-solid: #D63C43;
-  --action-solid-hover: #C2333A;
-  --confetti-coral: #F04A50;
-  --confetti-amber: #FFB020;
-  --confetti-teal: #2AA198;
-  --confetti-violet: #8B7CF0;
+  --action-top: #E0185F;
+  --action-bottom: #D83A1A;
 
-  /* ---- Light scheme (default): faintly warm paper ---- */
-  --bg: #FAF9F7;
-  --surface-low: #EFEDEA;
-  --surface-high: #DDDAD3;
-  --surface-highest: #D5D1C9;
-  --on-surface: #26242C;
-  --on-surface-variant: #5E5A66;
-  --outline: #77717F;
-  --outline-variant: #DCD9D3;
+  /* ---- Light scheme (default): warm paper under a dusk sky ---- */
+  --sun-top: #F2216A;
+  --sun-bottom: #FA6A2C;
+  --sea-top: #0F8F9E;
+  --sea-bottom: #3CC29A;
+  --gold-top: #F07A00;
+  --gold-bottom: #FFC23D;
+  --dusk-top: #6A4CF0;
+  --dusk-bottom: #C062E8;
+  --bg: #FFF8F3;
+  --surface-low: #F8ECE6;
+  --surface-high: #F0DED4;
+  --surface-highest: #E8D2C6;
+  --on-surface: #2A2030;
+  --on-surface-variant: #5E4F66;
+  --outline: #7A6E82;
+  --outline-variant: #EEDDD3;
+  --sky-high: #E6DAF2;
+  --sky: #FFE0CC;
+  --cloud-display: block;
+  --star-display: none;
   /* Cards, outlined (ghost) controls, status tags, poster glow, home TV */
   --card: #FFFFFF;
   --ghost-bg: #FFFFFF;
-  --ghost-line: #CFCBC4;
-  --tag-beta-bg: #FCEBD0;
-  --tag-beta-ink: #7A4B00;
+  --ghost-line: #DCC7BE;
+  --tag-beta-bg: #FCE3CC;
+  --tag-beta-ink: #7A3E00;
   --glow-filter: blur(80px) saturate(1.4);
   --glow-opacity: 0.3;
-  --tv-body: #18171C;
+  --tv-body: #1C1620;
   --tv-edge: rgba(255, 255, 255, 0.06);
-  --tv-shadow: 0 40px 90px rgba(20, 18, 26, 0.28);
-  --tv-light-display: block;
 }
 
 /* Dark values appear twice on purpose: once for the system setting (unless the
    visitor forced light) and once for a forced-dark choice. theme.js sets
-   data-theme from localStorage; keep both blocks identical when editing. */
+   data-theme from localStorage; keep both blocks identical when editing.
+   The TV has no body at night: home.css draws it as an outline. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #110F17;
-    --surface-low: #1C1A24;
-    --surface-high: #2A2735;
-    --surface-highest: #332F3F;
+    --sun-top: #FF4F86;
+    --sun-bottom: #FF9640;
+    --dusk-top: #A07CFF;
+    --dusk-bottom: #E48BF7;
+    --bg: #141119;
+    --surface-low: #201A2A;
+    --surface-high: #2C2635;
+    --surface-highest: #3A3146;
     --on-surface: #F1EFEC;
-    --on-surface-variant: #A8A3B1;
-    --outline: #8D8798;
-    --outline-variant: #2F2B3A;
-    --card: #1C1A24;
+    --on-surface-variant: #ABA9B0;
+    --outline: #8E8C95;
+    --outline-variant: #342C40;
+    --sky-high: #1C1725;
+    --sky: #1C1725;
+    --cloud-display: none;
+    --star-display: block;
+    --card: #201A2A;
     --ghost-bg: rgba(255, 255, 255, 0.08);
     --ghost-line: rgba(255, 255, 255, 0.18);
     --tag-beta-bg: rgba(255, 193, 77, 0.14);
     --tag-beta-ink: #FFC14D;
     --glow-filter: blur(70px) saturate(1.5) brightness(0.42);
     --glow-opacity: 1;
-    --tv-body: #25232C;
-    --tv-edge: rgba(255, 255, 255, 0.10);
-    --tv-shadow: 0 0 transparent;
-    --tv-light-display: none;
+    --tv-body: transparent;
+    --tv-edge: transparent;
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #110F17;
-  --surface-low: #1C1A24;
-  --surface-high: #2A2735;
-  --surface-highest: #332F3F;
+  --sun-top: #FF4F86;
+  --sun-bottom: #FF9640;
+  --dusk-top: #A07CFF;
+  --dusk-bottom: #E48BF7;
+  --bg: #141119;
+  --surface-low: #201A2A;
+  --surface-high: #2C2635;
+  --surface-highest: #3A3146;
   --on-surface: #F1EFEC;
-  --on-surface-variant: #A8A3B1;
-  --outline: #8D8798;
-  --outline-variant: #2F2B3A;
-  --card: #1C1A24;
+  --on-surface-variant: #ABA9B0;
+  --outline: #8E8C95;
+  --outline-variant: #342C40;
+  --sky-high: #1C1725;
+  --sky: #1C1725;
+  --cloud-display: none;
+  --star-display: block;
+  --card: #201A2A;
   --ghost-bg: rgba(255, 255, 255, 0.08);
   --ghost-line: rgba(255, 255, 255, 0.18);
   --tag-beta-bg: rgba(255, 193, 77, 0.14);
   --tag-beta-ink: #FFC14D;
   --glow-filter: blur(70px) saturate(1.5) brightness(0.42);
   --glow-opacity: 1;
-  --tv-body: #25232C;
-  --tv-edge: rgba(255, 255, 255, 0.10);
-  --tv-shadow: 0 0 transparent;
-  --tv-light-display: none;
+  --tv-body: transparent;
+  --tv-edge: transparent;
 }
 
 /* Kill the blue tap-highlight box mobile browsers overlay on links

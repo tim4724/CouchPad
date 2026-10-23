@@ -2,8 +2,8 @@
    buttons and footer. Tokens (--bg, --card, --glow-*, …) come from theme.css,
    linked first; each page adds its own stylesheet after this one. The legal
    pages are also shown inside the apps and keep their own legal.css.
-   Coral (--action-solid) fills the one primary button of a page only;
-   everything else is ink, muted ink and lines. */
+   The sunset (--action-top/-bottom) fills the one primary button of a page
+   only; everything else is ink, muted ink and lines. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -68,12 +68,8 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
   text-decoration: none;
   white-space: nowrap;
 }
-.brand svg { width: 30px; height: 30px; flex: none; }
-/* The gamepad mark: tile in ink, glyph cut in the page colour. The glyph is
-   the launcher app icon's shape; favicon.svg has fatter controls for 16px and
-   looks clumsy at this size, so don't copy it from there. */
-.mark__tile { fill: var(--on-surface); }
-.mark__glyph { fill: var(--bg); }
+/* The header is the wordmark alone; the balloon mark stays the favicon and
+   launcher icon, and the balloons in the sky carry the brand on the page. */
 .topbar__lang {
   font-size: 15px;
   font-weight: 500;
@@ -123,8 +119,8 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
   white-space: nowrap;
   cursor: pointer;
 }
-.btn--primary { background: var(--action-solid); color: #fff; }
-.btn--primary:hover { background: var(--action-solid-hover); }
+.btn--primary { background: linear-gradient(var(--action-top), var(--action-bottom)); color: #fff; }
+.btn--primary:hover { filter: brightness(0.9); }
 .btn--ghost {
   background: var(--ghost-bg);
   color: var(--on-surface);
@@ -143,7 +139,6 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
   padding: 56px 0 40px;
   font-size: 15px;
 }
-.footer .mark__glyph { fill: var(--surface-low); }
 .footer__top, .footer__row {
   display: flex;
   flex-wrap: wrap;
@@ -164,6 +159,37 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
 .footer--slim { margin-top: 0; padding: 22px 0; }
 .footer--slim .footer__row { align-items: center; gap: 12px 32px; }
 .footer--slim .footer__links { padding-top: 0; }
+
+/* ---- Sky parts, shared by the pages that open under the dusk (home, beta):
+   a .sky band with no header hairline, stars at night, flat white clouds by
+   day, and the fleet's balloons. A page carries the symbols (the launcher
+   icon's balloon, a cloud, the star field) and the four gradients in a
+   .sky-defs svg, then places <use>s of them with .drift; the paths have no
+   fill, so they take the one set on the placement. Each page positions its
+   own clouds and balloons; the first two clouds and the sea balloon drift at
+   the same pace everywhere. ---- */
+.sky { position: relative; isolation: isolate; overflow: hidden; }
+.sky .topbar { border-bottom: 0; }
+.sky > .stars { inset: 0; width: 100%; height: 100%; }
+.sky-defs { position: absolute; width: 0; height: 0; }
+.stars { position: absolute; display: var(--star-display); fill: #F1EFEC; opacity: 0.75; z-index: -2; }
+.drift { position: absolute; z-index: -2; }
+.drift svg { display: block; width: 100%; height: auto; overflow: visible; }
+.cloud { display: var(--cloud-display); fill: #FFFFFF; }
+.cloud--1 { animation: slide 30s linear infinite alternate; }
+.cloud--2 { animation: slide 24s linear -8s infinite alternate-reverse; }
+.balloon { z-index: -1; animation: bob 7s ease-in-out infinite alternate; }
+.balloon--sea { animation-duration: 6s; animation-delay: -2s; }
+.g-sun-top { stop-color: var(--sun-top); }
+.g-sun-bottom { stop-color: var(--sun-bottom); }
+.g-sea-top { stop-color: var(--sea-top); }
+.g-sea-bottom { stop-color: var(--sea-bottom); }
+.g-gold-top { stop-color: var(--gold-top); }
+.g-gold-bottom { stop-color: var(--gold-bottom); }
+.g-dusk-top { stop-color: var(--dusk-top); }
+.g-dusk-bottom { stop-color: var(--dusk-bottom); }
+@keyframes bob { from { transform: translateY(8px); } to { transform: translateY(-10px); } }
+@keyframes slide { from { transform: translateX(-24px); } to { transform: translateX(24px); } }
 
 @media (max-width: 560px) {
   .wrap { padding: 0 16px; }
