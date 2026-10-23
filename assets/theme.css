@@ -14,11 +14,15 @@
      night. The app icon's own tile (favicon.svg) is a touch
      lighter than --sun; the balloon is deepened so it holds on
      the peach sky.
-   - --sky-high / --sky: the dusk, lilac up high and peach at the
-     horizon, fading into --bg on the home and beta pages. The
-     controller app's home screen runs the same stops over a
-     shorter height. Dark is one near-black with stars instead of
-     clouds.
+   - --sky-high / --sky-mid / --sky: the sky band, fading into --bg
+     on the home and beta pages; by day lilac over peach with
+     --sky-mid the halfway colour, at night three stops with stars
+     instead of clouds. The controller app's home screen runs the
+     same stops over a shorter height.
+   - --glass / --glass-line: the home and beta pages' panels and
+     cards. --glass is a padding-box fill plus a border-box rim
+     gradient, so a border using it must be transparent;
+     --glass-line is their inner dividers.
    No shadows or glows on buttons, cards or the TV; depth is a
    hairline. (The room page's blurred-poster glow is the one
    exception, behind art, never a control.)
@@ -65,10 +69,14 @@
   --outline-variant: #EEDDD3;
   --sky-high: #E6DAF2;
   --sky: #FFE0CC;
+  --sky-mid: color-mix(in srgb, var(--sky-high), var(--sky));
   --cloud-display: block;
   --star-display: none;
   /* Cards, outlined (ghost) controls, status tags, poster glow, home TV */
   --card: #FFFFFF;
+  --glass: linear-gradient(#FFFFFF, color-mix(in srgb, #FFFFFF 55%, var(--bg))) padding-box,
+    linear-gradient(#FFFFFF, #EEDDD3 30%, #D9C3B7) border-box;
+  --glass-line: var(--outline-variant);
   --ghost-bg: #FFFFFF;
   --ghost-line: #DCC7BE;
   --tag-beta-bg: #FCE3CC;
@@ -98,8 +106,12 @@
     --on-surface-variant: #ABA9B0;
     --outline: #8E8C95;
     --outline-variant: #342C40;
-    --sky-high: #1C1725;
-    --sky: #1C1725;
+    --sky-high: #0C0A12;
+    --sky-mid: #16111E;
+    --sky: #21141F;
+    --glass: linear-gradient(color-mix(in srgb, #FFFFFF 7%, var(--bg)), color-mix(in srgb, #FFFFFF 3.5%, var(--bg))) padding-box,
+      linear-gradient(color-mix(in srgb, #FFFFFF 26%, var(--bg)), color-mix(in srgb, #FFFFFF 7%, var(--bg)) 30%, color-mix(in srgb, #FFFFFF 4%, var(--bg))) border-box;
+    --glass-line: rgba(255, 255, 255, 0.09);
     --cloud-display: none;
     --star-display: block;
     --card: #201A2A;
@@ -127,8 +139,12 @@
   --on-surface-variant: #ABA9B0;
   --outline: #8E8C95;
   --outline-variant: #342C40;
-  --sky-high: #1C1725;
-  --sky: #1C1725;
+  --sky-high: #0C0A12;
+  --sky-mid: #16111E;
+  --sky: #21141F;
+  --glass: linear-gradient(color-mix(in srgb, #FFFFFF 7%, var(--bg)), color-mix(in srgb, #FFFFFF 3.5%, var(--bg))) padding-box,
+    linear-gradient(color-mix(in srgb, #FFFFFF 26%, var(--bg)), color-mix(in srgb, #FFFFFF 7%, var(--bg)) 30%, color-mix(in srgb, #FFFFFF 4%, var(--bg))) border-box;
+  --glass-line: rgba(255, 255, 255, 0.09);
   --cloud-display: none;
   --star-display: block;
   --card: #201A2A;

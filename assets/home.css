@@ -86,8 +86,38 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   margin-left: -50vw;
   top: -2400px;
   bottom: 25%;
-  background: linear-gradient(to top, var(--bg) 0, var(--sky) 220px, var(--sky-high) 720px);
+  background: linear-gradient(to top, var(--bg) 0, var(--sky) 220px, var(--sky-mid) 470px, var(--sky-high) 720px);
   z-index: -3;
+}
+/* At night the glow spreads wider than the day's horizon: the band reaches
+   below the screen and fades over a longer run, so it reads as light, not as
+   a stripe. A pre-dithered copy of the gradient (tools/night_band.py) paints
+   over it once loaded. Mirrors theme.css's forced/system split; keep both
+   blocks identical. The phone blocks follow the desktop ones at the same
+   specificity, so they win at that width. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tv__screen::before {
+    bottom: -20%;
+    background: url("/assets/sky/night-band-800-v3.webp") left bottom / 128px 800px repeat-x,
+      linear-gradient(to top, var(--bg) 0, var(--sky) 380px, var(--sky-mid) 640px, var(--sky-high) 800px);
+  }
+}
+:root[data-theme="dark"] .tv__screen::before {
+  bottom: -20%;
+  background: url("/assets/sky/night-band-800-v3.webp") left bottom / 128px 800px repeat-x,
+    linear-gradient(to top, var(--bg) 0, var(--sky) 380px, var(--sky-mid) 640px, var(--sky-high) 800px);
+}
+@media (max-width: 560px) and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tv__screen::before {
+    background: url("/assets/sky/night-band-520-v3.webp") left bottom / 64px 520px repeat-x,
+      linear-gradient(to top, var(--bg) 0, var(--sky) 190px, var(--sky-mid) 370px, var(--sky-high) 520px);
+  }
+}
+@media (max-width: 560px) {
+  :root[data-theme="dark"] .tv__screen::before {
+    background: url("/assets/sky/night-band-520-v3.webp") left bottom / 64px 520px repeat-x,
+      linear-gradient(to top, var(--bg) 0, var(--sky) 190px, var(--sky-mid) 370px, var(--sky-high) 520px);
+  }
 }
 .hero > .stars { height: 780px; }
 .cloud--1 { left: -2%; top: 150px; width: 210px; }
@@ -104,16 +134,10 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 .balloon--gold { right: 20%; top: 4px; width: 52px; fill: url(#g-gold); animation-duration: 5s; animation-delay: -3s; }
 .balloon--dusk { left: 17%; top: 200px; width: 50px; fill: url(#g-dusk); animation-duration: 6.5s; animation-delay: -1s; }
 
-/* Footer: the dusk again, upside down, growing out of the paper, with one
-   cloud by day or a few stars at night. No balloon down here. */
-.footer--sky {
-  background: linear-gradient(var(--bg) 0%, var(--sky) 40%, var(--sky-high) 100%);
-  border-top: 0;
-  padding: 48px 0 28px;
-}
-.footer--sky .wrap { position: relative; }
-.footer--sky .footer__base { border-top: 0; margin-top: 28px; padding-top: 0; }
-.footer--sky .cloud { right: 6%; top: 60px; width: 120px; }
+/* Footer: on the page itself, no panel and no sky of its own. */
+.footer--home { background: none; border-top: 0; padding: 48px 0 28px; }
+.footer--home .footer__base { border-top: 0; margin-top: 28px; padding-top: 0; }
+
 .feature figcaption {
   display: flex;
   flex-wrap: wrap;
@@ -144,8 +168,8 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 .game {
   display: flex;
   flex-direction: column;
-  background: var(--card);
-  border: 1px solid var(--outline-variant);
+  background: var(--glass);
+  border: 1px solid transparent;
   border-radius: 20px;
   overflow: hidden;
 }
@@ -210,8 +234,8 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
    colour each in fleet order, and no dividers, so they read as a list, not
    as tabs or buttons. */
 .how {
-  background: var(--surface-low);
-  border: 1px solid var(--outline-variant);
+  background: var(--glass);
+  border: 1px solid transparent;
   border-radius: 28px;
 }
 .how__top {
@@ -223,7 +247,6 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 }
 .how__art { color: var(--on-surface); }
 .how__art svg { display: block; width: 100%; height: auto; }
-.how__cut { fill: var(--surface-low); }
 .how__lead { color: var(--on-surface-variant); font-size: 19px; margin-top: 14px; }
 .howfacts {
   list-style: none;
@@ -232,7 +255,7 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   justify-content: space-between;
   gap: 16px 32px;
   padding: 24px 48px;
-  border-top: 1px solid var(--outline-variant);
+  border-top: 1px solid var(--glass-line);
 }
 .howfacts li {
   display: flex;
@@ -339,10 +362,9 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   .cloud--1 { top: 70px; width: 120px; }
   .cloud--2 { top: 0; width: 100px; }
   .cloud--4 { right: -50px; top: -30px; width: 120px; }
-  .footer--sky .cloud { right: -20px; top: auto; bottom: 56px; width: 110px; }
   .tv { --tv-pad: 6px; }
   .tv__screen { border-radius: 12px; }
-  .tv__screen::before { background: linear-gradient(to top, var(--bg) 0, var(--sky) 110px, var(--sky-high) 460px); }
+  .tv__screen::before { background: linear-gradient(to top, var(--bg) 0, var(--sky) 110px, var(--sky-mid) 285px, var(--sky-high) 460px); }
   .feature__poster { border-radius: 7px; }
   .tv__stand { width: 32px; height: 16px; }
   .tv__stand::after { width: 150px; height: 5px; margin-left: -75px; border-radius: 5px 5px 2px 2px; }

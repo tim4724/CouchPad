@@ -13,10 +13,12 @@ body {
   /* The page's top is sky, so the browser bar is too (see home.css). */
   background: linear-gradient(var(--bg), var(--bg)) var(--sky-high);
 }
+/* The footer panel is glass like the step cards, its lit rim along the top. */
+.footer { background: var(--glass); border-top-color: transparent; }
 .beta { flex: 1 0 auto; padding-top: 32px; padding-bottom: 72px; }
 
 /* ---- The band: lilac to peach, fading into the paper under the title. ---- */
-.betahero { background: linear-gradient(var(--sky-high), var(--sky) 60%, var(--bg)); }
+.betahero { background: linear-gradient(var(--sky-high), var(--sky-mid) 30%, var(--sky) 60%, var(--bg)); }
 .beta__title {
   position: relative;
   max-width: 640px;
@@ -39,8 +41,8 @@ body {
   grid-template-columns: auto 1fr;
   align-items: center;
   column-gap: 14px;
-  background: var(--card);
-  border: 1px solid var(--outline-variant);
+  background: var(--glass);
+  border: 1px solid transparent;
   border-radius: 20px;
   padding: 24px 28px;
 }
