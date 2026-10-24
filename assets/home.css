@@ -497,7 +497,7 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   width: 240%;
   aspect-ratio: 1;
   transform: translateY(-50%);
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 40%, transparent) 30%, color-mix(in srgb, var(--glow) 18%, transparent) 45%, color-mix(in srgb, var(--glow) 6%, transparent) 70%, transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 28%, transparent) 30%, color-mix(in srgb, var(--glow) 12%, transparent) 45%, color-mix(in srgb, var(--glow) 4%, transparent) 70%, transparent);
   opacity: 0.6;
   animation: burn 11s ease-in-out -3s infinite;
 }
