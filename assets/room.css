@@ -9,9 +9,19 @@
 [hidden] { display: none !important; }
 
 /* Fill the viewport: the glow area takes the spare height, pinning the footer
-   to the bottom edge. */
-body { display: flex; flex-direction: column; }
-.roomtop { flex: 1 0 auto; }
+   to the bottom edge. The page opens under the dusk like the home page: the
+   sky behind the header fades into the paper, and the poster's glow, once
+   room.js sets it, lies over both. The browser bar takes the sky (see
+   home.css). */
+body {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(var(--bg), var(--bg)) var(--sky-high);
+}
+.roomtop {
+  flex: 1 0 auto;
+  background: linear-gradient(var(--sky-high), var(--sky-mid) 90px, var(--sky) 200px, var(--bg) 380px);
+}
 
 .room {
   display: grid;
@@ -27,16 +37,16 @@ body { display: flex; flex-direction: column; }
   border-radius: 18px;
   overflow: hidden;
 }
-/* No poster (looking up, or not found): a quiet slot. */
+/* No poster (looking up, or not found): an empty glass card. */
 .roomcard:not(.ambient) .roomcard__media {
-  background: var(--surface-low);
-  border: 1px solid var(--outline-variant);
+  background: var(--glass);
+  border: 1px solid transparent;
 }
 /* While the lookup runs (the wait badge is up), the empty slot breathes. */
 .roomcard:has(.badge--wait:not([hidden])) .roomcard__media {
   animation: roomcard-wait 1.6s ease-in-out infinite alternate;
 }
-@keyframes roomcard-wait { to { background: var(--surface-high); } }
+@keyframes roomcard-wait { to { opacity: 0.55; } }
 /* Shown whole (never cropped), no frame: the glow behind it is the frame. */
 .roomcard.ambient .roomcard__media {
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--outline-variant);
@@ -84,7 +94,7 @@ body { display: flex; flex-direction: column; }
   margin-bottom: 12px;
   padding: 5px 12px;
   border-radius: 999px;
-  background: var(--surface-low);
+  background: var(--surface-high);
   font-size: 13px;
   font-weight: 600;
 }
@@ -102,7 +112,7 @@ body { display: flex; flex-direction: column; }
   gap: 8px;
   padding: 5px;
   border-radius: 999px;
-  background: var(--card);
+  background: var(--ghost-bg);
   border: 1.5px solid var(--ghost-line);
 }
 .codeform:focus-within { border-color: var(--on-surface); }
@@ -133,7 +143,7 @@ body { display: flex; flex-direction: column; }
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  background: var(--card);
+  background: var(--ghost-bg);
   border: 1.5px solid var(--ghost-line);
   border-radius: 18px;
   text-decoration: none;
@@ -159,7 +169,7 @@ body { display: flex; flex-direction: column; }
   -webkit-appearance: none;
   font: inherit;
   color: var(--on-surface);
-  background: var(--card);
+  background: var(--ghost-bg);
   border: 1.5px solid var(--ghost-line);
   border-radius: 999px;
   min-height: 40px;
