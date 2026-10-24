@@ -19,10 +19,10 @@
      --sky-mid the halfway colour, at night three stops with stars
      instead of clouds. The controller app's home screen runs the
      same stops over a shorter height.
-   - --glass / --glass-line: the home and beta pages' panels and
-     cards. --glass is a padding-box fill plus a border-box rim
-     gradient, so a border using it must be transparent;
-     --glass-line is their inner dividers.
+   - --glass / --glass-line: the home page's panels and cards and the
+     room page's empty poster card. --glass is a padding-box fill plus
+     a border-box rim gradient, so a border using it must be
+     transparent; --glass-line is their inner dividers.
    No shadows or glows on buttons, cards or the TV; depth is a
    hairline. (Two exceptions, both light from art, never a
    control: the room page's blurred-poster glow and the faint
