@@ -102,6 +102,27 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
 :root[data-theme="dark"] .theme-toggle__sun { display: block; }
 :root[data-theme="dark"] .theme-toggle__moon { display: none; }
 
+/* The theme switch's sunset (theme.js decides when it runs): the new scheme
+   spreads from the toggle in a soft-edged circle, from --vt-x/-y to --vt-r,
+   which theme.js sets. The reveal holds its end state: unfilled, its mask
+   snaps back to nothing for a frame before the transition ends and the old
+   scheme flashes. What appears plays its own entrance (.theme-switched is
+   set only by a click, never on first paint). */
+@property --vt-reveal { syntax: "<length>"; inherits: false; initial-value: 0px; }
+::view-transition-old(root),
+::view-transition-new(root) { mix-blend-mode: normal; }
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) {
+  animation: vt-reveal 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+  -webkit-mask-image: radial-gradient(circle at var(--vt-x) var(--vt-y), #000 var(--vt-reveal), transparent calc(var(--vt-reveal) + 160px));
+  mask-image: radial-gradient(circle at var(--vt-x) var(--vt-y), #000 var(--vt-reveal), transparent calc(var(--vt-reveal) + 160px));
+}
+@keyframes vt-reveal { from { --vt-reveal: -160px; } to { --vt-reveal: var(--vt-r); } }
+:root.theme-switched .theme-toggle svg { animation: vt-icon-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+:root.theme-switched .cloud svg { animation: vt-cloud-in 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s backwards; }
+@keyframes vt-icon-in { from { opacity: 0; rotate: -90deg; scale: 0.4; } }
+@keyframes vt-cloud-in { from { opacity: 0; translate: 0 32px; } }
+
 /* ---- Buttons ---- */
 .btn {
   display: inline-flex;

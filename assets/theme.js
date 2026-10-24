@@ -39,12 +39,35 @@
   }
   document.addEventListener('DOMContentLoaded', syncPressed);
 
+  // With a mouse, the new scheme spreads from the button as a view transition
+  // (site.css). Not on touch screens: there the browser's own bars recolour
+  // at once while the page is still revealing, iOS Safari draws its toolbar
+  // opaque for the length of a transition, and Firefox on Android stalls on
+  // it. They switch at once; what appears still plays its own entrance.
+  var finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   document.addEventListener('click', function (ev) {
-    if (!ev.target.closest('.theme-toggle')) return;
-    var next = isDark() ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem(STORE, next); } catch (e) {}
-    syncPressed();
-    syncBar();
+    var btn = ev.target.closest('.theme-toggle');
+    if (!btn) return;
+    // Decided when applied, not on click: a view transition applies a frame
+    // or more later, and a second tap in between must flip it back.
+    function apply() {
+      var next = isDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      root.classList.add('theme-switched');
+      try { localStorage.setItem(STORE, next); } catch (e) {}
+      syncPressed();
+      syncBar();
+    }
+    if (!document.startViewTransition || !finePointer.matches || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      apply();
+      return;
+    }
+    var r = btn.getBoundingClientRect();
+    var x = r.left + r.width / 2;
+    var y = r.top + r.height / 2;
+    root.style.setProperty('--vt-x', x + 'px');
+    root.style.setProperty('--vt-y', y + 'px');
+    root.style.setProperty('--vt-r', Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 'px');
+    document.startViewTransition(apply);
   });
 })();

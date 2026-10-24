@@ -36,13 +36,18 @@ dusk, with the fleet's balloons in it; the beta page is that opening in a
 lighter dose. Posters are shown whole, never cropped, and nothing sits on them.
 The sunset gradient fills only a page's one primary button; nothing has a
 shadow or glow, except the room page's poster glow behind art.
+
+Motion follows the rules at the top of home.css's "Motion" section (what may
+animate, so weak phones and reduced motion stay fine); the theme switch's
+sunset is in site.css and theme.js.
+
 The legal pages (`assets/legal.css`) have no header or footer: the controller
 apps show them in-app under their own title bar and hide the page's
 `.legal-shell > h1`, so keep that selector working.
 
 ## Structure
 
-- `index.html`, `de/index.html` + `assets/home.css` — home page (EN / DE)
+- `index.html`, `de/index.html` + `assets/home.css`, `assets/home.js` — home page (EN / DE)
 - `room.html` + `assets/room.js` — room join page, served at `/<CODE>#<instance>`
   (nginx maps any 6-char base58 path to it); browser fallback for the app deep
   links in `.well-known/`. Also the site's 404 page (with status 404), offering

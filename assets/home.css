@@ -119,7 +119,17 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
       linear-gradient(to top, var(--bg) 0, var(--sky) 190px, var(--sky-mid) 370px, var(--sky-high) 520px);
   }
 }
-.hero > .stars { height: 780px; }
+/* The star field sits in a plane of its own, so it can move as an HTML box
+   (see Motion): an <svg> moved by scrolling stays on the main thread. */
+.stars-plane { position: absolute; left: 0; top: 0; width: 100%; height: 780px; z-index: -2; pointer-events: none; }
+.stars-plane > .stars { inset: 0; width: 100%; height: 100%; }
+/* The sky's depth planes, back to front: clouds, the small balloons, the big
+   ones. They only group the drifts (which still place against the copy), so
+   a plane can move as one. Each takes its drifts' z-index, so it stays
+   behind the copy when its motion makes it a stacking context. */
+.sky-layer { position: absolute; inset: 0; pointer-events: none; }
+.sky-layer--clouds { z-index: -2; }
+.sky-layer--far, .sky-layer--near { z-index: -1; }
 .cloud--1 { left: -2%; top: 150px; width: 210px; }
 .cloud--2 { right: 6%; top: -20px; width: 150px; }
 .cloud--3 { left: 24%; top: -6px; width: 110px; animation: slide 36s linear -4s infinite alternate; }
@@ -247,6 +257,8 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 }
 .how__art { color: var(--on-surface); }
 .how__art svg { display: block; width: 100%; height: auto; }
+/* Only seen while it sweeps the code (see Motion). */
+.how__scan { opacity: 0; }
 .how__lead { color: var(--on-surface-variant); font-size: 19px; margin-top: 14px; }
 .howfacts {
   list-style: none;
@@ -337,6 +349,177 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 .langbar__dismiss:hover { color: var(--on-surface); background: var(--ghost-bg); }
 .langbar__dismiss svg { width: 18px; height: 18px; }
 
+/* ---- Motion ----
+   Everything that moves rests in its normal state and only animates from
+   it, so reduced motion (theme.css stops it all) shows the finished page.
+   What runs on load or forever animates only opacity and transforms of
+   HTML boxes, which the compositor runs off the main thread on weak phones
+   too: no blur, nothing inside an SVG, no scrolling an <svg> itself. An
+   element's animation list is written whole in one place, so no motion
+   silently replaces another's. */
+
+/* Entrance, once on load: the sky fades up from the paper, the planes of the
+   fleet lift into place, the poster grows into the screen, the headline,
+   line and caption settle. Short travel throughout: things settle, they
+   don't fly in. */
+.tv__screen::before { animation: in-fade 1.2s ease-out backwards; }
+.cloud svg { animation: in-fade 1.6s ease-out 0.25s backwards; }
+/* The planes' entrances are named, so Depth can add to them. */
+.stars-plane { --entrance: in-fade 1.6s ease-out 0.3s backwards; }
+.sky-layer--near { --entrance: in-rise 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards; }
+.sky-layer--far { --entrance: in-rise 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards; }
+.stars-plane, .sky-layer--near, .sky-layer--far { animation: var(--entrance); }
+.feature__poster { animation: in-poster 1.1s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.hero h1 { animation: in-line 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards; }
+.hero__lead { animation: in-line 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards; }
+.feature figcaption { animation: in-line 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards; }
+@keyframes in-fade { from { opacity: 0; } }
+@keyframes in-rise { from { opacity: 0; transform: translateY(12px); } 40% { opacity: 1; } }
+/* The poster is the page's largest paint (LCP) and browsers don't count a
+   paint at opacity 0: from 0 it would count only once faded in, a second
+   late. From 0.2 it counts at once. */
+@keyframes in-poster { from { opacity: 0.2; transform: scale(0.96); } }
+/* No blur: a blur spreads pixels past the box, which keeps it off the
+   compositor. */
+@keyframes in-line { from { opacity: 0; translate: 0 4px; } }
+
+/* Depth: the sky is behind the page, so it scrolls slower than the page,
+   and the farther the slower: the stars hang back most, then the clouds,
+   the small balloons and the big ones least. Over the first screen of
+   scrolling each is pushed down a share of the distance (--depth of 100vh),
+   on translate, beside the entrance's opacity and transform. Browsers
+   without scroll-driven animations keep the flat sky. */
+@supports (animation-timeline: scroll()) {
+  .stars-plane { --depth: 40vh; }
+  .sky-layer--clouds { --depth: 30vh; }
+  .sky-layer--far { --depth: 22vh; }
+  .sky-layer--near { --depth: 14vh; }
+  .sky-layer--clouds {
+    animation: depth linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0px 100vh;
+  }
+  .stars-plane, .sky-layer--near, .sky-layer--far {
+    animation: var(--entrance), depth linear both;
+    animation-timeline: auto, scroll(root);
+    animation-range: normal, 0px 100vh;
+  }
+  @keyframes depth { to { translate: 0 var(--depth); } }
+}
+
+/* Tether: each balloon also sways on its basket, as a balloon with a heavy
+   basket pivots low, on a period that doesn't line up with its bob; the big
+   sunset swings least. As transform on the <svg>: the rotate property, or
+   anything inside the SVG, would run on the main thread. */
+.balloon svg {
+  --sway: 3deg;
+  transform-origin: 50% 88%;
+  animation: sway 6s ease-in-out -2s infinite alternate;
+}
+.balloon--sea svg { --sway: 3.5deg; animation-duration: 7s; animation-delay: -5s; }
+.balloon--gold svg { --sway: 5deg; animation-duration: 4.6s; animation-delay: -1s; }
+.balloon--dusk svg { --sway: 5deg; animation-duration: 5.2s; animation-delay: -3s; }
+@keyframes sway {
+  from { transform: rotate(calc(-1 * var(--sway))); }
+  to { transform: rotate(var(--sway)); }
+}
+
+/* Night: the brightest stars (.stars__twinkle) each blink out and back
+   quickly once a cycle, so a few are always flickering. Six cycle lengths
+   and five phases on strides of 6 and 5, which share no factor, so no two
+   of the 18 blink in step. One by one, never as groups: Chrome gives each
+   its own layer, a few pixels where a group's spans the sky. */
+.stars__twinkle circle { animation: twinkle 4.1s ease-in-out infinite; }
+.stars__twinkle circle:nth-child(6n+2) { animation-duration: 5.3s; }
+.stars__twinkle circle:nth-child(6n+3) { animation-duration: 6.7s; }
+.stars__twinkle circle:nth-child(6n+4) { animation-duration: 3.7s; }
+.stars__twinkle circle:nth-child(6n+5) { animation-duration: 7.9s; }
+.stars__twinkle circle:nth-child(6n) { animation-duration: 4.9s; }
+.stars__twinkle circle:nth-child(5n+2) { animation-delay: -1.3s; }
+.stars__twinkle circle:nth-child(5n+3) { animation-delay: -2.6s; }
+.stars__twinkle circle:nth-child(5n+4) { animation-delay: -3.9s; }
+.stars__twinkle circle:nth-child(5n) { animation-delay: -5.2s; }
+@keyframes twinkle {
+  0%, 70%, 100% { opacity: 1; }
+  80% { opacity: 0.1; }
+}
+
+/* And a shooting star, a short streak once in a long cycle. It shares the
+   stars' --star-display and rests invisible, so reduced motion never shows a
+   stray line. The head is the bright end (the box's right end); it grows its
+   tail as it flies --shoot along the slant, through open sky, clear of the
+   balloons and the headline, at every width. */
+.shooting-star {
+  --shoot: 220px;
+  display: var(--star-display);
+  position: absolute;
+  z-index: -2;
+  top: 14px;
+  left: calc(50% - 150px);
+  width: 140px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, #F1EFEC);
+  transform-origin: 100% 50%;
+  opacity: 0;
+  animation: shoot 23s linear 3s infinite;
+}
+@keyframes shoot {
+  from { opacity: 0; transform: rotate(24deg) translateX(0) scaleX(0.2); }
+  0.6% { opacity: 1; }
+  3%, to { opacity: 0; transform: rotate(24deg) translateX(var(--shoot)) scaleX(1); }
+}
+
+/* After a theme switch (site.css runs the reveal), the stars come out. On
+   the field's <g>: its plane carries the entrance and the depth. */
+:root.theme-switched .stars__field { animation: vt-stars-in 1.8s ease-out 0.4s backwards; }
+@keyframes vt-stars-in { from { opacity: 0; } }
+
+/* The scan drawing plays once, as it comes into view (home.js arms it on
+   load, so it waits on its first frame, then marks it in): the TV and the
+   phone draw themselves, a scan line runs down the screen uncovering the
+   code, and only once it is scanned does the phone become a controller: the
+   D-pad pops in, then the buttons in fleet order. Unarmed (no JS) it simply
+   rests finished. Inside the SVG, so on the main thread, but small and
+   once. */
+.how__art.is-armed .how__tv { animation: scan-draw 1s cubic-bezier(0.65, 0, 0.35, 1) backwards; }
+.how__art.is-armed .how__stand { animation: scan-draw 0.35s ease-out 0.75s backwards; }
+.how__art.is-armed .how__phone { animation: scan-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.3s backwards; }
+.how__art.is-armed .how__notch { animation: scan-fade 0.4s ease-out 1s backwards; }
+/* Wipe and line share timing so the line leads the code down. The line has
+   no backwards fill: it rests hidden and only shows while it runs. */
+.how__art.is-armed .how__qr { animation: scan-wipe 0.8s cubic-bezier(0.45, 0, 0.55, 1) 1.05s backwards; }
+.how__art.is-armed .how__scan { animation: scan-line 0.95s cubic-bezier(0.45, 0, 0.55, 1) 1.05s; }
+/* The D-pad's two bars share a centre, so each popping about its own pops
+   the cross. No selector here may outweigh the pause rule below (three
+   classes), or its animation runs while it should wait; hence :where()
+   around the bars' element selector, which also keeps it below the
+   per-button delays. */
+.how__art.is-armed :where(.how__pad rect),
+.how__art.is-armed .how__btn {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scan-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.95s backwards;
+}
+.how__art.is-armed .how__btn--sun { animation-delay: 2.07s; }
+.how__art.is-armed .how__btn--sea { animation-delay: 2.19s; }
+.how__art.is-armed .how__btn--gold { animation-delay: 2.31s; }
+.how__art.is-armed .how__btn--dusk { animation-delay: 2.43s; }
+/* Held on the first frame until home.js sees the drawing. */
+.how__art.is-armed:not(.is-in) * { animation-play-state: paused; }
+@keyframes scan-draw {
+  from { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  to { stroke-dasharray: 1; stroke-dashoffset: 0; }
+}
+@keyframes scan-fade { from { opacity: 0; } }
+@keyframes scan-wipe { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@keyframes scan-line {
+  from { opacity: 1; translate: 0 0; }
+  84% { opacity: 1; translate: 0 56px; }
+  to { opacity: 0; translate: 0 56px; }
+}
+@keyframes scan-pop { from { scale: 0; } }
+
 @media (max-width: 960px) {
   .hero h1 { font-size: 54px; }
   .balloon--gold, .cloud--3, .cloud--5 { display: none; }
@@ -387,4 +570,5 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   }
   .langbar__dismiss { margin: -6px -6px 0 0; }
   .langbar__accept { justify-content: center; }
+  .shooting-star { --shoot: 130px; top: 88px; left: -15px; width: 90px; }
 }
