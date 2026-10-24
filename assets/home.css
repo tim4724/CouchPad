@@ -324,6 +324,10 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   font-size: 15px;
 }
 .langbar[hidden] { display: none; }
+/* It is fixed but inside the hero, whose isolation scopes its z-index, so
+   the hero itself rises above the page's positioned game cards (it clips
+   to its own box, so nothing else of it can cover them). */
+.hero { z-index: 1; }
 /* While it shows, the footer ends below it, so its last line can scroll
    clear of the chip (its 50px, its 16px inset and a margin). */
 @media (min-width: 561px) {
