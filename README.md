@@ -35,7 +35,8 @@ open with. The home hero shows the flagship poster on a drawn TV under the
 dusk, with the fleet's balloons in it; the beta page is that opening in a
 lighter dose. Posters are shown whole, never cropped, and nothing sits on them.
 The sunset gradient fills only a page's one primary button; nothing has a
-shadow or glow, except the room page's poster glow behind art.
+shadow or glow, except light from art: the room page's poster glow and the
+poster-tinted light under the mouse on the home game cards.
 
 Motion follows the rules at the top of home.css's "Motion" section (what may
 animate, so weak phones and reduced motion stay fine); the theme switch's

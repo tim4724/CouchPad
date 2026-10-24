@@ -10,6 +10,10 @@
   try { choice = localStorage.getItem(STORE); } catch (e) { choice = null; }
   if (choice === 'light' || choice === 'dark') root.setAttribute('data-theme', choice);
 
+  // iOS Safari applies :active (the buttons' press, site.css) only under a
+  // touch listener.
+  document.addEventListener('touchstart', function () {}, { passive: true });
+
   // Pages declare one theme-color per scheme (media="(prefers-color-scheme:
   // …)") so the browser bar follows the page background; a forced scheme has
   // to win over the system one there too, or the bar keeps the other scheme's

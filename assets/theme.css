@@ -24,8 +24,10 @@
      gradient, so a border using it must be transparent;
      --glass-line is their inner dividers.
    No shadows or glows on buttons, cards or the TV; depth is a
-   hairline. (The room page's blurred-poster glow is the one
-   exception, behind art, never a control.)
+   hairline. (Two exceptions, both light from art, never a
+   control: the room page's blurred-poster glow and the faint
+   poster-coloured light that follows the mouse over a home
+   game card.)
    Follows the system light/dark setting; dark is near-black by
    design, not a grey: a hint of the night sky's violet in the
    ground, a step more on cards.

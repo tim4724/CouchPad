@@ -10,3 +10,12 @@
     io.disconnect();
   }, { threshold: 0.6 }).observe(art);
 })();
+
+// The game cards' pointer light (home.css): where the pointer is, in the card.
+document.querySelector('.games').addEventListener('pointermove', function (e) {
+  var card = e.target.closest('.game');
+  if (!card || e.pointerType !== 'mouse') return;
+  var r = card.getBoundingClientRect();
+  card.style.setProperty('--x', e.clientX - r.left + 'px');
+  card.style.setProperty('--y', e.clientY - r.top + 'px');
+});
