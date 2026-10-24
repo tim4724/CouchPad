@@ -1,7 +1,8 @@
 // Light/dark override for the Paper Balloon site. Shared by every page so a choice
 // made on one follows the visitor everywhere; the home, room and beta pages
 // carry the .theme-toggle button. No stored choice = follow the system setting
-// (theme.css handles that via prefers-color-scheme alone).
+// (theme.css handles that via prefers-color-scheme alone). Also keeps the
+// browser bar colour in step with the page (theme-color, overscroll).
 // Loaded synchronously in <head> so the override lands before first paint.
 (function () {
   var STORE = 'cg-theme';
@@ -27,6 +28,18 @@
     bars.forEach(function (b) { b.el.content = pick ? pick.color : b.color; });
   }
   syncBar();
+
+  // Marks the lower half of the scroll (is-lower-half, site.css), so the
+  // overscroll and bar colour match the nearer end of the page. While bouncing,
+  // iOS reports scrollY below 0 or past the end, so a page too short to scroll
+  // still switches for a bounce at its bottom. Measured again on load, once
+  // images have set the page's height.
+  function syncHalf() {
+    root.classList.toggle('is-lower-half', scrollY > (root.scrollHeight - innerHeight) / 2);
+  }
+  addEventListener('scroll', syncHalf, { passive: true });
+  addEventListener('resize', syncHalf);
+  addEventListener('load', syncHalf);
 
   function isDark() {
     return root.getAttribute('data-theme')

@@ -4,7 +4,7 @@
 
 /* The page's top is sky, so the browser bar is too. iOS 26 Safari tints it
    from body's background-color and ignores theme-color; the gradient keeps
-   the page itself on --bg. */
+   the page itself on --bg. Lower down it turns to --bg too (site.css). */
 body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 
 /* Pitch, then the TV, then its caption row: the game's name on the left and

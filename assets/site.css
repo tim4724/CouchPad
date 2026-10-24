@@ -17,6 +17,10 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+/* body's background-color is the overscroll and iOS 26 bar colour at both
+   ends. The pages set it to the sky they open on (home.css); in the lower half
+   of the scroll (theme.js) it is the paper they end on. */
+.is-lower-half body { background-color: var(--bg); }
 a { color: inherit; }
 h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
 
