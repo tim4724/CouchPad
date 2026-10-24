@@ -1,7 +1,7 @@
 /* Closed-testing sign-up page (/beta, /de/beta), on site.css: the home page's
    opening in a lighter dose, a short dusk band behind the header and title
-   with two balloons and two clouds, then the three step cards in the home
-   page's card style. One sunset button, the group link, since joining the
+   with two balloons and a cloud, then the three step cards in the home
+   page's game-card style. One sunset button, the group link, since joining the
    group is the one thing the page asks for.
    Temporary: delete the page and this file once the apps are in production. */
 
@@ -13,8 +13,6 @@ body {
   /* The page's top is sky, so the browser bar is too (see home.css). */
   background: linear-gradient(var(--bg), var(--bg)) var(--sky-high);
 }
-/* The footer panel is glass like the step cards, its lit rim along the top. */
-.footer { background: var(--glass); border-top-color: transparent; }
 .beta { flex: 1 0 auto; padding-top: 32px; padding-bottom: 72px; }
 
 /* ---- The band: lilac to peach, fading into the paper under the title. ---- */
@@ -26,41 +24,47 @@ body {
   line-height: 1.05;
   padding: 56px 0 64px;
 }
-/* The sunset balloon with one companion, high right, and two clouds. */
-.balloon--sun { right: 4%; top: 64px; width: 96px; fill: url(#g-sun); }
-.balloon--sea { right: 17%; top: 36px; width: 48px; fill: url(#g-sea); }
-.cloud--1 { left: 46%; top: 110px; width: 150px; }
-.cloud--2 { right: 28%; top: 10px; width: 100px; }
+/* The sunset balloon with one companion and a cloud, right of the title and
+   under the header. Placed in the header's column, not the full-width band,
+   so they keep clear of the language link and the title at any width. */
+.betahero .wrap { position: relative; }
+.balloon--sun { right: 40px; top: 84px; width: 96px; fill: url(#g-sun); }
+.balloon--sea { right: 160px; top: 100px; width: 48px; fill: url(#g-sea); }
+.cloud--1 { right: 0; top: 176px; width: 150px; }
 
-/* ---- Steps: cards stacked full width. Number and title share a line; the
-   content sits below, indented to the title on wider screens. ---- */
+/* ---- Steps: cards stacked full width, in the home page's game-card
+   padding and type. Number and title share a line; the content sits below,
+   indented to the title on wider screens. The numbers wear the fleet in
+   order, like the home page's facts. ---- */
 .steps { list-style: none; counter-reset: step; display: grid; gap: 16px; }
 .step {
   counter-increment: step;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  column-gap: 14px;
+  column-gap: 12px;
   background: var(--glass);
   border: 1px solid transparent;
   border-radius: 20px;
-  padding: 24px 28px;
+  padding: 20px 22px 22px;
 }
 .step::before {
   content: counter(step);
   display: grid;
   place-items: center;
-  width: 32px; height: 32px;
+  width: 28px; height: 28px;
   border-radius: 50%;
-  background: var(--on-surface);
-  color: var(--bg);
-  font-size: 15px;
+  background: linear-gradient(var(--sun-top), var(--sun-bottom));
+  color: #FFFFFF;
+  font-size: 14px;
   font-weight: 600;
 }
+.step:nth-child(2)::before { background: linear-gradient(var(--sea-top), var(--sea-bottom)); }
+.step:nth-child(3)::before { background: linear-gradient(var(--gold-top), var(--gold-bottom)); }
 .step__body { grid-column: 1 / -1; margin-top: 12px; }
 @media (min-width: 880px) { .step__body { grid-column: 2; } }
-.step h2 { font-size: 21px; line-height: 1.2; }
-.step p { color: var(--on-surface-variant); }
+.step h2 { font-size: 22px; line-height: 1.2; }
+.step p { color: var(--on-surface-variant); font-size: 16px; }
 .step p + p { margin-top: 6px; }
 .step p a:not(.btn) { color: var(--on-surface); }
 .step__hint { margin-top: 12px; font-size: 15px; }
@@ -98,12 +102,17 @@ body {
 
 .beta__privacy { margin-top: 32px; font-size: 14px; color: var(--on-surface-variant); }
 
+/* Too narrow for the balloons beside the title: they move between the
+   header and the title, clear of both. */
+@media (max-width: 800px) {
+  .beta__title { padding: 96px 0 40px; }
+  .balloon--sun { right: 40px; top: 64px; width: 56px; }
+  .balloon--sea { right: 112px; top: 76px; width: 32px; }
+  .cloud--1 { right: auto; left: -30px; top: 100px; width: 110px; }
+}
+/* Phones: the balloons nudge in and the title shrinks. */
 @media (max-width: 560px) {
-  /* Balloons between the header and the title, clear of both. */
-  .beta__title { font-size: 36px; padding: 96px 0 40px; }
-  .balloon--sun { right: 12px; top: 64px; width: 56px; }
-  .balloon--sea { right: 84px; top: 76px; width: 32px; }
-  .cloud--1 { left: -30px; top: 100px; width: 110px; }
-  .cloud--2 { display: none; }
-  .step { padding: 20px; }
+  .beta__title { font-size: 36px; }
+  .balloon--sun { right: 12px; }
+  .balloon--sea { right: 84px; }
 }

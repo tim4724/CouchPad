@@ -144,8 +144,8 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 .balloon--gold { right: 20%; top: 4px; width: 52px; fill: url(#g-gold); --glow: var(--gold-bottom); animation-duration: 5s; animation-delay: -3s; }
 .balloon--dusk { left: 17%; top: 200px; width: 50px; fill: url(#g-dusk); --glow: var(--dusk-bottom); animation-duration: 6.5s; animation-delay: -1s; }
 
-/* Footer: on the page itself, no panel and no sky of its own. */
-.footer--home { background: none; border-top: 0; padding: 48px 0 28px; }
+/* Footer: the brand column and a base row, in the home page's own rhythm. */
+.footer--home { padding: 48px 0 28px; }
 .footer--home .footer__base { border-top: 0; margin-top: 28px; padding-top: 0; }
 
 .feature figcaption {

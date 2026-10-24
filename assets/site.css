@@ -152,12 +152,11 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
 .btn--ghost:hover { border-color: var(--on-surface); }
 .btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-/* ---- Footer: a soft panel. The home page's has the brand and a base row;
-   the other pages use the one-row --slim variant. ---- */
+/* ---- Footer: plain text on the page, no panel or rule. The home page's
+   has the brand and a base row; the other pages use the one-row --slim
+   variant. ---- */
 .footer {
   margin-top: 112px;
-  background: var(--surface-low);
-  border-top: 1px solid var(--outline-variant);
   color: var(--on-surface-variant);
   padding: 56px 0 40px;
   font-size: 15px;
@@ -183,14 +182,15 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
 .footer--slim .footer__row { align-items: center; gap: 12px 32px; }
 .footer--slim .footer__links { padding-top: 0; }
 
-/* ---- Sky parts, shared by the pages that open under the dusk (home, beta):
+/* ---- Sky parts, shared by the pages that open under the dusk (home, beta;
+   room takes only the bare band):
    a .sky band with no header hairline, stars at night, flat white clouds by
    day, and the fleet's balloons. A page carries the symbols (the launcher
    icon's balloon, a cloud, the star field) and the four gradients in a
    .sky-defs svg, then places <use>s of them with .drift; the paths have no
    fill, so they take the one set on the placement. Each page positions its
-   own clouds and balloons; the first two clouds and the sea balloon drift at
-   the same pace everywhere. ---- */
+   own clouds and balloons; the first cloud and the sea balloon drift at the
+   same pace everywhere. ---- */
 .sky { position: relative; isolation: isolate; overflow: hidden; }
 .sky .topbar { border-bottom: 0; }
 .sky > .stars { inset: 0; width: 100%; height: 100%; }
