@@ -294,8 +294,9 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
 /* ---- Language-suggestion banner (EN root only; lang.js shows it) ----
    A chip pinned to the bottom of the viewport, out of the hero so it never
    meets the balloons: globe + sentence, a ghost pill, a round close button.
-   One row where it fits; on phones the pill drops under the sentence. Quiet
-   on purpose: it is a hint, not the page's action. */
+   Not on phones, where any chip sits over the page; the header's language
+   link serves there. Quiet on purpose: it is a hint, not the page's
+   action. */
 .langbar {
   position: fixed;
   left: 50%;
@@ -319,6 +320,11 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   font-size: 15px;
 }
 .langbar[hidden] { display: none; }
+/* While it shows, the footer ends below it, so its last line can scroll
+   clear of the chip (its 50px, its 16px inset and a margin). */
+@media (min-width: 561px) {
+  body:has(.langbar:not([hidden])) .footer--home { padding-bottom: 96px; }
+}
 .langbar__globe { grid-area: globe; width: 18px; height: 18px; color: var(--on-surface-variant); }
 .langbar__text { grid-area: text; }
 .langbar__accept {
@@ -554,21 +560,14 @@ body { background: linear-gradient(var(--bg), var(--bg)) var(--sky-high); }
   .feature figcaption { flex-direction: column; gap: 24px; padding-top: 20px; text-align: center; }
   .hero__ctas { justify-content: center; }
   .section { padding-top: 72px; }
+  /* The footer keeps the sections' rhythm, not the desktop's wide margin. */
+  .footer--home { margin-top: 40px; padding-top: 32px; }
   /* Phones: heading and sentence first, the drawing centred below them. */
   .how__top { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 28px 20px 24px; }
   .how__art { order: 1; width: 220px; justify-self: center; }
   /* One column: two would wrap "Phones as controllers". */
   .howfacts { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 20px; }
   .howfacts li { gap: 10px; font-size: 18px; }
-  .langbar {
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas: "globe text close" "accept accept accept";
-    align-items: start;
-    width: calc(100% - 32px);
-    border-radius: 24px;
-    padding: 12px 12px 12px 16px;
-  }
-  .langbar__dismiss { margin: -6px -6px 0 0; }
-  .langbar__accept { justify-content: center; }
+  .langbar { display: none; }
   .shooting-star { --shoot: 130px; top: 88px; left: -15px; width: 90px; }
 }
