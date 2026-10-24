@@ -82,20 +82,23 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
 }
 .topbar__lang:hover { color: var(--on-surface); }
 
-/* Shows the scheme it switches TO: moon in light mode, sun in dark. The
-   visibility rules mirror theme.css's forced/system split; keep in sync. */
-.theme-toggle {
+/* A round icon-only button: the theme toggle, the home page's banner close. */
+.icon-btn {
   border: 0;
   background: none;
   color: var(--on-surface-variant);
   width: 36px; height: 36px;
-  margin-right: -8px; /* glyph, not tap area, on the content edge */
   display: grid;
   place-items: center;
   cursor: pointer;
   border-radius: 999px;
 }
-.theme-toggle:hover { color: var(--on-surface); background: var(--ghost-bg); }
+.icon-btn:hover { color: var(--on-surface); background: var(--ghost-bg); }
+.icon-btn svg { width: 18px; height: 18px; }
+
+/* Shows the scheme it switches TO: moon in light mode, sun in dark. The
+   visibility rules mirror theme.css's forced/system split; keep in sync. */
+.theme-toggle { margin-right: -8px; /* glyph, not tap area, on the content edge */ }
 .theme-toggle svg { width: 19px; height: 19px; }
 .theme-toggle__sun { display: none; }
 .theme-toggle__moon { display: block; }
@@ -154,7 +157,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
   border: 1.5px solid var(--ghost-line);
 }
 .btn--ghost:hover { border-color: var(--on-surface); }
-.btn svg { width: 16px; height: 16px; fill: currentColor; }
+.btn svg { width: 16px; height: 16px; flex: none; }
 
 /* ---- Footer: plain text on the page, no panel or rule. The home page's
    has the brand and a base row; the other pages use the one-row --slim
@@ -197,9 +200,8 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; }
    same pace everywhere. ---- */
 .sky { position: relative; isolation: isolate; overflow: hidden; }
 .sky .topbar { border-bottom: 0; }
-.sky > .stars { inset: 0; width: 100%; height: 100%; }
 .sky-defs { position: absolute; width: 0; height: 0; }
-.stars { position: absolute; display: var(--star-display); fill: #F1EFEC; opacity: 0.75; z-index: -2; }
+.stars { position: absolute; inset: 0; width: 100%; height: 100%; display: var(--star-display); fill: #F1EFEC; opacity: 0.75; z-index: -2; }
 .drift { position: absolute; z-index: -2; }
 .drift svg { display: block; width: 100%; height: auto; overflow: visible; }
 .cloud { display: var(--cloud-display); fill: #FFFFFF; }

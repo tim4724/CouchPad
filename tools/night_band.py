@@ -7,7 +7,7 @@ colour-neutral noise; home.css lays them over the CSS gradient, which paints
 until they arrive.
 
 Colours come from the dark block in assets/theme.css; the stops below must
-match the dark .tv__screen::before rules in assets/home.css. Re-run after
+match the --night-stops and --night-tile sizes in assets/home.css. Re-run after
 changing either, and since .webp is cached for a month without revalidating,
 bump VERSION (it names the files) and point home.css at the new names.
 
@@ -19,7 +19,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "sky"
 SCALE = 2  # device pixels per CSS pixel; 1x screens downsample, 3x upsample
-VERSION = 3
+TILE_W = 64  # CSS px; the band only varies vertically, the width just carries the dither
+VERSION = 4
 
 
 def dark_tokens():
@@ -59,11 +60,11 @@ def png(width, height, stops):
 def main():
     bg, sky, mid, high = dark_tokens()
     OUT.mkdir(exist_ok=True)
-    # (file, tile width in CSS px, horizon, dusk, top): home.css's dark desktop and phone stops.
-    for name, w, horizon, dusk, top in [("night-band-800", 128, 380, 640, 800), ("night-band-520", 64, 190, 370, 520)]:
+    # (file, horizon, dusk, top): home.css's desktop and phone --night-stops.
+    for name, horizon, dusk, top in [("night-band-800", 380, 640, 800), ("night-band-520", 190, 370, 520)]:
         stops = [(0, bg), (horizon, sky), (dusk, mid), (top, high)]
         with tempfile.NamedTemporaryFile(suffix=".png") as tmp:
-            tmp.write(png(w * SCALE, top * SCALE, stops))
+            tmp.write(png(TILE_W * SCALE, top * SCALE, stops))
             tmp.flush()
             dest = OUT / f"{name}-v{VERSION}.webp"
             subprocess.run(["cwebp", "-quiet", "-lossless", "-z", "9", tmp.name, "-o", str(dest)], check=True)
